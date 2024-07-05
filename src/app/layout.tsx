@@ -1,9 +1,9 @@
+import { Toaster } from '@/components/ui/toaster'
 import type { Metadata } from 'next'
-import { Poppins, Manrope } from 'next/font/google'
+import { Manrope, Poppins } from 'next/font/google'
 import React from 'react'
 import './globals.css'
-import { Navbar } from '@/components/ui/navbar'
-import { Toaster } from '@/components/ui/toaster'
+import { BottomBar } from '@/components/ui/bottombar'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -29,9 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${manrope.variable} p-20`}>
-        <Navbar />
+      <body className={`${poppins.variable} ${manrope.variable}`}>
         {children}
+        <BottomBar />
         <Toaster />
       </body>
     </html>
