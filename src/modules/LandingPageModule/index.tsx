@@ -3,7 +3,7 @@ import { ArrowDown, Vote } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 
-const Background = () => {
+export const Background = () => {
   return (
     <div className="w-full h-full absolute z-0">
       <Image

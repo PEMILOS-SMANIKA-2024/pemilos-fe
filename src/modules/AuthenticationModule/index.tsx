@@ -5,6 +5,9 @@ import { Input } from '@/components/ui/input'
 import { API_URL } from '@/modules/constant'
 import { useState } from 'react'
 import { toast } from '@/components/ui/use-toast'
+import { Background } from '../LandingPageModule'
+import { DoorOpen } from 'lucide-react'
+import Image from 'next/image'
 
 export function AuthPageModule() {
   const [nisn, setNisn] = useState('')
@@ -50,33 +53,59 @@ export function AuthPageModule() {
   }
 
   return (
-    <section className="font-manrope">
-      <div className="p-8 border-[1px] w-[300px] rounded-xl">
-        <div className="flex flex-col gap-7">
-          <label className="font-extrabold text-xl">Login</label>
-          <Input
-            placeholder="Username"
-            className="font-manrope font-medium text-xs"
-            onChange={(e) => {
-              setNisn(e.target.value)
-            }}
-          />
-          <Input
-            placeholder="Password"
-            type="password"
-            className="font-manrope font-medium text-xs"
-            onChange={(e) => {
-              setPassword(e.target.value)
-            }}
-          />
-          <Button
-            onClick={() => {
-              const response = login()
-            }}
-            className="text-xs font-bold"
-          >
-            Login
-          </Button>
+    <section className="font-manrope w-full h-screen relative overflow-hidden flex items-center justify-center">
+      <Background />
+      <Image
+        src={'/osis-1.png'}
+        alt="SMANIKA OSIS Logo"
+        width={400}
+        height={200}
+        className="w-32 md:w-80 lg:w-96 bottom-0 absolute left-0 hover:scale-[105%] z-30 duration-300"
+      />
+      <Image
+        src={'/osis-2.png'}
+        alt="SMANIKA OSIS Logo"
+        width={400}
+        height={200}
+        className="w-32 md:w-80 lg:w-96 bottom-0 absolute right-0 hover:scale-[105%] z-30 duration-300"
+      />
+      <div className="flex flex-col gap-2 items-center z-20">
+        <Image
+          src={'/logo-smanika-osis.png'}
+          alt="SMANIKA OSIS Logo"
+          width={100}
+          height={200}
+          className=""
+        />
+        <div className="p-8 border-[1px] border-black w-[300px] rounded-xl bg-white shadow-sm">
+          <div className="flex flex-col gap-7">
+            <label className="font-extrabold text-2xl">Login</label>
+            <Input
+              placeholder="Username"
+              className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA]"
+              onChange={(e) => {
+                setNisn(e.target.value)
+              }}
+            />
+            <Input
+              placeholder="Password"
+              type="password"
+              className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA]"
+              onChange={(e) => {
+                setPassword(e.target.value)
+              }}
+            />
+            <Button
+              onClick={() => {
+                login()
+              }}
+              size={'lg'}
+              className="text-xs font-bold"
+            >
+              <DoorOpen className="w-4" />
+              <span>Login</span>
+            </Button>
+          </div>
         </div>
       </div>
     </section>
