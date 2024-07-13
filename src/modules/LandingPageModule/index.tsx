@@ -1,4 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/react-in-jsx-scope */
 import { Button } from '@/components/ui/button'
 import useToken from '@/custom-hook/useToken'
 import { ArrowDown, User, Vote } from 'lucide-react'
@@ -53,6 +54,18 @@ export default function LandingPageModule() {
             <ArrowDown className="w-5" />
             <span>Lihat Calon</span>
           </Button>
+          <Button
+            onClick={() => {
+              const token = localStorage.getItem('token')
+
+              if (token) {
+                push('/vote')
+                return
+              }
+
+              push('/login')
+            }}
+          />
           <Button
             onClick={() => {
               const token = localStorage.getItem('token')

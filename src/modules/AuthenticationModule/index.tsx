@@ -89,6 +89,7 @@ export function AuthPageModule() {
         description: 'Login Failed',
         variant: 'destructive',
       })
+      push('')
     }
   }
 
@@ -123,6 +124,7 @@ export function AuthPageModule() {
             <Input
               placeholder="Username"
               className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA] placeholder:text-[#ADADAD]"
+              className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA] placeholder:text-[#ADADAD]"
               onChange={(e) => {
                 setNisn(e.target.value)
               }}
@@ -130,6 +132,7 @@ export function AuthPageModule() {
             <Input
               placeholder="Password"
               type="password"
+              className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA] placeholder:text-[#ADADAD]"
               className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA] placeholder:text-[#ADADAD]"
               onChange={(e) => {
                 setPassword(e.target.value)
