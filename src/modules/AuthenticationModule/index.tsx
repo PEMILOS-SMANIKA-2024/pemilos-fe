@@ -1,19 +1,34 @@
 'use client'
+
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { API_URL } from '@/modules/constant'
-import { useState } from 'react'
 import { toast } from '@/components/ui/use-toast'
-import { Background } from '../LandingPageModule'
+import { API_URL } from '@/modules/constant'
 import { DoorOpen } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { Background } from '../LandingPageModule'
 
 export function AuthPageModule() {
   const [nisn, setNisn] = useState('')
   const [password, setPassword] = useState('')
 
+  const { push } = useRouter()
+  // const token = localStorage.getItem('token')
+
   async function login() {
+    const token = localStorage.getItem('token')
+    if (token) {
+      toast({
+        title: 'Login',
+        description: 'You are already logged in',
+        variant: 'destructive',
+      })
+      return
+    }
+
     const url = `${API_URL}/auth/login`
     try {
       const fetchData = await fetch(url, {
@@ -24,13 +39,16 @@ export function AuthPageModule() {
         }),
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
       })
 
       const response = await fetchData.json()
 
+      console.log(response)
+
       if (!response.result) {
-        throw new Error(response.message)
+        console.log(response)
       }
 
       // Store JWT to local storage
@@ -42,6 +60,8 @@ export function AuthPageModule() {
         variant: 'default',
       })
 
+      push('')
+
       return response
     } catch (error) {
       toast({
@@ -49,6 +69,7 @@ export function AuthPageModule() {
         description: 'Login failed',
         variant: 'destructive',
       })
+      push('')
     }
   }
 
@@ -82,7 +103,7 @@ export function AuthPageModule() {
             <label className="font-extrabold text-2xl">Login</label>
             <Input
               placeholder="Username"
-              className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA]"
+              className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA] placeholder:text-[#ADADAD]"
               onChange={(e) => {
                 setNisn(e.target.value)
               }}
@@ -90,7 +111,7 @@ export function AuthPageModule() {
             <Input
               placeholder="Password"
               type="password"
-              className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA]"
+              className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA] placeholder:text-[#ADADAD]"
               onChange={(e) => {
                 setPassword(e.target.value)
               }}

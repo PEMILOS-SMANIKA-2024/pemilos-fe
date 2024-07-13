@@ -1,7 +1,10 @@
+/* eslint-disable react/react-in-jsx-scope */
 import { Button } from '@/components/ui/button'
-import { ArrowDown, Vote } from 'lucide-react'
+import { jwtDecode } from 'jwt-decode'
+import { ArrowDown, User, Vote } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export const Background = () => {
   return (
@@ -25,9 +28,46 @@ export const Background = () => {
 }
 
 export default function LandingPageModule() {
+  const { push, refresh } = useRouter()
+
+  const [token, setToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    setToken(token)
+  })
+
+  let decoded: { username: string; exp: string } = { username: '', exp: '' }
+
+  if (token) {
+    decoded = jwtDecode(token ?? '')
+  }
+
+  const expirationDate = new Date(parseInt(decoded.exp) * 1000)
+
+  if (typeof window !== 'undefined' && expirationDate < new Date()) {
+    localStorage.removeItem('token')
+    refresh()
+  }
+
   return (
     <section className="w-full h-screen relative overflow-hidden flex justify-center items-center font-manrope">
       <Background />
+      {token && (
+        <div className="fixed top-4 right-4">
+          <Button
+            variant={'outline'}
+            className="px-10 py-5"
+            onClick={() => {
+              localStorage.removeItem('token')
+              push('/login')
+            }}
+          >
+            <User />
+            Hello, {decoded.username}!
+          </Button>
+        </div>
+      )}
       <div className="gap-4 z-20 flex flex-col items-center">
         <Image
           src={'/logo-smanika-osis.png'}
@@ -52,7 +92,18 @@ export default function LandingPageModule() {
             <ArrowDown className="w-5" />
             <span>Lihat Calon</span>
           </Button>
-          <Button>
+          <Button
+            onClick={() => {
+              const token = localStorage.getItem('token')
+
+              if (token) {
+                push('/vote')
+                return
+              }
+
+              push('/login')
+            }}
+          >
             <Vote className="w-5" />
             <span>Vote</span>
           </Button>
