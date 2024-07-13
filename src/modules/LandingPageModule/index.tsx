@@ -65,18 +65,6 @@ export default function LandingPageModule() {
 
               push('/login')
             }}
-          />
-          <Button
-            onClick={() => {
-              const token = localStorage.getItem('token')
-
-              if (token) {
-                push('/vote')
-                return
-              }
-
-              push('/login')
-            }}
           >
             <Vote className="w-5" />
             <span>Vote</span>
