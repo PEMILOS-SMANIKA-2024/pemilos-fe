@@ -1,54 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/react-in-jsx-scope */
 import { Button } from '@/components/ui/button'
-import { jwtDecode } from 'jwt-decode'
+import useToken from '@/custom-hook/useToken'
 import { ArrowDown, User, Vote } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-
-export const Background = () => {
-  return (
-    <div className="w-full h-full absolute z-0">
-      <Image
-        src={'/corner-blob-1.png'}
-        alt="Corner Blob 1"
-        width={500}
-        height={300}
-        className="absolute -bottom-12"
-      />
-      <Image
-        src={'/corner-blob-2.png'}
-        alt="Corner Blob 2"
-        width={400}
-        height={300}
-        className="absolute -top-12 right-0"
-      />
-    </div>
-  )
-}
+import { Background } from './components/background'
 
 export default function LandingPageModule() {
-  const { push, refresh } = useRouter()
+  const { push } = useRouter()
 
-  const [token, setToken] = useState<string | null>(null)
-
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    setToken(token)
-  })
-
-  let decoded: { username: string; exp: string } = { username: '', exp: '' }
-
-  if (token) {
-    decoded = jwtDecode(token ?? '')
-  }
-
-  const expirationDate = new Date(parseInt(decoded.exp) * 1000)
-
-  if (typeof window !== 'undefined' && expirationDate < new Date()) {
-    localStorage.removeItem('token')
-    refresh()
-  }
+  const { token, decoded } = useToken()
 
   return (
     <section className="w-full h-screen relative overflow-hidden flex justify-center items-center font-manrope">
@@ -64,7 +26,7 @@ export default function LandingPageModule() {
             }}
           >
             <User />
-            Hello, {decoded.username}!
+            Hello, {decoded.name.split(' ').slice(0, 2).join(' ')}!
           </Button>
         </div>
       )}
@@ -92,6 +54,18 @@ export default function LandingPageModule() {
             <ArrowDown className="w-5" />
             <span>Lihat Calon</span>
           </Button>
+          <Button
+            onClick={() => {
+              const token = localStorage.getItem('token')
+
+              if (token) {
+                push('/vote')
+                return
+              }
+
+              push('/login')
+            }}
+          />
           <Button
             onClick={() => {
               const token = localStorage.getItem('token')

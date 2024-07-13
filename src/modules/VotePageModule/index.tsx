@@ -1,25 +1,42 @@
+/* eslint-disable react/react-in-jsx-scope */
 'use client'
-import React from 'react'
-import { Background } from '../LandingPageModule'
 import { Button } from '@/components/ui/button'
+import { fetchWithToken } from '@/custom-hook/customFetch'
+import useToken from '@/custom-hook/useToken'
 import { DoorClosed, Vote } from 'lucide-react'
 import Image from 'next/image'
+import { Background } from '../LandingPageModule/components/background'
+import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 
 export default function VotePageModule() {
+  const { token } = useToken()
   const { push } = useRouter()
+
+  async function logOut() {
+    const response = await fetchWithToken('/auth/logout', token, {
+      method: 'POST',
+    })
+
+    if (response.result) {
+      localStorage.removeItem('token')
+      toast({
+        title: 'Logout',
+        description: 'Berhasil logout',
+        variant: 'default',
+      })
+
+      setTimeout(() => {
+        push('/login')
+      })
+    }
+  }
+
   return (
     <section className="w-full h-screen overflow-hidden flex flex-col relative font-manrope">
       <Background />
       <div className="w-full p-20 z-20 flex flex-col gap-2">
-        <Button
-          variant={'outline'}
-          className="w-[180px]"
-          onClick={() => {
-            localStorage.removeItem('token')
-            push('/login')
-          }}
-        >
+        <Button variant={'outline'} className="w-[180px]" onClick={logOut}>
           <DoorClosed />
           <span>Logout</span>
         </Button>
