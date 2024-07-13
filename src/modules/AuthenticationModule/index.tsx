@@ -1,75 +1,94 @@
+/* eslint-disable react/react-in-jsx-scope */
 'use client'
 
-import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
-import { API_URL } from '@/modules/constant'
+import useToken from '@/custom-hook/useToken'
 import { DoorOpen } from 'lucide-react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Background } from '../LandingPageModule'
+import { Background } from '../LandingPageModule/components/background'
+import { fetchWithToken } from '@/custom-hook/customFetch'
+import { usePathname, useRouter } from 'next/navigation'
 
 export function AuthPageModule() {
   const [nisn, setNisn] = useState('')
   const [password, setPassword] = useState('')
 
+  const { token } = useToken()
   const { push } = useRouter()
-  // const token = localStorage.getItem('token')
+  const pathname = usePathname()
+
+  const [loading, setLoading] = useState(false)
 
   async function login() {
-    const token = localStorage.getItem('token')
+    setLoading(true)
     if (token) {
       toast({
         title: 'Login',
         description: 'You are already logged in',
         variant: 'destructive',
       })
+      setLoading(false)
       return
     }
 
-    const url = `${API_URL}/auth/login`
     try {
-      const fetchData = await fetch(url, {
+      const fetchData = await fetchWithToken('/auth/login', token, {
         method: 'POST',
         body: JSON.stringify({
           username: nisn,
           password: password,
         }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
       })
 
-      const response = await fetchData.json()
-
-      console.log(response)
-
-      if (!response.result) {
-        console.log(response)
+      if (fetchData.message === 'User not found') {
+        toast({
+          title: 'Login',
+          description: 'User tidak ditemukan!',
+          variant: 'destructive',
+        })
+        return
       }
 
+      if (fetchData.message === 'User already logged in another device') {
+        toast({
+          title: 'User sudah login di perangkat lain!',
+          description: 'Silahkan hubungi admin untuk mengatasi masalah ini',
+          variant: 'destructive',
+        })
+        setLoading(false)
+        return
+      }
+
+      // Set Loggedin Status to True
+      await fetchWithToken('/auth/isLogged', fetchData.result.token, {
+        method: 'POST',
+      })
+
       // Store JWT to local storage
-      localStorage.setItem('token', response.result.token)
+      localStorage.setItem('token', fetchData.result.token)
 
       toast({
         title: 'Login',
-        description: `Login success, Welcome ${response.result.username}`,
+        description: `Login success, Welcome ${fetchData.result.name}`,
         variant: 'default',
       })
 
-      push('')
+      setLoading(false)
 
-      return response
+      const url = window.location.href.replace(pathname, '')
+      setTimeout(() => {
+        push(url)
+      })
     } catch (error) {
+      setLoading(false)
       toast({
         title: 'Login',
-        description: 'Login failed',
+        description: 'Login Failed',
         variant: 'destructive',
       })
-      push('')
     }
   }
 
@@ -116,6 +135,9 @@ export function AuthPageModule() {
                 setPassword(e.target.value)
               }}
             />
+            {loading && (
+              <div className="text-xs animate-bounce">... Loading</div>
+            )}
             <Button
               onClick={() => {
                 login()
