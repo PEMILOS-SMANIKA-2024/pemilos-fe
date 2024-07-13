@@ -1,9 +1,9 @@
+import { BottomBar } from '@/components/ui/bottombar'
 import { Toaster } from '@/components/ui/toaster'
 import type { Metadata } from 'next'
 import { Manrope, Poppins } from 'next/font/google'
 import React from 'react'
 import './globals.css'
-import { BottomBar } from '@/components/ui/bottombar'
 
 const poppins = Poppins({
   subsets: ['latin'],
