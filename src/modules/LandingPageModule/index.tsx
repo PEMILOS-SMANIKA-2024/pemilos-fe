@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode'
 import { ArrowDown, User, Vote } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export const Background = () => {
   return (
@@ -28,7 +29,14 @@ export const Background = () => {
 
 export default function LandingPageModule() {
   const { push, refresh } = useRouter()
-  const token = localStorage.getItem('token')
+
+  const [token, setToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    setToken(token)
+  })
+
   let decoded: { username: string; exp: string } = { username: '', exp: '' }
 
   if (token) {
@@ -37,7 +45,7 @@ export default function LandingPageModule() {
 
   const expirationDate = new Date(parseInt(decoded.exp) * 1000)
 
-  if (expirationDate < new Date()) {
+  if (typeof window !== 'undefined' && expirationDate < new Date()) {
     localStorage.removeItem('token')
     refresh()
   }
