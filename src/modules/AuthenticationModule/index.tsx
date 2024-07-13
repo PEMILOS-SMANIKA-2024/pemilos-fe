@@ -29,7 +29,7 @@ export function AuthPageModule() {
       return
     }
 
-    const url = `${API_URL}auth/login`
+    const url = `${API_URL}/auth/login`
     try {
       const fetchData = await fetch(url, {
         method: 'POST',
@@ -39,10 +39,13 @@ export function AuthPageModule() {
         }),
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
       })
 
       const response = await fetchData.json()
+
+      console.log(response)
 
       if (!response.result) {
         console.log(response)
