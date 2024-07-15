@@ -16,15 +16,8 @@ export default function LandingPageModule() {
     <section className="w-full h-screen relative overflow-hidden flex justify-center items-center font-manrope">
       <Background />
       {token && (
-        <div className="fixed top-4 right-4">
-          <Button
-            variant={'outline'}
-            className="px-10 py-5"
-            onClick={() => {
-              localStorage.removeItem('token')
-              push('/login')
-            }}
-          >
+        <div className="fixed top-4 right-4 z-30">
+          <Button variant={'outline'} className="px-10 py-5 bg-white">
             <User />
             Hello, {decoded.name.split(' ').slice(0, 2).join(' ')}!
           </Button>
@@ -43,13 +36,13 @@ export default function LandingPageModule() {
           alt="SMANIKA Memilih"
           width={500}
           height={200}
-          className=""
+          className="w-[70%] sm:w-[60%] md:w-[50%] lg:w-[60%]"
         />
         <p className="font-manrope font-semibold w-[70%] text-center">
           Website Resmi Pemilihan Calon Ketua dan Wakil Ketua OSIS SMA Negeri 1
           Sumbawa Besar Periode 2024/2025
         </p>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <Button variant={'outline'}>
             <ArrowDown className="w-5" />
             <span>Lihat Calon</span>
@@ -65,21 +58,9 @@ export default function LandingPageModule() {
 
               push('/login')
             }}
-          />
-          <Button
-            onClick={() => {
-              const token = localStorage.getItem('token')
-
-              if (token) {
-                push('/vote')
-                return
-              }
-
-              push('/login')
-            }}
           >
             <Vote className="w-5" />
-            <span>Vote</span>
+            <span>{token ? 'Vote' : 'Login'}</span>
           </Button>
         </div>
       </div>

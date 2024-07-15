@@ -29,7 +29,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${manrope.variable}`}>
+      <body
+        className={`${poppins.variable} ${manrope.variable}`}
+        suppressHydrationWarning
+        suppressContentEditableWarning
+      >
         {children}
         <BottomBar />
         <Toaster />
