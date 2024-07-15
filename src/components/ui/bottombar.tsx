@@ -6,7 +6,7 @@ import React from 'react'
 export const BottomBar = () => {
   return (
     <main className="w-full bg-[#6149D4] flex flex-col gap-3 py-8 px-16 font-manrope text-white font-semibold">
-      <div className="w-full flex justify-between">
+      <div className="w-full flex justify-between ">
         <Image
           src={'/logo-smanika-osis.png'}
           alt="SMANIKA OSIS Logo"
