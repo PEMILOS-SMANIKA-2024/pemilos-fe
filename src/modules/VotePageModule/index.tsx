@@ -20,6 +20,7 @@ export default function VotePageModule() {
   const [openDialog, setOpenDialog] = useState(false)
 
   async function voteCalon(calonId: number) {
+    setOpenDialog(false)
     if (alreadyVoted) {
       toast({
         title: 'Vote',
@@ -127,7 +128,9 @@ export default function VotePageModule() {
                 <VoteConfirmationDialog
                   openDialog={openDialog}
                   setOpenDialog={setOpenDialog}
-                  onSubmit={() => voteCalon(item)}
+                  onSubmit={async () => {
+                    await voteCalon(item)
+                  }}
                 >
                   <Button className="w-full">
                     <Vote />
