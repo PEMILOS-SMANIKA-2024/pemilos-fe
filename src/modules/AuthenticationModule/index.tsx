@@ -30,7 +30,6 @@ export function AuthPageModule() {
         description: 'You are already logged in',
         variant: 'destructive',
       })
-      setLoading(false)
       return
     }
 
@@ -42,6 +41,15 @@ export function AuthPageModule() {
           password: password,
         }),
       })
+
+      if (fetchData.message === 'Incorrect password') {
+        toast({
+          title: 'Login',
+          description: 'Password salah!',
+          variant: 'destructive',
+        })
+        return
+      }
 
       if (fetchData.message === 'User not found') {
         toast({
@@ -79,8 +87,6 @@ export function AuthPageModule() {
         description: `Login success, Welcome ${fetchData.result.name}`,
         variant: 'default',
       })
-
-      setLoading(false)
 
       const url = window.location.href.replace(pathname, '')
       setTimeout(() => {
@@ -143,7 +149,14 @@ export function AuthPageModule() {
             {loading && (
               <div className="text-xs animate-bounce">... Loading</div>
             )}
-            <Button onClick={login} size={'lg'} className="text-xs font-bold">
+            <Button
+              onClick={async () => {
+                await login()
+                setLoading(false)
+              }}
+              size={'lg'}
+              className="text-xs font-bold"
+            >
               <DoorOpen className="w-4" />
               <span>Login</span>
             </Button>

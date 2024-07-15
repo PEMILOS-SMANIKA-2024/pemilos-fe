@@ -33,6 +33,10 @@ export const fetchWithoutToken = async (
 }
 
 export const checkExpired = (expirationDate: Date | null) => {
+  if (expirationDate == null) {
+    return true
+  }
+
   if (expirationDate) {
     return expirationDate < new Date()
   }
