@@ -63,9 +63,13 @@ export function AuthPageModule() {
       }
 
       // Set Loggedin Status to True
-      await fetchWithToken('/auth/isLogged', fetchData.result.token, {
-        method: 'POST',
-      })
+      await fetchWithToken(
+        `/auth/isLogged/${fetchData.result.id}`,
+        fetchData.result.token,
+        {
+          method: 'POST',
+        }
+      )
 
       // Store JWT to local storage
       localStorage.setItem('token', fetchData.result.token)
@@ -139,13 +143,7 @@ export function AuthPageModule() {
             {loading && (
               <div className="text-xs animate-bounce">... Loading</div>
             )}
-            <Button
-              onClick={() => {
-                login()
-              }}
-              size={'lg'}
-              className="text-xs font-bold"
-            >
+            <Button onClick={login} size={'lg'} className="text-xs font-bold">
               <DoorOpen className="w-4" />
               <span>Login</span>
             </Button>
