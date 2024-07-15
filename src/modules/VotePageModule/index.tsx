@@ -23,7 +23,7 @@ export default function VotePageModule() {
     if (alreadyVoted) {
       toast({
         title: 'Vote',
-        description: 'Lu dh vote gblk, jangan nyepam',
+        description: 'Tadi udah vote yak, jangan nyepam 😅   ~ Admin',
         variant: 'destructive',
       })
     } else {
