@@ -8,9 +8,9 @@ import { useRouter } from 'next/navigation'
 export default function Home() {
   const { decoded, expirationDate } = useToken()
   const { replace } = useRouter()
-  const rootUrl = window.location.href.split('/')[0]
 
-  if (checkExpired(expirationDate)) {
+  if (checkExpired(expirationDate) && typeof window !== 'undefined') {
+    const rootUrl = window.location.href.split('/')[0]
     const response = async () => {
       const response = await fetchWithoutToken(`/auth/logout/${decoded.id}`, {
         method: 'POST',
