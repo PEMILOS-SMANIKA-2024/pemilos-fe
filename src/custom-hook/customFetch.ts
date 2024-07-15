@@ -16,3 +16,25 @@ export const fetchWithToken = async (
 
   return response.json()
 }
+
+export const fetchWithoutToken = async (
+  route: string,
+  options: RequestInit
+) => {
+  const response = await fetch(`${API_URL}${route}`, {
+    ...options,
+    headers: {
+      ...options.headers,
+      'Content-Type': 'application/json',
+    },
+  })
+
+  return response.json()
+}
+
+export const checkExpired = (expirationDate: Date | null) => {
+  if (expirationDate) {
+    return expirationDate < new Date()
+  }
+  return false
+}
