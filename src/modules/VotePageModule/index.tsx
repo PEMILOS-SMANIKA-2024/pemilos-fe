@@ -9,60 +9,68 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Background } from '../LandingPageModule/components/background'
 import { VoteConfirmationDialog } from './components/vote-confirmation'
+import { useState } from 'react'
 
 export default function VotePageModule() {
   const { token, decoded } = useToken()
   const { push } = useRouter()
 
+  const [alreadyVoted, setAlreadyVoted] = useState(false)
+
+  const [openDialog, setOpenDialog] = useState(false)
+
   async function voteCalon(calonId: number) {
-    const response = await fetchWithToken(
-      `/vote/${calonId}/${decoded.id}`,
-      token,
-      {
-        method: 'POST',
-      }
-    )
-
-    if (response.message === 'User already voted') {
+    if (alreadyVoted) {
       toast({
         title: 'Vote',
-        description: 'Eits, vote sekali doang yak',
+        description: 'Lu dh vote gblk, jangan nyepam',
         variant: 'destructive',
-      })
-      return
-    }
-
-    if (response.message === 'Calon not found') {
-      toast({
-        title: 'Vote',
-        description: 'Calon tidak ditemukan!',
-        variant: 'destructive',
-      })
-      return
-    }
-
-    if (response.message === 'User not found') {
-      toast({
-        title: 'Vote',
-        description: 'User tidak ditemukan!',
-        variant: 'destructive',
-      })
-      return
-    }
-
-    if (response.result) {
-      toast({
-        title: 'Vote',
-        description: 'Berhasil vote!',
-        variant: 'default',
       })
     } else {
-      toast({
-        title: 'Vote',
-        description: 'Gagal vote!',
-        variant: 'destructive',
-      })
+      const response = await fetchWithToken(
+        `/vote/${calonId}/${decoded.id}`,
+        token,
+        {
+          method: 'POST',
+        }
+      )
+
+      if (response.message === 'User already voted') {
+        toast({
+          title: 'Vote',
+          description: 'Eits, vote sekali doang yak',
+          variant: 'destructive',
+        })
+        localStorage.setItem('alreadyVoted', 'true')
+      } else if (response.message === 'Calon not found') {
+        toast({
+          title: 'Vote',
+          description: 'Calon tidak ditemukan!',
+          variant: 'destructive',
+        })
+      } else if (response.message === 'User not found') {
+        toast({
+          title: 'Vote',
+          description: 'User tidak ditemukan!',
+          variant: 'destructive',
+        })
+      } else if (response.result) {
+        toast({
+          title: 'Vote',
+          description: 'Berhasil vote!',
+          variant: 'default',
+        })
+      } else {
+        toast({
+          title: 'Vote',
+          description: 'Gagal vote!',
+          variant: 'destructive',
+        })
+      }
     }
+
+    setAlreadyVoted(true)
+    setOpenDialog(false)
   }
 
   async function logout() {
@@ -116,7 +124,11 @@ export default function VotePageModule() {
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Doloremque, quos.
                 </p>
-                <VoteConfirmationDialog onSubmit={() => voteCalon(item)}>
+                <VoteConfirmationDialog
+                  openDialog={openDialog}
+                  setOpenDialog={setOpenDialog}
+                  onSubmit={() => voteCalon(item)}
+                >
                   <Button className="w-full">
                     <Vote />
                     <span>Vote</span>

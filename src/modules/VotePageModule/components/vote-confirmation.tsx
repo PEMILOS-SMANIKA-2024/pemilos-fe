@@ -15,14 +15,23 @@ import {
 interface VoteConfirmationDialogProps {
   children?: React.ReactNode
   onSubmit: () => void
+  openDialog: boolean
+  setOpenDialog: (open: boolean) => void
 }
 
 export const VoteConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
   children,
   onSubmit,
+  openDialog,
+  setOpenDialog,
 }) => {
   return (
-    <Dialog>
+    <Dialog
+      open={openDialog}
+      onOpenChange={(open) => {
+        setOpenDialog(open)
+      }}
+    >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
