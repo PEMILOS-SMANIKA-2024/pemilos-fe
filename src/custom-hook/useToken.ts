@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
 import { jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { fetchWithoutToken } from './customFetch'
 
 interface DecodedToken {
+  id: number
   name: string
   username: string
   role: string
@@ -12,6 +14,7 @@ interface DecodedToken {
 const useToken = () => {
   const [token, setToken] = useState<string>('')
   const [decoded, setDecoded] = useState<DecodedToken>({
+    id: 0,
     username: '',
     exp: '',
     name: '',
@@ -30,8 +33,21 @@ const useToken = () => {
       setExpirationDate(expiration)
 
       if (typeof window !== 'undefined' && expiration < new Date()) {
-        localStorage.removeItem('token')
-        refresh()
+        // localStorage.removeItem('token')
+        const response = async () => {
+          const response = await fetchWithoutToken(
+            `/auth/logout/${decoded.id}`,
+            {
+              method: 'POST',
+            }
+          )
+
+          if (response.ok) {
+            localStorage.removeItem('token')
+            refresh()
+          }
+        }
+        response()
       }
     }
   }, [refresh])
