@@ -95,13 +95,14 @@ export default function LandingPageModule() {
           animate="visible"
         >
           <motion.div variants={childVariants}>
-            <Button variant={'outline'}>
+            <Button variant={'outline'} isAnimated>
               <ArrowDown className="w-5" />
               <span>Lihat Calon</span>
             </Button>
           </motion.div>
           <motion.div variants={childVariants}>
             <Button
+              isAnimated
               className="w-full"
               onClick={() => {
                 const token = localStorage.getItem('token')

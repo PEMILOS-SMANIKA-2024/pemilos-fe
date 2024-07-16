@@ -2,6 +2,7 @@ import { useRouter } from 'next/navigation'
 import { checkExpired, fetchWithoutToken } from './customFetch'
 import useToken from './useToken'
 import { dateFormatter } from '@/lib/utils'
+import { toast } from '@/components/ui/use-toast'
 
 export function ExpirationLogout(logOutToo?: boolean) {
   const { token, decoded, expirationDate } = useToken()
@@ -11,7 +12,10 @@ export function ExpirationLogout(logOutToo?: boolean) {
 
   console.log(dateFormatter(expirationDate))
 
-  if (checkExpired(expirationDate) && typeof window !== 'undefined' && token) {
+  if (
+    (checkExpired(expirationDate) && typeof window !== 'undefined' && token) ||
+    !token
+  ) {
     console.log('masuk')
 
     const response = async () => {
@@ -22,6 +26,11 @@ export function ExpirationLogout(logOutToo?: boolean) {
       localStorage.removeItem('token')
 
       if (logOutToo) {
+        toast({
+          title: 'Session Expired',
+          description: 'Sesi anda sudah habis, silahkan login kembali',
+          variant: 'destructive',
+        })
         replace('/login')
       }
     }
