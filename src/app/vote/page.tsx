@@ -5,5 +5,6 @@ import VotePageModule from '@/modules/VotePageModule'
 
 export default function VotePage() {
   ExpirationLogout(true)
+
   return <VotePageModule />
 }

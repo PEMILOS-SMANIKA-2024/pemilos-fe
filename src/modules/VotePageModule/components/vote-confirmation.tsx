@@ -41,6 +41,7 @@ export const VoteConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
         <DialogFooter className="flex flex-col gap-2">
           <DialogClose>
             <Button
+              isAnimated
               onClick={() => {
                 onSubmit()
               }}
@@ -50,7 +51,9 @@ export const VoteConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
             </Button>
           </DialogClose>
           <DialogClose>
-            <Button variant={'destructive'}>Tidak Yakin</Button>
+            <Button isAnimated variant={'destructive'}>
+              Tidak Yakin
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

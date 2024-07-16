@@ -160,7 +160,7 @@ export default function VotePageModule() {
                     await voteCalon(item)
                   }}
                 >
-                  <Button className="w-full">
+                  <Button className="w-full" isAnimated>
                     <Vote />
                     <span>Vote</span>
                   </Button>
