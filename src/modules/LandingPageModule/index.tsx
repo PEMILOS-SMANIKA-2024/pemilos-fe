@@ -9,7 +9,6 @@ import { Background } from './components/background'
 
 export default function LandingPageModule() {
   const { push } = useRouter()
-
   const { token, decoded } = useToken()
 
   return (

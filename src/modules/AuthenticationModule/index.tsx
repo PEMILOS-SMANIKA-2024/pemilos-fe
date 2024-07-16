@@ -17,10 +17,14 @@ export function AuthPageModule() {
   const [password, setPassword] = useState('')
 
   const { token } = useToken()
-  const { push } = useRouter()
+  const { push, refresh } = useRouter()
   const pathname = usePathname()
 
   const [loading, setLoading] = useState(false)
+
+  setTimeout(() => {
+    refresh()
+  }, 500)
 
   async function login() {
     setLoading(true)
@@ -147,7 +151,9 @@ export function AuthPageModule() {
               }}
             />
             {loading && (
-              <div className="text-xs animate-bounce">... Loading</div>
+              <div className="text-xs animate-bounce text-center">
+                Loading...
+              </div>
             )}
             <Button
               onClick={async () => {

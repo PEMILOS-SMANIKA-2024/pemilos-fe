@@ -32,7 +32,7 @@ export const fetchWithoutToken = async (
   return response.json()
 }
 
-export const checkExpired = (expirationDate: Date | null) => {
+export const checkExpired = (expirationDate: Date | null | string) => {
   if (expirationDate == null) {
     return true
   }

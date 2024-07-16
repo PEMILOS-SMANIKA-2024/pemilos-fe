@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { fetchWithoutToken } from './customFetch'
 
-interface DecodedToken {
+export interface DecodedToken {
   id: number
   name: string
   username: string

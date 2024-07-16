@@ -2,29 +2,57 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
-import { fetchWithoutToken, fetchWithToken } from '@/custom-hook/customFetch'
+import {
+  checkExpired,
+  fetchWithoutToken,
+  fetchWithToken,
+} from '@/custom-hook/customFetch'
 import useToken from '@/custom-hook/useToken'
 import { DoorClosed, Vote } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { Background } from '../LandingPageModule/components/background'
 import { VoteConfirmationDialog } from './components/vote-confirmation'
-import { useState } from 'react'
 
 export default function VotePageModule() {
-  const { token, decoded } = useToken()
-  const { push } = useRouter()
+  const { token, decoded, expirationDate } = useToken()
+  const { push, replace } = useRouter()
 
   const [alreadyVoted, setAlreadyVoted] = useState(false)
 
   const [openDialog, setOpenDialog] = useState(false)
 
   async function voteCalon(calonId: number) {
-    setOpenDialog(false)
+    const tokenExpired = checkExpired(expirationDate)
+
+    if (tokenExpired) {
+      toast({
+        title: 'Sesi anda sudah expired!',
+        description: 'Mengarahkan ke halaman login ...',
+        variant: 'destructive',
+      })
+
+      const response = async () => {
+        await fetchWithoutToken(`/auth/logout/${decoded.id}`, {
+          method: 'POST',
+        })
+
+        localStorage.removeItem('token')
+      }
+      response()
+
+      setTimeout(() => {
+        replace('/login')
+      }, 500)
+
+      return
+    }
+
     if (alreadyVoted) {
       toast({
         title: 'Vote',
-        description: 'Tadi udah vote yak, jangan nyepam 😅   ~ Admin',
+        description: 'Eits, vote sekali doang yak',
         variant: 'destructive',
       })
     } else {

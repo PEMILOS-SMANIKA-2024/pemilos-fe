@@ -39,14 +39,16 @@ export const VoteConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
           <DialogDescription>Pilihan anda tidak bisa diubah!</DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex flex-col gap-2">
-          <Button
-            onClick={() => {
-              onSubmit()
-            }}
-            variant={'default'}
-          >
-            Yakin
-          </Button>
+          <DialogClose>
+            <Button
+              onClick={() => {
+                onSubmit()
+              }}
+              variant={'default'}
+            >
+              Yakin
+            </Button>
+          </DialogClose>
           <DialogClose>
             <Button variant={'destructive'}>Tidak Yakin</Button>
           </DialogClose>
