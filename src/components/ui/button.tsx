@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
-
 import { cn } from '@/lib/utils'
+import { motion } from 'framer-motion'
 
 const buttonVariants = cva(
   'border-2 border-black gap-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
@@ -10,19 +10,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-[#6149D4] text-primary-foreground hover:bg-[#46297B] hover:scale-[105%] transition ease-in-out delay-150',
-        destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+          'bg-[#6149D4] text-primary-foreground transition ease-in-out delay-150',
+        destructive: 'bg-destructive text-destructive-foreground',
         outline:
-          'bg-white text-black font-bold hover:border-[#6149D4] hover:text-[#6149D4] hover:scale-[105%] duration-300 transition ease-in-out delay-150',
-        secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+          'bg-white text-black font-bold duration-300 transition ease-in-out delay-150',
+        secondary: 'bg-secondary text-secondary-foreground',
+        ghost: '',
+        link: 'text-primary underline-offset-4',
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-9 rounded-md px-3',
+        default: 'h-12 px-8',
+        sm: 'h-9 rounded-md px-6',
         lg: 'h-11 rounded-md px-8',
         icon: 'h-10 w-10',
       },
@@ -44,11 +42,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button'
     return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
+      <motion.div
+        whileHover={{
+          scale: 1.1,
+          transition: { duration: 0.2 },
+        }}
+        whileTap={{ scale: 0.9 }}
+      >
+        <Comp
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          {...props}
+        />
+      </motion.div>
     )
   }
 )

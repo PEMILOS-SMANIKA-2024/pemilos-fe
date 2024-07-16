@@ -4,29 +4,35 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
+import { fetchWithToken } from '@/custom-hook/customFetch'
 import useToken from '@/custom-hook/useToken'
 import { DoorOpen } from 'lucide-react'
 import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Background } from '../LandingPageModule/components/background'
-import { fetchWithToken } from '@/custom-hook/customFetch'
-import { usePathname, useRouter } from 'next/navigation'
+import { motion } from 'framer-motion'
 
 export function AuthPageModule() {
   const [nisn, setNisn] = useState('')
   const [password, setPassword] = useState('')
 
   const { token } = useToken()
-  const { push, refresh } = useRouter()
+  const { push } = useRouter()
   const pathname = usePathname()
 
   const [loading, setLoading] = useState(false)
 
-  setTimeout(() => {
-    refresh()
-  }, 500)
-
   async function login() {
+    if (!nisn || !password) {
+      toast({
+        title: 'Login',
+        description: 'Username dan Password tidak boleh kosong',
+        variant: 'destructive',
+      })
+      return
+    }
+
     setLoading(true)
     if (token) {
       toast({
@@ -110,34 +116,75 @@ export function AuthPageModule() {
   return (
     <section className="font-manrope w-full h-screen relative overflow-hidden flex items-center justify-center">
       <Background />
-      <Image
-        src={'/osis-1.png'}
-        alt="SMANIKA OSIS Logo"
-        width={400}
-        height={200}
-        className="w-32 md:w-80 lg:w-96 bottom-0 absolute left-0 hover:scale-[105%] z-30 duration-300"
-      />
-      <Image
-        src={'/osis-2.png'}
-        alt="SMANIKA OSIS Logo"
-        width={400}
-        height={200}
-        className="w-32 md:w-80 lg:w-96 bottom-0 absolute right-0 hover:scale-[105%] z-30 duration-300"
-      />
-      <div className="flex flex-col gap-2 items-center z-20">
+      <motion.div
+        initial={{ x: -250, y: 250 }}
+        animate={{ x: 0, y: 0 }}
+        transition={{
+          type: 'spring',
+          stiffness: 260,
+          damping: 40,
+        }}
+        className="bottom-0 absolute left-0 "
+      >
         <Image
-          src={'/logo-smanika-osis.png'}
+          src={'/osis-1.png'}
           alt="SMANIKA OSIS Logo"
-          width={100}
+          width={400}
           height={200}
-          className=""
+          className="w-32 md:w-80 lg:w-96 hover:scale-[105%] z-30 duration-300"
         />
-        <div className="p-8 border-[1px] border-black w-[300px] rounded-xl bg-white shadow-sm">
+      </motion.div>
+      <motion.div
+        initial={{ x: 350, y: 350 }}
+        animate={{ x: 0, y: 0 }}
+        transition={{
+          type: 'spring',
+          stiffness: 260,
+          damping: 40,
+        }}
+        className="bottom-0 absolute right-0"
+      >
+        <Image
+          src={'/osis-2.png'}
+          alt="SMANIKA OSIS Logo"
+          width={400}
+          height={200}
+          className="w-32 md:w-80 lg:w-96 hover:scale-[105%] z-30 duration-300"
+        />
+      </motion.div>
+      <div className="flex flex-col gap-2 items-center z-20">
+        <motion.div
+          initial={{ scale: 0, rotate: 0 }}
+          animate={{ scale: 1, rotate: 360 }}
+          transition={{
+            type: 'spring',
+            stiffness: 260,
+            damping: 20,
+          }}
+        >
+          <Image
+            src={'/logo-smanika-osis.png'}
+            alt="SMANIKA OSIS Logo"
+            width={100}
+            height={200}
+            className=""
+          />
+        </motion.div>
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{
+            type: 'spring',
+            stiffness: 260,
+            damping: 20,
+          }}
+          className="p-8 border-[1px] border-black w-[300px] md:w-[350px] rounded-xl bg-white shadow-md"
+        >
           <div className="flex flex-col gap-7">
             <label className="font-extrabold text-2xl">Login</label>
             <Input
               placeholder="Username"
-              className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA] placeholder:text-[#ADADAD]"
+              className="font-manrope font-semibold text-sm bg-[#FAFAFA] placeholder:text-[#ADADAD]"
               onChange={(e) => {
                 setNisn(e.target.value)
               }}
@@ -145,7 +192,7 @@ export function AuthPageModule() {
             <Input
               placeholder="Password"
               type="password"
-              className="font-manrope font-semibold text-sm p-5 bg-[#FAFAFA] placeholder:text-[#ADADAD]"
+              className="font-manrope font-semibold text-sm bg-[#FAFAFA] placeholder:text-[#ADADAD] focus:outline-none "
               onChange={(e) => {
                 setPassword(e.target.value)
               }}
@@ -161,13 +208,13 @@ export function AuthPageModule() {
                 setLoading(false)
               }}
               size={'lg'}
-              className="text-xs font-bold"
+              className="w-full"
             >
               <DoorOpen className="w-4" />
               <span>Login</span>
             </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
