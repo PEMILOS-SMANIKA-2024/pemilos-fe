@@ -1,14 +1,12 @@
 'use client'
 import { Button } from '@/components/ui/button'
+import { motion } from 'framer-motion'
 import { ChevronLeft } from 'lucide-react'
 import Image from 'next/image'
 import { Background } from '../LandingPageModule/components/background'
-import { motion } from 'framer-motion'
 
 /* eslint-disable react/react-in-jsx-scope */
 export default function NotFoundModule() {
-  const randomNumber = Math.floor(Math.random() * 2) + 1
-
   return (
     <section className="h-screen relative overflow-hidden flex items-center justify-center font-manrope">
       <Background />
@@ -22,12 +20,7 @@ export default function NotFoundModule() {
             damping: 20,
           }}
         >
-          <Image
-            src={`/404-${randomNumber}.png`}
-            alt="404"
-            width={300}
-            height={300}
-          />
+          <Image src={`/404-${2}.png`} alt="404" width={300} height={300} />
         </motion.div>
         <motion.h1
           initial={{ scale: 0 }}
