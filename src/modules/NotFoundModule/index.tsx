@@ -20,7 +20,7 @@ export default function NotFoundModule() {
             damping: 20,
           }}
         >
-          <Image src={`/404-${2}.png`} alt="404" width={300} height={300} />
+          <Image src={`/404-${1}.png`} alt="404" width={300} height={300} />
         </motion.div>
         <motion.h1
           initial={{ scale: 0 }}
