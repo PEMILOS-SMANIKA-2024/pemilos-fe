@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Manrope, Poppins } from 'next/font/google'
 import React from 'react'
 import './globals.css'
+import Head from 'next/head'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -29,6 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <link
+          rel="icon"
+          href="/icon?<generated>"
+          type="image/<generated>"
+          sizes="<generated>"
+        />
+      </Head>
       <body
         className={`${poppins.variable} ${manrope.variable}`}
         suppressHydrationWarning
