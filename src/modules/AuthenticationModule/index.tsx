@@ -80,15 +80,6 @@ export function AuthPageModule() {
         return
       }
 
-      // Set Loggedin Status to True
-      await fetchWithToken(
-        `/auth/isLogged/${fetchData.result.id}`,
-        fetchData.result.token,
-        {
-          method: 'POST',
-        }
-      )
-
       // Store JWT to local storage
       localStorage.setItem('token', fetchData.result.token)
 
@@ -103,6 +94,8 @@ export function AuthPageModule() {
         push(url)
       })
     } catch (error) {
+      console.log(error)
+
       setLoading(false)
       toast({
         title: 'Login',
@@ -209,6 +202,7 @@ export function AuthPageModule() {
               }}
               size={'lg'}
               className="w-full"
+              isAnimated
             >
               <DoorOpen className="w-4" />
               <span>Login</span>

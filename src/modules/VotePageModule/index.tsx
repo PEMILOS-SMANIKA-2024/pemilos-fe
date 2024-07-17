@@ -2,11 +2,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
-import {
-  checkExpired,
-  fetchWithoutToken,
-  fetchWithToken,
-} from '@/custom-hook/customFetch'
+import { checkExpired, fetchWithToken } from '@/custom-hook/customFetch'
 import useToken from '@/custom-hook/useToken'
 import { DoorClosed, Vote } from 'lucide-react'
 import Image from 'next/image'
@@ -34,7 +30,7 @@ export default function VotePageModule() {
       })
 
       const response = async () => {
-        await fetchWithoutToken(`/auth/logout/${decoded.id}`, {
+        await fetchWithToken(`/auth/logout/${decoded.id}`, token, {
           method: 'POST',
         })
 
@@ -61,6 +57,9 @@ export default function VotePageModule() {
         token,
         {
           method: 'POST',
+          body: JSON.stringify({
+            sessionToken: token,
+          }),
         }
       )
 
@@ -103,7 +102,7 @@ export default function VotePageModule() {
   }
 
   async function logout() {
-    const response = await fetchWithoutToken(`/auth/logout/${decoded.id}`, {
+    const response = await fetchWithToken(`/auth/logout/${decoded.id}`, token, {
       method: 'POST',
     })
 

@@ -1,7 +1,7 @@
 import { jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { fetchWithoutToken } from './customFetch'
+import { fetchWithToken } from './customFetch'
 
 export interface DecodedToken {
   id: number
@@ -35,8 +35,9 @@ const useToken = () => {
       if (typeof window !== 'undefined' && expiration < new Date()) {
         // localStorage.removeItem('token')
         const response = async () => {
-          const response = await fetchWithoutToken(
+          const response = await fetchWithToken(
             `/auth/logout/${decoded.id}`,
+            token,
             {
               method: 'POST',
             }

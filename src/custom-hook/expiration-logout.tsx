@@ -1,6 +1,6 @@
 import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
-import { checkExpired, fetchWithoutToken } from './customFetch'
+import { checkExpired, fetchWithToken } from './customFetch'
 import useToken from './useToken'
 
 export function ExpirationLogout(logOutToo?: boolean) {
@@ -9,7 +9,7 @@ export function ExpirationLogout(logOutToo?: boolean) {
 
   if (checkExpired(expirationDate) && typeof window !== 'undefined' && token) {
     const response = async () => {
-      await fetchWithoutToken(`/auth/logout/${decoded.id}`, {
+      await fetchWithToken(`/auth/logout/${decoded.id}`, token, {
         method: 'POST',
       })
 
