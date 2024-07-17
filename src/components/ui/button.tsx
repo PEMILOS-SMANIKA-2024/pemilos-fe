@@ -41,18 +41,11 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      className,
-      variant,
-      size,
-      asChild = false,
-      isAnimated: isAnimted = false,
-      ...props
-    },
+    { className, variant, size, asChild = false, isAnimated = false, ...props },
     ref
   ) => {
     const Comp = asChild ? Slot : 'button'
-    if (isAnimted) {
+    if (isAnimated) {
       return (
         <motion.div
           whileHover={{
