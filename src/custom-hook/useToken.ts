@@ -9,6 +9,7 @@ export interface DecodedToken {
   username: string
   role: string
   exp: string
+  hasVoted: boolean
 }
 
 const useToken = () => {
@@ -19,6 +20,7 @@ const useToken = () => {
     exp: '',
     name: '',
     role: 'siswa',
+    hasVoted: false,
   })
   const [expirationDate, setExpirationDate] = useState<Date | null>(null)
   const { refresh } = useRouter()
