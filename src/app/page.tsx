@@ -2,7 +2,7 @@
 'use client'
 import { ExpirationLogout } from '@/custom-hook/expiration-logout'
 import LandingPageModule from '@/modules/LandingPageModule'
-import { VisiMisiSection } from '@/modules/LandingPageModule/visi-misi'
+import { VisiMisiModule } from '@/modules/LandingPageModule/visi-misi'
 
 export default function Home() {
   ExpirationLogout()
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <LandingPageModule />
-      <VisiMisiSection />
+      <VisiMisiModule />
     </>
   )
 }
