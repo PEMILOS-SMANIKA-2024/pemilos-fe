@@ -203,6 +203,14 @@ export const VisiMisiModule = () => {
               Misi dari Andrew & Aryo adalah memperjuangkan hak-hak siswa dan
               siswi SMANIKA
             </p>
+            <iframe
+              className="w-full aspect-video self-stretch md:min-h-96"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=B8OGkM156KWZ01wQ?autoplay=1&mute=1"
+              allowFullScreen
+              allow="autoplay; encrypted-media"
+              title="Product Overview Video"
+              aria-hidden="true"
+            />
           </motion.div>
         )}
       </AnimatePresence>
