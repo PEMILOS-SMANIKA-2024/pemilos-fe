@@ -6,12 +6,12 @@ import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 import { fetchWithToken } from '@/custom-hook/customFetch'
 import useToken from '@/custom-hook/useToken'
+import { motion } from 'framer-motion'
 import { DoorOpen } from 'lucide-react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Background } from '../LandingPageModule/components/background'
-import { motion } from 'framer-motion'
 
 export function AuthPageModule() {
   const [nisn, setNisn] = useState('')
@@ -20,8 +20,6 @@ export function AuthPageModule() {
   const { token } = useToken()
   const { push } = useRouter()
   const pathname = usePathname()
-
-  const [loading, setLoading] = useState(false)
 
   async function login() {
     if (!nisn || !password) {
@@ -33,11 +31,16 @@ export function AuthPageModule() {
       return
     }
 
-    setLoading(true)
+    toast({
+      title: 'Login ...',
+      description: 'Berusaha login',
+      variant: 'default',
+    })
+
     if (token) {
       toast({
         title: 'Login',
-        description: 'You are already logged in',
+        description: 'Kamu sudah Login!',
         variant: 'destructive',
       })
       return
@@ -76,7 +79,6 @@ export function AuthPageModule() {
           description: 'Silahkan hubungi admin untuk mengatasi masalah ini',
           variant: 'destructive',
         })
-        setLoading(false)
         return
       }
 
@@ -85,7 +87,7 @@ export function AuthPageModule() {
 
       toast({
         title: 'Login',
-        description: `Login success, Welcome ${fetchData.result.name}`,
+        description: `Login sukses, Halo! ${fetchData.result.name}`,
         variant: 'default',
       })
 
@@ -94,12 +96,9 @@ export function AuthPageModule() {
         push(url)
       })
     } catch (error) {
-      console.log(error)
-
-      setLoading(false)
       toast({
         title: 'Login',
-        description: 'Login Failed',
+        description: 'Login Gagal',
         variant: 'destructive',
       })
       push('')
@@ -109,42 +108,6 @@ export function AuthPageModule() {
   return (
     <section className="font-manrope w-full h-screen relative overflow-hidden flex items-center justify-center">
       <Background />
-      <motion.div
-        initial={{ x: -250, y: 250 }}
-        animate={{ x: 0, y: 0 }}
-        transition={{
-          type: 'spring',
-          stiffness: 260,
-          damping: 40,
-        }}
-        className="bottom-0 absolute left-0 "
-      >
-        <Image
-          src={'/osis-1.png'}
-          alt="SMANIKA OSIS Logo"
-          width={400}
-          height={200}
-          className="w-32 md:w-80 lg:w-96 hover:scale-[105%] z-30 duration-300"
-        />
-      </motion.div>
-      <motion.div
-        initial={{ x: 350, y: 350 }}
-        animate={{ x: 0, y: 0 }}
-        transition={{
-          type: 'spring',
-          stiffness: 260,
-          damping: 40,
-        }}
-        className="bottom-0 absolute right-0"
-      >
-        <Image
-          src={'/osis-2.png'}
-          alt="SMANIKA OSIS Logo"
-          width={400}
-          height={200}
-          className="w-32 md:w-80 lg:w-96 hover:scale-[105%] z-30 duration-300"
-        />
-      </motion.div>
       <div className="flex flex-col gap-2 items-center z-20">
         <motion.div
           initial={{ scale: 0, rotate: 0 }}
@@ -171,10 +134,10 @@ export function AuthPageModule() {
             stiffness: 260,
             damping: 20,
           }}
-          className="p-8 border-[1px] border-black w-[300px] md:w-[350px] rounded-xl bg-white shadow-md"
+          className="p-8 md:p-12 border-2 border-black/10 w-[300px] md:w-[400px] rounded-xl bg-white shadow-sm"
         >
-          <div className="flex flex-col gap-7">
-            <label className="font-extrabold text-2xl">Login</label>
+          <div className="flex flex-col gap-8">
+            <label className="font-bold text-3xl text-center">Login</label>
             <Input
               placeholder="Username"
               className="font-manrope font-semibold text-sm bg-[#FAFAFA] placeholder:text-[#ADADAD]"
@@ -190,15 +153,9 @@ export function AuthPageModule() {
                 setPassword(e.target.value)
               }}
             />
-            {loading && (
-              <div className="text-xs animate-bounce text-center">
-                Loading...
-              </div>
-            )}
             <Button
               onClick={async () => {
                 await login()
-                setLoading(false)
               }}
               size={'lg'}
               className="w-full"

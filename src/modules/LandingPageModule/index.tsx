@@ -2,11 +2,11 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Button } from '@/components/ui/button'
 import useToken from '@/custom-hook/useToken'
+import { motion } from 'framer-motion'
 import { ArrowDown, User, Vote } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Background } from './components/background'
-import { motion } from 'framer-motion'
 import { childVariants, containerVariants } from './components/stagger'
 
 export default function LandingPageModule() {

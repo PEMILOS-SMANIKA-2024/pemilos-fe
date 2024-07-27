@@ -9,7 +9,10 @@ import {
 export const FAQSection = () => {
   return (
     <section className="w-full font-manrope px-10 flex flex-col gap-10 my-10 relative">
-      <h1 className="font-extrabold text-3xl md:text-5xl">FAQ</h1>
+      <h1 className="font-extrabold text-3xl md:text-5xl text-center">
+        Masih Bingung? <br /> Yuk Baca
+        <b className="text-purple-primary"> FAQ </b> Berikut
+      </h1>
       <Accordion
         type="single"
         collapsible

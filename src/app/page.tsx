@@ -3,6 +3,7 @@
 import { ExpirationLogout } from '@/custom-hook/expiration-logout'
 import LandingPageModule from '@/modules/LandingPageModule'
 import { FAQSection } from '@/modules/LandingPageModule/faq'
+import { TataCaraModule } from '@/modules/LandingPageModule/tata-cara'
 import { VisiMisiModule } from '@/modules/LandingPageModule/visi-misi'
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
     <>
       <LandingPageModule />
       <VisiMisiModule />
+      <TataCaraModule />
       <FAQSection />
     </>
   )
