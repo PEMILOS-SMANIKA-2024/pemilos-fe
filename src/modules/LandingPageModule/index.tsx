@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Background } from './components/background'
 import { childVariants, containerVariants } from './components/stagger'
+import { Link } from 'react-scroll'
 
 export default function LandingPageModule() {
   const { push } = useRouter()
@@ -94,12 +95,21 @@ export default function LandingPageModule() {
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={childVariants}>
-            <Button variant={'outline'} isAnimated>
-              <ArrowDown className="w-5" />
-              <span>Lihat Calon</span>
-            </Button>
-          </motion.div>
+          <Link
+            activeClass="active"
+            to={'visi-misi'}
+            spy={true}
+            smooth={true}
+            offset={-30}
+            duration={500}
+          >
+            <motion.div variants={childVariants}>
+              <Button variant={'outline'} isAnimated>
+                <ArrowDown className="w-5" />
+                <span>Lihat Calon</span>
+              </Button>
+            </motion.div>
+          </Link>
           <motion.div variants={childVariants}>
             <Button
               isAnimated

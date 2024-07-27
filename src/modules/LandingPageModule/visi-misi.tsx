@@ -129,7 +129,10 @@ export const VisiMisiModule = () => {
   }, [api])
 
   return (
-    <section className="font-manrope px-10 flex flex-col gap-10 my-10 relative">
+    <section
+      id="visi-misi"
+      className="font-manrope px-10 flex flex-col gap-10 my-10 relative"
+    >
       <h1 className="font-extrabold text-3xl md:text-5xl text-center">
         Yuk, Cek <b className="text-purple-primary">Visi Misi</b>
         <br />
