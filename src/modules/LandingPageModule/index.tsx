@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { Background } from './components/background'
 import { motion } from 'framer-motion'
 import { childVariants, containerVariants } from './components/stagger'
+import { Navbar } from '@/components/ui/navbar'
 
 export default function LandingPageModule() {
   const { push } = useRouter()
@@ -20,6 +21,7 @@ export default function LandingPageModule() {
 
   return (
     <section className="w-full h-screen relative overflow-hidden flex justify-center items-center font-manrope">
+      <Navbar />
       <Background />
       {token && (
         <div className="fixed top-4 right-4 z-30">
