@@ -2,17 +2,20 @@
 /* eslint-disable react/react-in-jsx-scope */
 import useToken from '@/custom-hook/useToken'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Menu } from 'lucide-react'
+import { ChevronDown, DoorClosed, Menu } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-scroll'
 import { Button } from './button'
+import { Separator } from './separator'
+import { toast } from './use-toast'
+import { fetchWithToken } from '@/custom-hook/customFetch'
 
 export const Navbar = () => {
   const { push } = useRouter()
   const [underlineVisible, setUnderlineVisible] = useState(false)
-  const { token } = useToken()
+  const { token, decoded } = useToken()
 
   const handleTextAnimationComplete = () => {
     setUnderlineVisible(true)
@@ -34,13 +37,54 @@ export const Navbar = () => {
 
   const [open, setOpen] = useState(false)
 
+  async function logout() {
+    toast({
+      title: 'Logout',
+      description: 'Sedang logout ...',
+      variant: 'default',
+    })
+
+    const response = await fetchWithToken(`/auth/logout/${decoded.id}`, token, {
+      method: 'POST',
+    })
+
+    if (response.result) {
+      localStorage.removeItem('token')
+      toast({
+        title: 'Logout',
+        description: 'Berhasil logout',
+        variant: 'default',
+      })
+
+      setTimeout(() => {
+        push('/login')
+      })
+    } else {
+      toast({
+        title: 'Logout',
+        description: 'Gagal logout',
+        variant: 'destructive',
+      })
+      localStorage.removeItem('token')
+      setTimeout(() => {
+        push('/login')
+      })
+    }
+  }
+
   return (
     <div className="absolute w-full max-w-[1920px] px-10 md:px-20 top-10 z-30">
       <AnimatePresence>
         <div
           className={`absolute p-10 w-fit lg:hidden bg-white right-10 md:right-20 top-24 shadow-md rounded-md flex flex-col font-manrope ${open ? 'flex' : 'hidden'}`}
         >
-          <div className="gap-2 flex flex-col font-semibold">
+          <div className="gap-2 flex flex-col font-semibold text-black-secondary">
+            {token !== '' && (
+              <div className="flex flex-col text-purple-primary font-bold">
+                Hello, {decoded.username}!
+                <Separator />
+              </div>
+            )}
             {navItems.map((item, index) =>
               ['visi misi', 'tata cara', 'faq', 'home'].includes(
                 item.toLowerCase()
@@ -103,8 +147,18 @@ export const Navbar = () => {
                 </motion.a>
               )
             )}
+            <div className="text-[#FF0000] flex-col cursor-pointer">
+              <Separator />
+              <div
+                onClick={logout}
+                className="flex gap-2 hover:scale-105 duration-200"
+              >
+                <DoorClosed className="w-4 " />
+                <span>Logout</span>
+              </div>
+            </div>
           </div>
-          {token === '' ? (
+          {token === '' && (
             <Button
               onClick={() => {
                 push('/login')
@@ -114,7 +168,7 @@ export const Navbar = () => {
             >
               Login
             </Button>
-          ) : null}
+          )}
         </div>
       </AnimatePresence>
       <nav
@@ -204,7 +258,33 @@ export const Navbar = () => {
             >
               Login
             </Button>
-          ) : null}
+          ) : (
+            <div
+              onClick={() => {
+                setOpen(!open)
+              }}
+              className="hidden lg:flex gap-2 text-purple-primary font-bold cursor-pointer relative"
+            >
+              <span>Hello, {decoded.username}!</span>
+              <ChevronDown
+                style={{
+                  transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.3s ease',
+                }}
+              />
+              {open && (
+                <div className="flex gap-2 absolute h-fit right-0 top-10 bg-white px-10 py-5 rounded-xl border-2 border-black/10 text-[#FF0000]">
+                  <div
+                    onClick={logout}
+                    className="flex gap-2 hover:scale-105 duration-200"
+                  >
+                    <DoorClosed className="w-4 " />
+                    <span>Logout</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <div className="w-[24px] h-[24px] flex gap-2 flex-col cursor-pointer lg:hidden">
           <Menu

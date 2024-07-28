@@ -13,7 +13,7 @@ export default function LandingPageModule() {
   const { push } = useRouter()
   const { token } = useToken()
 
-  const text1 =
+  const landingText =
     'Website Resmi Pemilihan Calon Ketua dan Wakil Ketua OSIS SMA Negeri 1 Sumbawa Besar Periode 2024/2025'.split(
       ' '
     )
@@ -68,7 +68,7 @@ export default function LandingPageModule() {
           </motion.div>
         </motion.div>
         <div className="font-manrope font-semibold w-[70%] text-center">
-          {text1.map((el, i) => (
+          {landingText.map((el, i) => (
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
