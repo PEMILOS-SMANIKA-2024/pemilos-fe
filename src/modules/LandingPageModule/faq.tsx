@@ -8,7 +8,10 @@ import {
 /* eslint-disable react/react-in-jsx-scope */
 export const FAQSection = () => {
   return (
-    <section className="w-full font-manrope px-10 flex flex-col gap-10 my-10 relative">
+    <section
+      id="faq"
+      className="w-full font-manrope flex flex-col gap-10 my-10 relative"
+    >
       <h1 className="font-extrabold text-3xl md:text-5xl text-center">
         Masih Bingung? <br /> Yuk Baca
         <b className="text-purple-primary"> FAQ </b> Berikut

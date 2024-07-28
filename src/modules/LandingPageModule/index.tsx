@@ -6,9 +6,8 @@ import { motion } from 'framer-motion'
 import { ArrowDown, User, Vote } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Background } from './components/background'
-import { childVariants, containerVariants } from './components/stagger'
 import { Link } from 'react-scroll'
+import { childVariants, containerVariants } from './components/stagger'
 
 export default function LandingPageModule() {
   const { push } = useRouter()
@@ -20,8 +19,10 @@ export default function LandingPageModule() {
     )
 
   return (
-    <section className="w-full h-screen relative overflow-hidden flex justify-center items-center font-manrope">
-      <Background />
+    <section
+      id="home"
+      className="w-full h-screen relative overflow-hidden flex justify-center items-center font-manrope"
+    >
       {token && (
         <div className="fixed top-4 right-4 z-30">
           <Button variant={'outline'} className="px-10 py-5 bg-white">

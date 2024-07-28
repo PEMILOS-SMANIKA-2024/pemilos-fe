@@ -3,7 +3,7 @@ import Image from 'next/image'
 /* eslint-disable react/react-in-jsx-scope */
 export const TataCaraModule = () => {
   return (
-    <main className="font-manrope flex flex-col gap-6 md:gap-10 px-10">
+    <main id="tata cara" className="font-manrope flex flex-col gap-6 md:gap-10">
       <h1 className="font-extrabold text-3xl md:text-5xl text-center">
         Gimana Tuh <br /> Tata Cara
         <b className="text-purple-primary"> Pemilihannya?</b>
