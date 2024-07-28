@@ -90,7 +90,7 @@ export default function LandingPageModule() {
         >
           <Link
             activeClass="active"
-            to={'visi-misi'}
+            to={'visi misi'}
             spy={true}
             smooth={true}
             offset={-30}
