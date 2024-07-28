@@ -15,20 +15,20 @@ export default function VotePageModule() {
   const { token, decoded, expirationDate } = useToken()
   const { push, replace } = useRouter()
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!token) {
-        toast({
-          title: 'Login',
-          description: 'Silahkan login terlebih dahulu',
-          variant: 'destructive',
-        })
-        replace('/login')
-      }
-    }, 200)
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (!token) {
+  //       toast({
+  //         title: 'Login',
+  //         description: 'Silahkan login terlebih dahulu',
+  //         variant: 'destructive',
+  //       })
+  //       replace('/login')
+  //     }
+  //   }, 200)
 
-    return () => clearTimeout(timer)
-  }, [token, replace])
+  //   return () => clearTimeout(timer)
+  // }, [token, replace])
 
   const [alreadyVoted, setAlreadyVoted] = useState(false)
 
@@ -156,8 +156,9 @@ export default function VotePageModule() {
         <h1 className="font-bold font-manrope text-3xl">
           Pilih Masa Depan Smanika
         </h1>
-        <div className="flex flex-col lg:flex-row  gap-10 justify-between w-full font-manrope">
-          {token &&
+        <div className="flex flex-col lg:flex-row gap-5 justify-between w-full font-manrope">
+          {
+            // token &&
             [1, 2, 3].map((item) => {
               return (
                 <div
@@ -196,7 +197,8 @@ export default function VotePageModule() {
                   </VoteConfirmationDialog>
                 </div>
               )
-            })}
+            })
+          }
         </div>
       </div>
     </section>

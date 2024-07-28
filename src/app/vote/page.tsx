@@ -4,7 +4,7 @@ import { ExpirationLogout } from '@/custom-hook/expiration-logout'
 import VotePageModule from '@/modules/VotePageModule'
 
 export default function VotePage() {
-  ExpirationLogout(true)
+  // ExpirationLogout(true)
 
   return <VotePageModule />
 }
