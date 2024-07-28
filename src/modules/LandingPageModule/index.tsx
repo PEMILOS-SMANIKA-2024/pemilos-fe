@@ -2,17 +2,16 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { Button } from '@/components/ui/button'
 import useToken from '@/custom-hook/useToken'
-import { ArrowDown, User, Vote } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ArrowDown, Vote } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Background } from './components/background'
-import { motion } from 'framer-motion'
+import { Link } from 'react-scroll'
 import { childVariants, containerVariants } from './components/stagger'
-import { Navbar } from '@/components/ui/navbar'
 
 export default function LandingPageModule() {
   const { push } = useRouter()
-  const { token, decoded } = useToken()
+  const { token } = useToken()
 
   const text1 =
     'Website Resmi Pemilihan Calon Ketua dan Wakil Ketua OSIS SMA Negeri 1 Sumbawa Besar Periode 2024/2025'.split(
@@ -20,17 +19,10 @@ export default function LandingPageModule() {
     )
 
   return (
-    <section className="w-full h-screen relative overflow-hidden flex justify-center items-center font-manrope">
-      <Navbar />
-      <Background />
-      {token && (
-        <div className="fixed top-4 right-4 z-30">
-          <Button variant={'outline'} className="px-10 py-5 bg-white">
-            <User />
-            Hello, {decoded.name.split(' ').slice(0, 2).join(' ')}!
-          </Button>
-        </div>
-      )}
+    <section
+      id="home"
+      className="w-full h-screen relative overflow-hidden flex justify-center items-center font-manrope"
+    >
       <div className="gap-4 z-20 flex flex-col items-center">
         <motion.div
           initial={{ scale: 0 }}
@@ -96,12 +88,21 @@ export default function LandingPageModule() {
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={childVariants}>
-            <Button variant={'outline'} isAnimated>
-              <ArrowDown className="w-5" />
-              <span>Lihat Calon</span>
-            </Button>
-          </motion.div>
+          <Link
+            activeClass="active"
+            to={'visi misi'}
+            spy={true}
+            smooth={true}
+            offset={-30}
+            duration={500}
+          >
+            <motion.div variants={childVariants}>
+              <Button variant={'outline'} isAnimated>
+                <ArrowDown className="w-5" />
+                <span>Lihat Calon</span>
+              </Button>
+            </motion.div>
+          </Link>
           <motion.div variants={childVariants}>
             <Button
               isAnimated

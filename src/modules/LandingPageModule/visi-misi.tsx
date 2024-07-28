@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
@@ -60,7 +61,7 @@ export const VisiMisiModule = () => {
     return (
       <motion.div
         key={item}
-        className="bg-white border-2 z-20 border-black rounded-md p-10 flex flex-col items-center gap-5 duration-300 cursor-pointer"
+        className="bg-white border-2 z-20 border-black/10 shadow-md rounded-md p-10 md:p-12 flex flex-col items-center gap-5 duration-300 cursor-pointer"
         variants={cardVariants}
         animate="visible"
         whileHover="hover"
@@ -86,9 +87,11 @@ export const VisiMisiModule = () => {
             className="w-40 absolute bottom-0"
           />
         </motion.div>
-        <div>
-          <h1 className="font-bold text-xl">Andrew & Aryo</h1>
-          <p className="font-medium text-[#5F5F5F]">
+        <div className="flex flex-col gap-2">
+          <h1 className="font-bold text-xl text-black-primary">
+            Andrew & Aryo
+          </h1>
+          <p className="font-medium text-black-secondary text-sm">
             Calon Ketua dan Wakil Ketua OSIS Nomor Urut {item + 1}
           </p>
           <div className="mt-4 flex gap-2 duration-300">
@@ -126,94 +129,102 @@ export const VisiMisiModule = () => {
   }, [api])
 
   return (
-    <section className="font-manrope px-10 flex flex-col gap-10 my-10 relative">
-      <Image
-        src={'/leaf-1.png'}
-        alt="Leaf"
-        width={300}
-        height={300}
-        className="w-60 absolute top-0 right-0 -z-10"
-      />
-      <Image
-        src={'/leaf-2.png'}
-        alt="Leaf"
-        width={300}
-        height={300}
-        className="w-60 absolute bottom-0 left-0 -z-10"
-      />
-      <h1 className="font-extrabold text-3xl md:text-5xl">
-        Yuk, cek Visi Misi!
+    <section
+      id="visi misi"
+      className="font-manrope flex flex-col gap-10 my-10 relative"
+    >
+      <h1 className="font-extrabold text-3xl md:text-5xl text-center">
+        Yuk, Cek <b className="text-purple-primary">Visi Misi</b>
+        <br />
+        Masing-masing <b className="text-purple-primary">Calon</b>
       </h1>
-      <div className="hidden lg:flex flex-col lg:flex-row justify-around gap-5">
-        {[1, 2, 3].map((item, index) => (
-          <motion.div
-            key={item}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            transition={{ duration: 0.5, delay: item * 0.2 }}
-          >
-            <PaslonCard
-              item={index}
-              openVisiMisi={openVisiMisi}
-              setOpenVisiMisi={setOpenVisiMisi}
-            />
-          </motion.div>
-        ))}
-      </div>
-      <div className="flex flex-col gap-4 items-center w-full lg:hidden">
-        <Carousel className="w-full max-w-xs" setApi={setApi}>
-          <CarouselContent>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <CarouselItem key={index}>
-                <motion.div
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  <PaslonCard
-                    item={index}
-                    openVisiMisi={openVisiMisi}
-                    setOpenVisiMisi={setOpenVisiMisi}
-                  />
-                </motion.div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-        <div className="w-full flex justify-center">
-          {current} / {count}
+      {/* <VisiMisiCards /> */}
+      <div className="flex flex-col gap-10">
+        <div className="hidden lg:flex flex-col lg:flex-row gap-5 justify-center">
+          {[1, 2, 3].map((item, index) => (
+            <motion.div
+              key={item}
+              variants={cardVariants}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.5, delay: item * 0.2 }}
+            >
+              <PaslonCard
+                item={index}
+                openVisiMisi={openVisiMisi}
+                setOpenVisiMisi={setOpenVisiMisi}
+              />
+            </motion.div>
+          ))}
         </div>
+        <div className="flex flex-col gap-4 items-center w-full lg:hidden">
+          <Carousel className="w-full max-w-xs" setApi={setApi}>
+            <CarouselContent>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <CarouselItem key={index}>
+                  <motion.div
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    <PaslonCard
+                      item={index}
+                      openVisiMisi={openVisiMisi}
+                      setOpenVisiMisi={setOpenVisiMisi}
+                    />
+                  </motion.div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+          <div className="w-full flex justify-center">
+            {current} / {count}
+          </div>
+        </div>
+        <AnimatePresence>
+          {openVisiMisi != null && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="bg-white border-2 border-black/10 rounded-lg p-7 md:p-12 flex flex-col gap-5 duration-300 hover:shadow-lg hover:scale-[102%] delay-100 cursor-pointer"
+            >
+              <h1 className="font-extrabold text-2xl text-black-primary">
+                VISI
+              </h1>
+              <p className="font-semibold text-black-secondary">
+                "Menjadikan OSIS sebagai organisasi yang inspiratif, kreatif,
+                dan inovatif, guna menciptakan lingkungan sekolah yang harmonis,
+                berprestasi, dan berbudaya."
+              </p>
+              <h1 className="font-extrabold text-2xl text-black-primary">
+                MISI
+              </h1>
+              {[1, 2, 3].map((item) => {
+                return (
+                  <div
+                    className="w-full px-5 md:px-10 py-5 text-white bg-purple-primary rounded-md cursor-pointer hover:scale-[101%] duration-150 transition-all"
+                    key={item}
+                  >
+                    <p className="font-medium text-sm">
+                      Misi dari Andrew & Aryo adalah memperjuangkan hak-hak
+                      siswa dan siswi SMANIKA
+                    </p>
+                  </div>
+                )
+              })}
+              <iframe
+                className="w-full aspect-video self-stretch md:min-h-96"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=B8OGkM156KWZ01wQ?autoplay=1"
+                allowFullScreen
+                allow="autoplay; encrypted-media"
+                title="Product Overview Video"
+                aria-hidden="true"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-      <AnimatePresence>
-        {openVisiMisi != null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="bg-white border-2 border-black rounded-md p-10 flex flex-col gap-5 duration-300 hover:shadow-lg hover:scale-[102%] delay-100 cursor-pointer"
-          >
-            <h1>Paslon {current}</h1>
-            <h1 className="font-bold text-xl">Visi</h1>
-            <p className="font-medium text-[#5F5F5F]">
-              Visi dari Andrew & Aryo adalah mewujudkan SMANIKA yang lebih baik
-            </p>
-            <h1 className="font-bold text-xl">Misi</h1>
-            <p className="font-medium text-[#5F5F5F]">
-              Misi dari Andrew & Aryo adalah memperjuangkan hak-hak siswa dan
-              siswi SMANIKA
-            </p>
-            <iframe
-              className="w-full aspect-video self-stretch md:min-h-96"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=B8OGkM156KWZ01wQ?autoplay=1"
-              allowFullScreen
-              allow="autoplay; encrypted-media"
-              title="Product Overview Video"
-              aria-hidden="true"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   )
 }

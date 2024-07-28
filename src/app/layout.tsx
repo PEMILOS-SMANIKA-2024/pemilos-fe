@@ -1,9 +1,10 @@
-import { BottomBar } from '@/components/ui/bottombar'
+import { BottomBar } from '@/components/ui/footer'
 import { Toaster } from '@/components/ui/toaster'
 import type { Metadata } from 'next'
 import { Manrope, Poppins } from 'next/font/google'
 import React from 'react'
 import './globals.css'
+import Image from 'next/image'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -49,6 +50,14 @@ export default function RootLayout({
         suppressHydrationWarning
         suppressContentEditableWarning
       >
+        <Image
+          src={'/pattern.png'}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+          alt="Pattern"
+          className="fixed z-[-1] opacity-[3%] max-w-[1920px]"
+        />
         {children}
         <BottomBar />
         <Toaster />

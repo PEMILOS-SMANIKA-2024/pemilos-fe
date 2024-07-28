@@ -29,7 +29,21 @@ const useToken = () => {
     const storedToken = localStorage.getItem('token')
     if (storedToken) {
       setToken(storedToken ?? '')
-      const decodedToken: DecodedToken = jwtDecode(storedToken)
+      let decodedToken: DecodedToken = {
+        id: 0,
+        username: '',
+        exp: '',
+        name: '',
+        role: 'siswa',
+        hasVoted: false,
+      }
+      try {
+        decodedToken = jwtDecode(storedToken)
+      } catch (error) {
+        localStorage.removeItem('token')
+        setToken('')
+        refresh()
+      }
       setDecoded(decodedToken)
       const expiration = new Date(parseInt(decodedToken.exp) * 1000)
       setExpirationDate(expiration)

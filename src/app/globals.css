@@ -74,3 +74,12 @@
       @apply bg-background text-foreground;
     }
   }
+html {
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  max-width: 1920px;
+  position: relative;
+}
