@@ -90,11 +90,11 @@ export default function LandingPageModule() {
         >
           <Link
             activeClass="active"
-            to={'visi misi'}
+            to={'visi-misi'}
             spy={true}
             smooth={true}
             offset={-30}
-            duration={500}
+            duration={1000}
           >
             <motion.div variants={childVariants}>
               <Button variant={'outline'} isAnimated>

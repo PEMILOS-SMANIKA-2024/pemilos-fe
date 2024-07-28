@@ -145,7 +145,7 @@ export const Navbar = () => {
                 } else {
                   scroller.scrollTo('visi-misi', {
                     smooth: true,
-                    offset: -150,
+                    offset: -50,
                   })
                 }
               }}
@@ -323,7 +323,7 @@ export const Navbar = () => {
                 } else {
                   scroller.scrollTo('visi-misi', {
                     smooth: true,
-                    offset: -150,
+                    offset: -50,
                   })
                 }
               }}
