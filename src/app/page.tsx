@@ -7,21 +7,12 @@ import { Background } from '@/modules/LandingPageModule/components/background'
 import { FAQSection } from '@/modules/LandingPageModule/faq'
 import { TataCaraModule } from '@/modules/LandingPageModule/tata-cara'
 import { VisiMisiModule } from '@/modules/LandingPageModule/visi-misi'
-import Image from 'next/image'
 
 export default function Home() {
   ExpirationLogout()
 
   return (
-    <>
-      <Image
-        src={'/pattern.png'}
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
-        alt="Pattern"
-        className="fixed z-0 opacity-[3%]"
-      />
+    <div className="max-w-[1920px]">
       <Background />
 
       <Navbar />
@@ -31,6 +22,6 @@ export default function Home() {
         <TataCaraModule />
         <FAQSection />
       </main>
-    </>
+    </div>
   )
 }

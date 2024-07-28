@@ -8,7 +8,7 @@ export const TataCaraModule = () => {
         Gimana Tuh <br /> Tata Cara
         <b className="text-purple-primary"> Pemilihannya?</b>
       </h1>
-      <div className="flex gap-10 w-full justify-center flex-wrap">
+      <div className="flex gap-5 w-full justify-center flex-wrap">
         {[1, 2, 3, 4, 5, 6].map((item) => {
           return (
             <div

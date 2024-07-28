@@ -56,7 +56,7 @@ export default function RootLayout({
           objectFit="cover"
           objectPosition="center"
           alt="Pattern"
-          className="fixed z-[-1] opacity-[3%]"
+          className="fixed z-[-1] opacity-[3%] max-w-[1920px]"
         />
         {children}
         <BottomBar />

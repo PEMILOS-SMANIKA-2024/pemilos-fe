@@ -3,7 +3,7 @@ import Image from 'next/image'
 /* eslint-disable react/react-in-jsx-scope */
 export const Background = () => {
   return (
-    <div className="w-full h-full absolute z-0">
+    <div className="w-full h-screen absolute z-0 max-w-[1920px]">
       <motion.div
         initial={{ x: -200, y: 200 }}
         animate={{ x: 0, y: 0 }}

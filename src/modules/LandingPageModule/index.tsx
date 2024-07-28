@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import useToken from '@/custom-hook/useToken'
 import { motion } from 'framer-motion'
-import { ArrowDown, User, Vote } from 'lucide-react'
+import { ArrowDown, Vote } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Link } from 'react-scroll'
@@ -11,7 +11,7 @@ import { childVariants, containerVariants } from './components/stagger'
 
 export default function LandingPageModule() {
   const { push } = useRouter()
-  const { token, decoded } = useToken()
+  const { token } = useToken()
 
   const text1 =
     'Website Resmi Pemilihan Calon Ketua dan Wakil Ketua OSIS SMA Negeri 1 Sumbawa Besar Periode 2024/2025'.split(
@@ -23,14 +23,6 @@ export default function LandingPageModule() {
       id="home"
       className="w-full h-screen relative overflow-hidden flex justify-center items-center font-manrope"
     >
-      {token && (
-        <div className="fixed top-4 right-4 z-30">
-          <Button variant={'outline'} className="px-10 py-5 bg-white">
-            <User />
-            Hello, {decoded.name.split(' ').slice(0, 2).join(' ')}!
-          </Button>
-        </div>
-      )}
       <div className="gap-4 z-20 flex flex-col items-center">
         <motion.div
           initial={{ scale: 0 }}

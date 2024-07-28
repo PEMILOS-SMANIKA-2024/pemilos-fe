@@ -140,7 +140,7 @@ export const VisiMisiModule = () => {
       </h1>
       {/* <VisiMisiCards /> */}
       <div className="flex flex-col gap-10">
-        <div className="hidden lg:flex flex-col lg:flex-row justify-around gap-5">
+        <div className="hidden lg:flex flex-col lg:flex-row gap-5 justify-center">
           {[1, 2, 3].map((item, index) => (
             <motion.div
               key={item}
