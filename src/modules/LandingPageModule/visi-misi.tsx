@@ -2,6 +2,7 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable react/react-in-jsx-scope */
 import {
   Carousel,
   CarouselApi,
@@ -12,8 +13,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-
-/* eslint-disable react/react-in-jsx-scope */
+import { Element } from 'react-scroll'
 
 interface PaslonCardProps {
   item: paslonProps
@@ -180,97 +180,96 @@ export const VisiMisiModule = () => {
   }, [api])
 
   return (
-    <section
-      id="visi misi"
-      className="font-manrope flex flex-col gap-10 my-10 relative"
-    >
-      <h1 className="font-extrabold text-3xl md:text-5xl text-center">
-        Yuk, Cek <b className="text-purple-primary">Visi Misi</b>
-        <br />
-        Masing-masing <b className="text-purple-primary">Calon</b>
-      </h1>
-      {/* <VisiMisiCards /> */}
-      <div className="flex flex-col gap-10">
-        <div className="hidden lg:flex flex-col lg:flex-row gap-5 justify-center">
-          {paslonData.map((item, index) => (
-            <motion.div
-              key={index}
-              variants={cardVariants}
-              initial="hidden"
-              animate="visible"
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-            >
-              <PaslonCard
-                item={item}
-                openVisiMisi={openVisiMisi}
-                setOpenVisiMisi={setOpenVisiMisi}
-              />
-            </motion.div>
-          ))}
-        </div>
-        <div className="flex flex-col gap-4 items-center w-full lg:hidden">
-          <Carousel className="w-full max-w-xs" setApi={setApi}>
-            <CarouselContent>
-              {paslonData.map((item, index) => (
-                <CarouselItem key={index}>
-                  <motion.div
-                    variants={cardVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    <PaslonCard
-                      item={item}
-                      openVisiMisi={openVisiMisi}
-                      setOpenVisiMisi={setOpenVisiMisi}
-                    />
-                  </motion.div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-          <div className="w-full flex justify-center">
-            {current} / {count}
+    <Element name="visi-misi">
+      <section className="font-manrope flex flex-col gap-10 my-10 relative">
+        <h1 className="font-extrabold text-3xl md:text-5xl text-center">
+          Yuk, Cek <b className="text-purple-primary">Visi Misi</b>
+          <br />
+          Masing-masing <b className="text-purple-primary">Calon</b>
+        </h1>
+        {/* <VisiMisiCards /> */}
+        <div className="flex flex-col gap-10">
+          <div className="hidden lg:flex flex-col lg:flex-row gap-5 justify-center">
+            {paslonData.map((item, index) => (
+              <motion.div
+                key={index}
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+              >
+                <PaslonCard
+                  item={item}
+                  openVisiMisi={openVisiMisi}
+                  setOpenVisiMisi={setOpenVisiMisi}
+                />
+              </motion.div>
+            ))}
           </div>
+          <div className="flex flex-col gap-4 items-center w-full lg:hidden">
+            <Carousel className="w-full max-w-xs" setApi={setApi}>
+              <CarouselContent>
+                {paslonData.map((item, index) => (
+                  <CarouselItem key={index}>
+                    <motion.div
+                      variants={cardVariants}
+                      initial="hidden"
+                      animate="visible"
+                    >
+                      <PaslonCard
+                        item={item}
+                        openVisiMisi={openVisiMisi}
+                        setOpenVisiMisi={setOpenVisiMisi}
+                      />
+                    </motion.div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+            <div className="w-full flex justify-center">
+              {current} / {count}
+            </div>
+          </div>
+          <AnimatePresence>
+            {openVisiMisi != null && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="bg-white border-2 border-black/10 rounded-xl p-7 md:p-12 flex flex-col gap-5 duration-300 hover:shadow-lg hover:scale-[102%] delay-100 cursor-pointer"
+              >
+                <h1 className="font-extrabold text-2xl text-black-primary">
+                  VISI
+                </h1>
+                <p className="font-semibold text-black-secondary">
+                  {paslonData[openVisiMisi - 1].visi}
+                </p>
+                <h1 className="font-extrabold text-2xl text-black-primary">
+                  MISI
+                </h1>
+                {paslonData[openVisiMisi - 1].misi.map((item, index) => {
+                  return (
+                    <div
+                      className="w-full px-5 md:px-10 py-5 text-white bg-purple-primary rounded-md cursor-pointer hover:scale-[101%] duration-150 transition-all"
+                      key={index}
+                    >
+                      <p className="font-medium text-sm">{item}</p>
+                    </div>
+                  )
+                })}
+                <iframe
+                  className="w-full aspect-video self-stretch md:min-h-96 rounded-md"
+                  src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=B8OGkM156KWZ01wQ?autoplay=1"
+                  allowFullScreen
+                  allow="autoplay; encrypted-media"
+                  title="Product Overview Video"
+                  aria-hidden="true"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-        <AnimatePresence>
-          {openVisiMisi != null && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="bg-white border-2 border-black/10 rounded-xl p-7 md:p-12 flex flex-col gap-5 duration-300 hover:shadow-lg hover:scale-[102%] delay-100 cursor-pointer"
-            >
-              <h1 className="font-extrabold text-2xl text-black-primary">
-                VISI
-              </h1>
-              <p className="font-semibold text-black-secondary">
-                {paslonData[openVisiMisi - 1].visi}
-              </p>
-              <h1 className="font-extrabold text-2xl text-black-primary">
-                MISI
-              </h1>
-              {paslonData[openVisiMisi - 1].misi.map((item, index) => {
-                return (
-                  <div
-                    className="w-full px-5 md:px-10 py-5 text-white bg-purple-primary rounded-md cursor-pointer hover:scale-[101%] duration-150 transition-all"
-                    key={index}
-                  >
-                    <p className="font-medium text-sm">{item}</p>
-                  </div>
-                )
-              })}
-              <iframe
-                className="w-full aspect-video self-stretch md:min-h-96 rounded-md"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=B8OGkM156KWZ01wQ?autoplay=1"
-                allowFullScreen
-                allow="autoplay; encrypted-media"
-                title="Product Overview Video"
-                aria-hidden="true"
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </section>
+      </section>
+    </Element>
   )
 }

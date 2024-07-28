@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
 
 const buttonVariants = cva(
-  'rounded-[12px] gap-2 inline-flex items-center justify-center whitespace-nowrap rounded-[12px] text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'rounded-[12px]  gap-2 inline-flex items-center justify-center whitespace-nowrap rounded-[12px] text-sm font-bold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -13,7 +13,7 @@ const buttonVariants = cva(
           'bg-[#4141EA] text-primary-foreground transition ease-in-out delay-150',
         destructive: 'bg-destructive text-destructive-foreground',
         outline:
-          'border-2 border-black bg-[#F0F8FF] text-[#2E3881] font-bold duration-300 transition ease-in-out delay-150',
+          'border-2 border-[#2E3881] bg-[#F0F8FF] text-[#2E3881] font-bold duration-300 transition ease-in-out delay-150',
         secondary: 'bg-secondary text-secondary-foreground',
         ghost: '',
         link: 'text-primary underline-offset-4',

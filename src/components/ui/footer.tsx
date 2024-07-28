@@ -1,11 +1,21 @@
 /* eslint-disable react/react-in-jsx-scope */
 'use client'
+import { motion, useInView } from 'framer-motion'
 import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react'
 import Image from 'next/image'
+import { useRef } from 'react'
 
 export const BottomBar = () => {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: false })
+
   return (
-    <section className="bg-red-500 flex flex-col relative mt-20">
+    <motion.section
+      ref={ref}
+      initial={{ y: 100 }}
+      animate={{ y: inView ? 0 : 100 }}
+      className="bg-red-500 flex flex-col relative mt-20"
+    >
       <Image
         src="/blob-bottom.png"
         alt="blob"
@@ -52,6 +62,6 @@ export const BottomBar = () => {
           </h4>
         </div>
       </main>
-    </section>
+    </motion.section>
   )
 }

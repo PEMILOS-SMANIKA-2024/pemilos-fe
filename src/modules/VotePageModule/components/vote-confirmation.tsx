@@ -17,6 +17,7 @@ interface VoteConfirmationDialogProps {
   onSubmit: () => void
   openDialog: boolean
   setOpenDialog: (open: boolean) => void
+  disable?: boolean
 }
 
 export const VoteConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
@@ -24,35 +25,35 @@ export const VoteConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
   onSubmit,
   openDialog,
   setOpenDialog,
+  disable = false,
 }) => {
   return (
     <Dialog
-      open={openDialog}
+      open={openDialog && !disable}
       onOpenChange={(open) => {
         setOpenDialog(open)
       }}
     >
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="">
+      <DialogContent className="min-w-[300px] p-10">
         <DialogHeader>
           <DialogTitle>Yakin untuk memilih paslon ini?</DialogTitle>
           <DialogDescription>Pilihan anda tidak bisa diubah!</DialogDescription>
         </DialogHeader>
-        <DialogFooter className="flex flex-col gap-2">
+        <DialogFooter className="flex flex-col-reverse gap-2">
           <DialogClose>
-            <Button
-              isAnimated
-              onClick={() => {
-                onSubmit()
-              }}
-              variant={'default'}
-            >
-              Yakin
+            <Button isAnimated variant={'outline'} className="w-full">
+              Tidak Yakin
             </Button>
           </DialogClose>
           <DialogClose>
-            <Button isAnimated variant={'destructive'}>
-              Tidak Yakin
+            <Button
+              isAnimated
+              onClick={onSubmit}
+              variant={'default'}
+              className="w-full"
+            >
+              Yakin
             </Button>
           </DialogClose>
         </DialogFooter>

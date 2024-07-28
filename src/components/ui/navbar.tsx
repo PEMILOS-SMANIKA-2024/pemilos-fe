@@ -1,39 +1,61 @@
 'use client'
 /* eslint-disable react/react-in-jsx-scope */
+import { fetchWithToken } from '@/custom-hook/customFetch'
 import useToken from '@/custom-hook/useToken'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown, DoorClosed, Menu } from 'lucide-react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-scroll'
+import { usePathname, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { scroller } from 'react-scroll'
 import { Button } from './button'
 import { Separator } from './separator'
 import { toast } from './use-toast'
-import { fetchWithToken } from '@/custom-hook/customFetch'
 
-export const Navbar = () => {
-  const { push } = useRouter()
+export const NavbarItem = ({
+  name,
+  onClick,
+  index,
+}: {
+  name: string
+  onClick: () => void
+  index: number
+}) => {
   const [underlineVisible, setUnderlineVisible] = useState(false)
-  const { token, decoded } = useToken()
 
   const handleTextAnimationComplete = () => {
     setUnderlineVisible(true)
   }
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+      className="group transition duration-300 cursor-pointer list-none"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.9 }}
+      onAnimationComplete={handleTextAnimationComplete}
+      onClick={onClick}
+    >
+      {name}
+      {underlineVisible && (
+        <motion.span
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          exit={{ scaleX: 0 }}
+          transition={{ duration: 0.5 }}
+          className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-secondary"
+        />
+      )}
+    </motion.li>
+  )
+}
 
-  const [navItems, setNavItems] = useState([
-    'Home',
-    'Vote',
-    'Visi Misi',
-    'Tata Cara',
-    'FAQ',
-  ])
-
-  useEffect(() => {
-    if (token === '') {
-      setNavItems(['Home', 'Visi Misi', 'Tata Cara', 'FAQ'])
-    }
-  }, [])
+export const Navbar = () => {
+  const { push } = useRouter()
+  const { token, decoded } = useToken()
+  const pathname = usePathname()
 
   const [open, setOpen] = useState(false)
 
@@ -85,10 +107,83 @@ export const Navbar = () => {
                 <Separator />
               </div>
             )}
-            {navItems.map((item, index) =>
-              ['visi misi', 'tata cara', 'faq', 'home'].includes(
+            <NavbarItem
+              name="Home"
+              onClick={() => {
+                if (pathname === '/') {
+                  scroller.scrollTo('home', {
+                    smooth: true,
+                    offset: -150,
+                  })
+                } else {
+                  push('/')
+                }
+              }}
+              index={0}
+            />
+            {token !== '' && (
+              <NavbarItem
+                name="Vote"
+                onClick={() => {
+                  if (pathname === '/vote') {
+                    scroller.scrollTo('vote', {
+                      smooth: true,
+                      offset: -150,
+                    })
+                  } else {
+                    push('/vote')
+                  }
+                }}
+                index={1}
+              />
+            )}
+            <NavbarItem
+              name="Visi Misi"
+              onClick={() => {
+                if (pathname === '/vote') {
+                  push('/')
+                } else {
+                  scroller.scrollTo('visi-misi', {
+                    smooth: true,
+                    offset: -150,
+                  })
+                }
+              }}
+              index={2}
+            />
+            <NavbarItem
+              name="Tata Cara"
+              onClick={() => {
+                if (pathname === '/vote') {
+                  push('/')
+                } else {
+                  scroller.scrollTo('tata-cara', {
+                    smooth: true,
+                    offset: -150,
+                  })
+                }
+              }}
+              index={3}
+            />
+            <NavbarItem
+              name="FAQ"
+              onClick={() => {
+                if (pathname === '/vote') {
+                  push('/')
+                } else {
+                  scroller.scrollTo('faq', {
+                    smooth: true,
+                    offset: -150,
+                  })
+                }
+              }}
+              index={4}
+            />
+
+            {/* {navItems.map((item, index) =>
+              (['visi misi', 'tata cara', 'faq', 'home'].includes(
                 item.toLowerCase()
-              ) ? (
+              ) && pathname !== '/vote') ? (
                 <Link
                   key={index}
                   activeClass="active"
@@ -146,7 +241,7 @@ export const Navbar = () => {
                   )}
                 </motion.a>
               )
-            )}
+            )} */}
             <div className="text-[#FF0000] flex-col cursor-pointer">
               <Separator />
               <div
@@ -171,7 +266,14 @@ export const Navbar = () => {
           )}
         </div>
       </AnimatePresence>
-      <nav
+      <motion.nav
+        exit={{ opacity: 0, y: -20 }}
+        transition={{
+          type: 'spring',
+          stiffness: 260,
+          damping: 40,
+          duration: 0.5,
+        }}
         className={`bg-white px-10 w-full h-20 border shadow-md rounded-xl flex items-center z-30 justify-between font-manrope `}
       >
         <div className="font-semibold flex gap-10 items-center">
@@ -182,69 +284,79 @@ export const Navbar = () => {
             height={200}
             className="w-20 h-14"
           />
-          <div className={`gap-10 hidden lg:flex`}>
-            {navItems.map((item, index) =>
-              ['visi misi', 'tata cara', 'faq', 'home'].includes(
-                item.toLowerCase()
-              ) ? (
-                <Link
-                  key={index}
-                  activeClass="active"
-                  to={item.toLowerCase()}
-                  spy={true}
-                  smooth={true}
-                  offset={-150}
-                  duration={500}
-                >
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5, delay: index * 0.2 }}
-                    className="group transition duration-300 cursor-pointer list-none"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.9 }}
-                    onAnimationComplete={handleTextAnimationComplete}
-                  >
-                    {item}
-                    {underlineVisible && (
-                      <motion.span
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        exit={{ scaleX: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-secondary"
-                      />
-                    )}
-                  </motion.li>
-                </Link>
-              ) : (
-                <motion.a
-                  href={`/${item.toLowerCase() !== 'home' ? item.toLowerCase() : ''}`}
-                  key={index}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className="group transition duration-300 cursor-pointer list-none"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  onAnimationComplete={handleTextAnimationComplete}
-                >
-                  {item}
-                  {underlineVisible && (
-                    <motion.span
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      exit={{ scaleX: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-secondary"
-                    />
-                  )}
-                </motion.a>
-              )
+          <div className="gap-10 hidden lg:flex">
+            <NavbarItem
+              name="Home"
+              onClick={() => {
+                if (pathname === '/') {
+                  scroller.scrollTo('home', {
+                    smooth: true,
+                    offset: -150,
+                  })
+                } else {
+                  push('/')
+                }
+              }}
+              index={0}
+            />
+            {token !== '' && (
+              <NavbarItem
+                name="Vote"
+                onClick={() => {
+                  if (pathname === '/vote') {
+                    scroller.scrollTo('vote', {
+                      smooth: true,
+                      offset: -150,
+                    })
+                  } else {
+                    push('/vote')
+                  }
+                }}
+                index={1}
+              />
             )}
+            <NavbarItem
+              name="Visi Misi"
+              onClick={() => {
+                if (pathname === '/vote') {
+                  push('/')
+                } else {
+                  scroller.scrollTo('visi-misi', {
+                    smooth: true,
+                    offset: -150,
+                  })
+                }
+              }}
+              index={2}
+            />
+            <NavbarItem
+              name="Tata Cara"
+              onClick={() => {
+                if (pathname === '/vote') {
+                  push('/')
+                } else {
+                  scroller.scrollTo('tata-cara', {
+                    smooth: true,
+                    offset: -150,
+                  })
+                }
+              }}
+              index={3}
+            />
+            <NavbarItem
+              name="FAQ"
+              onClick={() => {
+                if (pathname === '/vote') {
+                  push('/')
+                } else {
+                  scroller.scrollTo('faq', {
+                    smooth: true,
+                    offset: -150,
+                  })
+                }
+              }}
+              index={4}
+            />
           </div>
         </div>
         <div>
@@ -293,7 +405,7 @@ export const Navbar = () => {
             }}
           />
         </div>
-      </nav>
+      </motion.nav>
     </div>
   )
 }
