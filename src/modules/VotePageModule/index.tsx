@@ -138,6 +138,16 @@ export default function VotePageModule() {
       setTimeout(() => {
         push('/login')
       })
+    } else {
+      toast({
+        title: 'Logout',
+        description: 'Gagal logout',
+        variant: 'destructive',
+      })
+      localStorage.removeItem('token')
+      setTimeout(() => {
+        push('/login')
+      })
     }
   }
 

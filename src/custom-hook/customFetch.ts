@@ -5,16 +5,22 @@ export const fetchWithToken = async (
   token: string | undefined,
   options: RequestInit
 ) => {
-  const response = await fetch(`${API_URL}${route}`, {
-    ...options,
-    headers: {
-      ...options.headers,
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  })
-
-  return response.json()
+  try {
+    const response = await fetch(`${API_URL}${route}`, {
+      ...options,
+      headers: {
+        ...options.headers,
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.json()
+  } catch (error) {
+    return {
+      error: true,
+      message: error,
+    }
+  }
 }
 
 export const fetchWithoutToken = async (

@@ -7,6 +7,7 @@ import { Background } from '@/modules/LandingPageModule/components/background'
 import { FAQSection } from '@/modules/LandingPageModule/faq'
 import { TataCaraModule } from '@/modules/LandingPageModule/tata-cara'
 import { VisiMisiModule } from '@/modules/LandingPageModule/visi-misi'
+import { VoteResultModule } from '@/modules/LandingPageModule/vote-result'
 
 export default function Home() {
   ExpirationLogout()
@@ -14,10 +15,10 @@ export default function Home() {
   return (
     <div className="max-w-[1920px]">
       <Background />
-
       <Navbar />
-      <main className="px-10 md:px-20 lg:px-40 flex flex-col gap-10 overflow-hidden min-h-screen">
+      <main className="px-10 lg:px-40 flex flex-col gap-10 overflow-hidden min-h-screen">
         <LandingPageModule />
+        <VoteResultModule />
         <VisiMisiModule />
         <TataCaraModule />
         <FAQSection />
