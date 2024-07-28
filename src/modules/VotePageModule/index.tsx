@@ -10,25 +10,26 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Background } from '../LandingPageModule/components/background'
 import { VoteConfirmationDialog } from './components/vote-confirmation'
+import { Navbar } from '@/components/ui/navbar'
 
 export default function VotePageModule() {
   const { token, decoded, expirationDate } = useToken()
   const { push, replace } = useRouter()
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!token) {
-        toast({
-          title: 'Login',
-          description: 'Silahkan login terlebih dahulu',
-          variant: 'destructive',
-        })
-        replace('/login')
-      }
-    }, 200)
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (!token) {
+  //       toast({
+  //         title: 'Login',
+  //         description: 'Silahkan login terlebih dahulu',
+  //         variant: 'destructive',
+  //       })
+  //       replace('/login')
+  //     }
+  //   }, 200)
 
-    return () => clearTimeout(timer)
-  }, [token, replace])
+  //   return () => clearTimeout(timer)
+  // }, [token, replace])
 
   const [alreadyVoted, setAlreadyVoted] = useState(false)
 
@@ -143,40 +144,42 @@ export default function VotePageModule() {
 
   return (
     <section className="w-full min-h-screen overflow-hidden flex flex-col relative font-manrope">
-      <Background />
+      <Navbar />
       <div className="w-full p-10 md:p-20 z-20 flex flex-col gap-2">
-        <Button
+        {/* <Button
           variant={'outline'}
           className="w-[180px] hover:scale-105"
           onClick={logout}
         >
           <DoorClosed />
           <span>Logout</span>
-        </Button>
-        <h1 className="font-bold font-manrope text-3xl">
-          Pilih Masa Depan Smanika
+        </Button> */}
+        <h1 className="font-extrabold font-manrope text-black-primary text-3xl md:text-6xl mt-32 text-center leading-normal">
+          Pilih sesuai <br /> <b className='text-purple-primary'>Hati Nuranimu</b>, Yak!
         </h1>
-        <div className="flex flex-col lg:flex-row  gap-10 justify-between w-full font-manrope">
-          {token &&
+        <h3 className='text-black-secondary text-xl md:text-3xl font-bold text-center my-10'>Klik kandidat yang ingin dipilih</h3>
+        <div className="flex flex-col lg:flex-row gap-5 justify-between w-full font-manrope">
+          {
+            // token &&
             [1, 2, 3].map((item) => {
               return (
                 <div
                   key={item}
-                  className="bg-white w-full lg:w-96 rounded-lg shadow-lg p-10 flex flex-col gap-4 border-2 border-black"
+                  className="bg-white w-96 h-[504px] md:h-[764px] rounded-lg shadow-lg p-10 flex flex-col gap-4 border-2 hover:scale-[1.02] md:hover:-translate-y-5 duration-300 cursor-pointer"
                 >
-                  <div className="w-full flex justify-center">
+                  <div className="w-full flex justify-center relative">
                     <Image
                       src={'/osis-1.png'}
                       alt="SMANIKA OSIS Logo"
                       width={250}
-                      height={200}
-                      className="hover:scale-[105%] duration-300"
+                      height={525}
+                      className='md:h-[525px] object-none'
                     />
+                    <div className='absolute w-14 h-14 rounded-full bg-purple-primary text-white font-bold flex items-center justify-center text-2xl left-2 top-2'>{item}</div>
                   </div>
-                  <h1 className="text-2xl font-bold">Kandidat {item}</h1>
-                  <p className="text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Doloremque, quos.
+                  <h1 className="text-3xl font-bold text-center text-black-primary">Andrew & Aryo</h1>
+                  <p className="text-md text-center text-black-secondary">
+                    Calon Ketua dan Wakil Ketua OSIS SMANIKA Nomor Urut {item}
                   </p>
                   <VoteConfirmationDialog
                     openDialog={openDialog}
@@ -185,18 +188,19 @@ export default function VotePageModule() {
                       await voteCalon(item)
                     }}
                   >
-                    <Button
+                    {/* <Button
                       disabled={decoded.hasVoted}
                       className="w-full"
                       isAnimated
                     >
                       <Vote />
                       <span>Vote</span>
-                    </Button>
+                    </Button> */}
                   </VoteConfirmationDialog>
                 </div>
               )
-            })}
+            })
+          }
         </div>
       </div>
     </section>
