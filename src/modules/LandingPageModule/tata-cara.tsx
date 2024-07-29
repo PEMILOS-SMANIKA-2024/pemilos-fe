@@ -1,22 +1,28 @@
 'use client'
 import Image from 'next/image'
 import { Element } from 'react-scroll'
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import { childVariants, containerVariants } from './components/stagger'
+import { AnimatedTitle } from '@/components/ui/animated-title'
+import { useRef } from 'react'
 
 /* eslint-disable react/react-in-jsx-scope */
 export const TataCaraModule = () => {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: false })
+
   return (
     <Element name="tata-cara">
       <main
         id="tata cara"
         className="font-manrope flex flex-col gap-6 md:gap-10"
       >
-        <h1 className="font-extrabold text-3xl md:text-5xl text-center">
+        <AnimatedTitle>
           Gimana Tuh <br /> Tata Cara
           <b className="text-purple-primary"> Pemilihannya?</b>
-        </h1>
+        </AnimatedTitle>
         <motion.div
+          ref={ref}
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -25,12 +31,13 @@ export const TataCaraModule = () => {
           {[1, 2, 3, 4, 5, 6].map((item) => {
             return (
               <motion.div
-                variants={childVariants}
                 whileHover={{
                   rotateZ: 10,
                   marginTop: -10,
                   transition: { duration: 0.2 },
                 }}
+                initial={{ scale: 0 }}
+                animate={{ scale: inView ? 1 : 0 }}
                 whileTap={{ scale: 0.9 }}
                 key={item}
                 className="cursor-pointer transition-all hover:shadow-lg hover:scale-105 hover:rotate-6 duration-200 w-fit h-fit bg-white border-2 border-black/10 p-8 md:p-12 rounded-xl shadow-sm"

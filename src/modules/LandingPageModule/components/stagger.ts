@@ -22,6 +22,9 @@ const childVariants: Variants = {
     scale: 1,
     transition: {
       duration: 0.5,
+      type: 'spring',
+      stiffness: 260,
+      damping: 20,
     },
   },
 }

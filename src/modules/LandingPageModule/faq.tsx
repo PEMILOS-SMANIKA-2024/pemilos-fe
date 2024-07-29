@@ -4,6 +4,8 @@ import {
   AccordionContent,
   AccordionItem,
 } from '@/components/ui/accordion'
+import { AnimatedSection } from '@/components/ui/animated-section'
+import { AnimatedTitle } from '@/components/ui/animated-title'
 
 interface FAQProps {
   question: string
@@ -34,27 +36,29 @@ export const FAQSection = () => {
       id="faq"
       className="w-full font-manrope flex flex-col gap-10 my-10 relative"
     >
-      <h1 className="font-extrabold text-3xl md:text-5xl text-center">
+      <AnimatedTitle>
         Masih Bingung? <br /> Yuk Baca
         <b className="text-purple-primary"> FAQ </b> Berikut
-      </h1>
-      <Accordion
-        type="single"
-        collapsible
-        className="w-full flex flex-col gap-4"
-      >
-        {
-          // token &&
-          FAQItems.map((item, index) => {
-            return (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger>{item.question}</AccordionTrigger>
-                <AccordionContent>{item.answer}</AccordionContent>
-              </AccordionItem>
-            )
-          })
-        }
-      </Accordion>
+      </AnimatedTitle>
+      <AnimatedSection>
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full flex flex-col gap-4"
+        >
+          {
+            // token &&
+            FAQItems.map((item, index) => {
+              return (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              )
+            })
+          }
+        </Accordion>
+      </AnimatedSection>
     </section>
   )
 }

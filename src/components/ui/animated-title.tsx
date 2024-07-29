@@ -1,25 +1,13 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 
-interface AnimatedSectionProps {
-  id?: string
-  children: React.ReactNode[] | React.ReactNode
-  className?: string
-}
-
-export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
-  children,
-  className,
-  ...props
-}) => {
+export const AnimatedTitle = ({ children }: { children: React.ReactNode }) => {
   const ref = useRef(null)
   const inView = useInView(ref, { once: false })
 
   return (
-    <motion.section
-      id={props.id}
+    <motion.h1
       ref={ref}
       initial={{ scale: 0 }}
       animate={{ scale: inView ? 1 : 0 }}
@@ -30,10 +18,10 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
         stiffness: 260,
         damping: 20,
       }}
-      className={className}
-      {...props}
+      whileHover={{ scale: 1.1 }}
+      className="font-extrabold text-3xl md:text-5xl text-center"
     >
       {children}
-    </motion.section>
+    </motion.h1>
   )
 }

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { ChevronLeft } from 'lucide-react'
 import Image from 'next/image'
-import { Background } from '../LandingPageModule/components/background'
+import { Background } from '../../components/ui/background'
 
 /* eslint-disable react/react-in-jsx-scope */
 export default function NotFoundModule() {

@@ -11,7 +11,7 @@ import { DoorOpen } from 'lucide-react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Background } from '../LandingPageModule/components/background'
+import { Background } from '../../components/ui/background'
 
 export function AuthPageModule() {
   const [nisn, setNisn] = useState('')

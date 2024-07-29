@@ -3,6 +3,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/react-in-jsx-scope */
+import { AnimatedSection } from '@/components/ui/animated-section'
+import { AnimatedTitle } from '@/components/ui/animated-title'
 import {
   Carousel,
   CarouselApi,
@@ -21,15 +23,6 @@ interface PaslonCardProps {
   setOpenVisiMisi: (item: number | null) => void
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { type: 'spring', stiffness: 300, damping: 20 },
-  },
-}
-
 const imageVariants = {
   hover: { scale: 1.1 },
 }
@@ -41,6 +34,18 @@ const textVariants = {
 const arrowVariants = {
   hover: { x: 5 }, // Move the arrow to the right on hover
   click: { x: 10 }, // Move the arrow further on click
+}
+
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.9,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { type: 'spring', stiffness: 300, damping: 20 },
+  },
 }
 
 interface paslonProps {
@@ -95,7 +100,7 @@ const paslonData: paslonProps[] = [
 ]
 
 export const VisiMisiModule = () => {
-  const [openVisiMisi, setOpenVisiMisi] = useState<number | null>(1)
+  const [openVisiMisi, setOpenVisiMisi] = useState<number | null>(null)
 
   const PaslonCard: React.FC<PaslonCardProps> = ({
     item,
@@ -106,7 +111,7 @@ export const VisiMisiModule = () => {
       if (typeof openVisiMisi === 'number' && openVisiMisi === item.nomorUrut) {
         setOpenVisiMisi(null)
       } else {
-        setCurrent(item.nomorUrut)
+        setCurrent(item.nomorUrut - 1)
         setOpenVisiMisi(item.nomorUrut)
       }
     }
@@ -114,10 +119,8 @@ export const VisiMisiModule = () => {
     return (
       <motion.div
         key={item.nomorUrut}
-        className="bg-white border-2 z-20 border-black/10 shadow-md rounded-xl p-10 md:p-12 flex flex-col items-center gap-5 duration-300 cursor-pointer"
+        className="bg-white border-2 z-20 border-black/10 shadow-md rounded-xl p-10 md:p-12 flex flex-col items-center gap-5 duration-300 cursor-pointer hover:scale-105"
         variants={cardVariants}
-        animate="visible"
-        whileHover="hover"
         whileTap="click"
         onClick={handleClick}
       >
@@ -163,31 +166,28 @@ export const VisiMisiModule = () => {
 
   // Carousel Setup
   const [api, setApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
-  const [count, setCount] = useState(0)
+  const [current, setCurrent] = useState(1)
 
   useEffect(() => {
     if (!api) {
       return
     }
 
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap() + 1)
+    setCurrent(api.selectedScrollSnap())
 
     api.on('select', () => {
-      setCurrent(api.selectedScrollSnap() + 1)
+      setCurrent(api.selectedScrollSnap())
     })
   }, [api])
 
   return (
     <Element name="visi-misi">
-      <section className="font-manrope flex flex-col gap-10 my-10 relative">
-        <h1 className="font-extrabold text-3xl md:text-5xl text-center">
+      <AnimatedSection className="font-manrope flex flex-col gap-10 my-10 relative">
+        <AnimatedTitle>
           Yuk, Cek <b className="text-purple-primary">Visi Misi</b>
           <br />
           Masing-masing <b className="text-purple-primary">Calon</b>
-        </h1>
-        {/* <VisiMisiCards /> */}
+        </AnimatedTitle>
         <div className="flex flex-col gap-10">
           <div className="hidden lg:flex flex-col lg:flex-row gap-5 justify-center">
             {paslonData.map((item, index) => (
@@ -226,8 +226,8 @@ export const VisiMisiModule = () => {
                 ))}
               </CarouselContent>
             </Carousel>
-            <div className="w-full flex justify-center">
-              {current} / {count}
+            <div className="w-full flex justify-center font-bold">
+              {current + 1} / {paslonData.length}
             </div>
           </div>
           <AnimatePresence>
@@ -242,12 +242,12 @@ export const VisiMisiModule = () => {
                   VISI
                 </h1>
                 <p className="font-semibold text-black-secondary">
-                  {paslonData[openVisiMisi - 1].visi}
+                  {paslonData[current].visi}
                 </p>
                 <h1 className="font-extrabold text-2xl text-black-primary">
                   MISI
                 </h1>
-                {paslonData[openVisiMisi - 1].misi.map((item, index) => {
+                {paslonData[current].misi.map((item, index) => {
                   return (
                     <div
                       className="w-full px-5 md:px-10 py-5 text-white bg-purple-primary rounded-md cursor-pointer hover:scale-[101%] duration-150 transition-all"
@@ -269,7 +269,7 @@ export const VisiMisiModule = () => {
             )}
           </AnimatePresence>
         </div>
-      </section>
+      </AnimatedSection>
     </Element>
   )
 }

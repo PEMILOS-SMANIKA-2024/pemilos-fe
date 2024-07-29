@@ -5,6 +5,7 @@ import { Manrope, Poppins } from 'next/font/google'
 import React from 'react'
 import './globals.css'
 import Image from 'next/image'
+import { ScrollIndicator } from '@/components/ui/scroll-indicator'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -58,6 +59,7 @@ export default function RootLayout({
           alt="Pattern"
           className="absolute z-[-1] opacity-[3%] max-w-[1920px] h-screen top"
         />
+        <ScrollIndicator />
         {children}
         <BottomBar />
         <Toaster />

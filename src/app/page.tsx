@@ -1,9 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
 'use client'
+import { Background } from '@/components/ui/background'
 import { Navbar } from '@/components/ui/navbar'
 import { ExpirationLogout } from '@/custom-hook/expiration-logout'
 import LandingPageModule from '@/modules/LandingPageModule'
-import { Background } from '@/modules/LandingPageModule/components/background'
 import { FAQSection } from '@/modules/LandingPageModule/faq'
 import { TataCaraModule } from '@/modules/LandingPageModule/tata-cara'
 import { VisiMisiModule } from '@/modules/LandingPageModule/visi-misi'

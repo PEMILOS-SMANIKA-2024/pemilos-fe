@@ -1,3 +1,5 @@
+import { AnimatedSection } from '@/components/ui/animated-section'
+import { AnimatedTitle } from '@/components/ui/animated-title'
 import Image from 'next/image'
 
 /* eslint-disable react/react-in-jsx-scope */
@@ -30,11 +32,11 @@ export const VoteResultModule = () => {
   const maxHeight = 350
   return (
     <section className="mt-10 font-manrope flex flex-col gap-10">
-      <h1 className="font-extrabold text-center text-3xl md:text-5xl mt-5">
+      <AnimatedTitle>
         Hasil Sementara <br />
         Pemilos <b className="text-purple-primary">SMANIKA</b> 2024
-      </h1>
-      <div className="flex items-end  justify-center gap-3 md:gap-10">
+      </AnimatedTitle>
+      <AnimatedSection className="flex items-end  justify-center gap-3 md:gap-10">
         {voteItem.map((item, index) => {
           const percentage = (item.voteCount / totalVotes) * 100
           const barHeight = Math.round((percentage / 100) * maxHeight)
@@ -66,7 +68,7 @@ export const VoteResultModule = () => {
             </div>
           )
         })}
-      </div>
+      </AnimatedSection>
     </section>
   )
 }

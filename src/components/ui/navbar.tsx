@@ -11,6 +11,7 @@ import { scroller } from 'react-scroll'
 import { Button } from './button'
 import { Separator } from './separator'
 import { toast } from './use-toast'
+import { Popover, PopoverContent, PopoverTrigger } from './popover'
 
 export const NavbarItem = ({
   name,
@@ -180,68 +181,6 @@ export const Navbar = () => {
               index={4}
             />
 
-            {/* {navItems.map((item, index) =>
-              (['visi misi', 'tata cara', 'faq', 'home'].includes(
-                item.toLowerCase()
-              ) && pathname !== '/vote') ? (
-                <Link
-                  key={index}
-                  activeClass="active"
-                  to={item.toLowerCase()}
-                  spy={true}
-                  smooth={true}
-                  offset={-150}
-                  duration={500}
-                >
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5, delay: index * 0.2 }}
-                    className="group transition duration-300 cursor-pointer list-none"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.9 }}
-                    onAnimationComplete={handleTextAnimationComplete}
-                  >
-                    {item}
-                    {underlineVisible && (
-                      <motion.span
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        exit={{ scaleX: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-secondary"
-                      />
-                    )}
-                  </motion.li>
-                </Link>
-              ) : (
-                <motion.a
-                  href={`/${item.toLowerCase() !== 'home' ? item.toLowerCase() : ''}`}
-                  key={index}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className="group transition duration-300 cursor-pointer list-none"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  onAnimationComplete={handleTextAnimationComplete}
-                >
-                  {item}
-                  {underlineVisible && (
-                    <motion.span
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      exit={{ scaleX: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-purple-secondary"
-                    />
-                  )}
-                </motion.a>
-              )
-            )} */}
             <div className="text-[#FF0000] flex-col cursor-pointer">
               <Separator />
               <div
@@ -371,21 +310,130 @@ export const Navbar = () => {
               Login
             </Button>
           ) : (
-            <div
-              onClick={() => {
-                setOpen(!open)
-              }}
-              className="hidden lg:flex gap-2 text-purple-primary font-bold cursor-pointer relative"
-            >
-              <span>Hello, {decoded.username}!</span>
-              <ChevronDown
-                style={{
-                  transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.3s ease',
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger>
+                <div
+                  onClick={() => {
+                    // setOpen(!open)
+                  }}
+                  className="hidden lg:flex gap-2 text-purple-primary font-bold cursor-pointer relative"
+                >
+                  <span>Hello, {decoded.username}!</span>
+                  <ChevronDown
+                    style={{
+                      transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transition: 'transform 0.3s ease',
+                    }}
+                  />
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-[200px] font-manrope font-semibold text-[#FF0000]">
+                <div
+                  onClick={logout}
+                  className="flex gap-2 hover:scale-105 duration-200 justify-center cursor-pointer"
+                >
+                  <DoorClosed className="w-4 " />
+                  <span>Logout</span>
+                </div>
+              </PopoverContent>
+            </Popover>
+          )}
+        </div>
+        <div className="w-[24px] h-[24px] flex gap-2 flex-col cursor-pointer lg:hidden">
+          <Popover>
+            <PopoverTrigger>
+              <Menu
+                onClick={() => {
+                  // setOpen(!open)
                 }}
               />
-              {open && (
-                <div className="flex gap-2 absolute h-fit right-0 top-10 bg-white px-10 py-5 rounded-xl border-2 border-black/10 text-[#FF0000]">
+            </PopoverTrigger>
+            <PopoverContent
+              className="font-manrope w-[200px] p-10 mr-10 md:mr-20 lg:hidden"
+              sideOffset={50}
+              alignOffset={100}
+            >
+              <div className="gap-2 flex flex-col font-semibold text-black-secondary">
+                {token !== '' && (
+                  <div className="flex flex-col text-purple-primary font-bold">
+                    Hello, {decoded.username}!
+                    <Separator />
+                  </div>
+                )}
+                <NavbarItem
+                  name="Home"
+                  onClick={() => {
+                    if (pathname === '/') {
+                      scroller.scrollTo('home', {
+                        smooth: true,
+                        offset: -150,
+                      })
+                    } else {
+                      push('/')
+                    }
+                  }}
+                  index={0}
+                />
+                {token !== '' && (
+                  <NavbarItem
+                    name="Vote"
+                    onClick={() => {
+                      if (pathname === '/vote') {
+                        scroller.scrollTo('vote', {
+                          smooth: true,
+                          offset: -150,
+                        })
+                      } else {
+                        push('/vote')
+                      }
+                    }}
+                    index={1}
+                  />
+                )}
+                <NavbarItem
+                  name="Visi Misi"
+                  onClick={() => {
+                    if (pathname === '/vote') {
+                      push('/')
+                    } else {
+                      scroller.scrollTo('visi-misi', {
+                        smooth: true,
+                        offset: -50,
+                      })
+                    }
+                  }}
+                  index={2}
+                />
+                <NavbarItem
+                  name="Tata Cara"
+                  onClick={() => {
+                    if (pathname === '/vote') {
+                      push('/')
+                    } else {
+                      scroller.scrollTo('tata-cara', {
+                        smooth: true,
+                        offset: -150,
+                      })
+                    }
+                  }}
+                  index={3}
+                />
+                <NavbarItem
+                  name="FAQ"
+                  onClick={() => {
+                    if (pathname === '/vote') {
+                      push('/')
+                    } else {
+                      scroller.scrollTo('faq', {
+                        smooth: true,
+                        offset: -150,
+                      })
+                    }
+                  }}
+                  index={4}
+                />
+                <div className="text-[#FF0000] flex-col cursor-pointer">
+                  <Separator />
                   <div
                     onClick={logout}
                     className="flex gap-2 hover:scale-105 duration-200"
@@ -394,16 +442,20 @@ export const Navbar = () => {
                     <span>Logout</span>
                   </div>
                 </div>
+              </div>
+              {token === '' && (
+                <Button
+                  onClick={() => {
+                    push('/login')
+                  }}
+                  variant={'default'}
+                  className="hover:scale-[1.05] transition duration-200 ease-in-out hidden lg:flex"
+                >
+                  Login
+                </Button>
               )}
-            </div>
-          )}
-        </div>
-        <div className="w-[24px] h-[24px] flex gap-2 flex-col cursor-pointer lg:hidden">
-          <Menu
-            onClick={() => {
-              setOpen(!open)
-            }}
-          />
+            </PopoverContent>
+          </Popover>
         </div>
       </motion.nav>
     </div>
