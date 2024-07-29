@@ -36,7 +36,7 @@ export const VoteResultModule = () => {
         Hasil Sementara <br />
         Pemilos <b className="text-purple-primary">SMANIKA</b> 2024
       </AnimatedTitle>
-      <AnimatedSection className="flex items-end  justify-center gap-3 md:gap-10">
+      <AnimatedSection className="flex items-end justify-center gap-3 md:gap-10">
         {voteItem.map((item, index) => {
           const percentage = (item.voteCount / totalVotes) * 100
           const barHeight = Math.round((percentage / 100) * maxHeight)

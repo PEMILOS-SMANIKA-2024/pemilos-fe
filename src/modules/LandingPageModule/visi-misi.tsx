@@ -73,7 +73,7 @@ const paslonData: paslonProps[] = [
   },
   {
     nomorUrut: 2,
-    nama: 'Dode /& Reksa',
+    nama: 'Dode & Reksa',
     image: 'osis-2.png',
     visi: 'Menjadikan OSIS sebagai organisasi yang inspiratif, kreatif, dan inovatif, guna menciptakan lingkungan sekolah yang harmonis, berprestasi, dan berbudaya.',
     misi: [
