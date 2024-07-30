@@ -30,6 +30,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
         stiffness: 260,
         damping: 20,
       }}
+      exit={{ scale: 0 }}
       className={className}
       {...props}
     >

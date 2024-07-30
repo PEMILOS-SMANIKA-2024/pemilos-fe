@@ -1,6 +1,6 @@
 import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
-import { checkExpired, fetchWithToken } from './customFetch'
+import { checkExpired, fetchWithToken } from './custom-fetch'
 import useToken from './useToken'
 
 export function ExpirationLogout(logOutToo?: boolean) {

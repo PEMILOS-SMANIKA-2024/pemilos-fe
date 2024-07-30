@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
-import { fetchWithToken } from '@/custom-hook/customFetch'
+import { fetchWithToken } from '@/custom-hook/custom-fetch'
 import useToken from '@/custom-hook/useToken'
 import { motion } from 'framer-motion'
 import { DoorOpen } from 'lucide-react'
@@ -20,6 +20,11 @@ export function AuthPageModule() {
   const { token } = useToken()
   const { push } = useRouter()
   const pathname = usePathname()
+
+  interface result {
+    token: string
+    name: string
+  }
 
   async function login() {
     if (!nisn || !password) {
@@ -47,7 +52,7 @@ export function AuthPageModule() {
     }
 
     try {
-      const fetchData = await fetchWithToken('/auth/login', token, {
+      const fetchData = await fetchWithToken<result>('/auth/login', token, {
         method: 'POST',
         body: JSON.stringify({
           username: nisn,
@@ -83,11 +88,13 @@ export function AuthPageModule() {
       }
 
       // Store JWT to local storage
-      localStorage.setItem('token', fetchData.result.token)
+      if (fetchData.result) {
+        localStorage.setItem('token', fetchData.result.token)
+      }
 
       toast({
         title: 'Login',
-        description: `Login sukses, Halo! ${fetchData.result.name}`,
+        description: `Login sukses, Halo! ${fetchData.result?.name}`,
         variant: 'default',
       })
 

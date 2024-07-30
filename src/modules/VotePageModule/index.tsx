@@ -3,7 +3,7 @@
 'use client'
 import { Navbar } from '@/components/ui/navbar'
 import { toast } from '@/components/ui/use-toast'
-import { checkExpired, fetchWithToken } from '@/custom-hook/customFetch'
+import { checkExpired, fetchWithToken } from '@/custom-hook/custom-fetch'
 import useToken from '@/custom-hook/useToken'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -118,7 +118,7 @@ export default function VotePageModule() {
         })
       }
 
-      const newToken = response.result.token
+      const newToken = (response.result as { token: string }).token
       localStorage.setItem('token', newToken)
     }
 

@@ -12,13 +12,15 @@ import { VoteResultModule } from '@/modules/LandingPageModule/vote-result'
 export default function Home() {
   ExpirationLogout()
 
+  const showResult = false
+
   return (
     <div className="max-w-[1920px]">
       <Background />
       <Navbar />
       <main className="px-10 lg:px-40 flex flex-col gap-10 overflow-hidden min-h-screen">
         <LandingPageModule />
-        <VoteResultModule />
+        {showResult && <VoteResultModule />}
         <VisiMisiModule />
         <TataCaraModule />
         <FAQSection />

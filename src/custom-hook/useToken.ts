@@ -1,7 +1,7 @@
 import { jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { fetchWithToken } from './customFetch'
+import { fetchWithToken } from './custom-fetch'
 
 export interface DecodedToken {
   id: number

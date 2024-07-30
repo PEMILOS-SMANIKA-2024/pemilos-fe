@@ -1,6 +1,6 @@
 'use client'
 /* eslint-disable react/react-in-jsx-scope */
-import { fetchWithToken } from '@/custom-hook/customFetch'
+import { fetchWithToken } from '@/custom-hook/custom-fetch'
 import useToken from '@/custom-hook/useToken'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown, DoorClosed, Menu } from 'lucide-react'
@@ -181,28 +181,31 @@ export const Navbar = () => {
               index={4}
             />
 
-            <div className="text-[#FF0000] flex-col cursor-pointer">
-              <Separator />
-              <div
-                onClick={logout}
-                className="flex gap-2 hover:scale-105 duration-200"
-              >
-                <DoorClosed className="w-4 " />
-                <span>Logout</span>
+            {token !== '' && (
+              <div className="text-[#FF0000] flex-col cursor-pointer">
+                <Separator />
+                <div
+                  onClick={logout}
+                  className="flex gap-2 hover:scale-105 duration-200"
+                >
+                  <DoorClosed className="w-4 " />
+                  <span>Logout</span>
+                </div>
               </div>
-            </div>
+            )}
+
+            {token === '' && (
+              <Button
+                onClick={() => {
+                  push('/login')
+                }}
+                variant={'default'}
+                className="hover:scale-[1.05] transition duration-200 ease-in-out hidden lg:flex"
+              >
+                Login
+              </Button>
+            )}
           </div>
-          {token === '' && (
-            <Button
-              onClick={() => {
-                push('/login')
-              }}
-              variant={'default'}
-              className="hover:scale-[1.05] transition duration-200 ease-in-out hidden lg:flex"
-            >
-              Login
-            </Button>
-          )}
         </div>
       </AnimatePresence>
       <motion.nav
@@ -432,28 +435,29 @@ export const Navbar = () => {
                   }}
                   index={4}
                 />
-                <div className="text-[#FF0000] flex-col cursor-pointer">
-                  <Separator />
-                  <div
-                    onClick={logout}
-                    className="flex gap-2 hover:scale-105 duration-200"
-                  >
-                    <DoorClosed className="w-4 " />
-                    <span>Logout</span>
+                {token !== '' ? (
+                  <div className="text-[#FF0000] flex-col cursor-pointer">
+                    <Separator />
+                    <div
+                      onClick={logout}
+                      className="flex gap-2 hover:scale-105 duration-200"
+                    >
+                      <DoorClosed className="w-4 " />
+                      <span>Logout</span>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      push('/login')
+                    }}
+                    variant={'default'}
+                    className="hover:scale-[1.05] transition duration-200 ease-in-out"
+                  >
+                    Login
+                  </Button>
+                )}
               </div>
-              {token === '' && (
-                <Button
-                  onClick={() => {
-                    push('/login')
-                  }}
-                  variant={'default'}
-                  className="hover:scale-[1.05] transition duration-200 ease-in-out hidden lg:flex"
-                >
-                  Login
-                </Button>
-              )}
             </PopoverContent>
           </Popover>
         </div>
