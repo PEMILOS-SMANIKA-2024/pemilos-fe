@@ -4,8 +4,16 @@ import { motion, useInView } from 'framer-motion'
 import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react'
 import Image from 'next/image'
 import { useRef } from 'react'
+import { NavbarItem } from './navbar'
+import { usePathname, useRouter } from 'next/navigation'
+import { scroller } from 'react-scroll'
+import useToken from '@/custom-hook/useToken'
 
 export const BottomBar = () => {
+  const pathname = usePathname()
+  const { push } = useRouter()
+  const { token } = useToken()
+
   const ref = useRef(null)
   const inView = useInView(ref, { once: false })
 
@@ -45,16 +53,78 @@ export const BottomBar = () => {
           </div>
         </div>
         <div className="flex flex-col gap-4 text-sm w-fit">
-          {['Landing', 'Login', 'Visi Misi', 'Vote'].map((item, index) => (
-            <a
-              key={index}
-              href={item.replaceAll(' ', '').toLowerCase()}
-              className="group transition duration-300"
-            >
-              {item}
-              <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-white"></span>
-            </a>
-          ))}
+          <NavbarItem
+            name="Home"
+            onClick={() => {
+              if (pathname === '/') {
+                scroller.scrollTo('home', {
+                  smooth: true,
+                  offset: -150,
+                })
+              } else {
+                push('/')
+              }
+            }}
+            index={0}
+          />
+          {token !== '' && (
+            <NavbarItem
+              name="Vote"
+              onClick={() => {
+                if (pathname === '/vote') {
+                  scroller.scrollTo('vote', {
+                    smooth: true,
+                    offset: -150,
+                  })
+                } else {
+                  push('/vote')
+                }
+              }}
+              index={1}
+            />
+          )}
+          <NavbarItem
+            name="Visi Misi"
+            onClick={() => {
+              if (pathname === '/vote') {
+                push('/')
+              } else {
+                scroller.scrollTo('visi-misi', {
+                  smooth: true,
+                  offset: -50,
+                })
+              }
+            }}
+            index={2}
+          />
+          <NavbarItem
+            name="Tata Cara"
+            onClick={() => {
+              if (pathname === '/vote') {
+                push('/')
+              } else {
+                scroller.scrollTo('tata-cara', {
+                  smooth: true,
+                  offset: -150,
+                })
+              }
+            }}
+            index={3}
+          />
+          <NavbarItem
+            name="FAQ"
+            onClick={() => {
+              if (pathname === '/vote') {
+                push('/')
+              } else {
+                scroller.scrollTo('faq', {
+                  smooth: true,
+                  offset: -150,
+                })
+              }
+            }}
+            index={4}
+          />
         </div>
         <div className="text-center">
           <h4 className="text-sm lg:text-base">
