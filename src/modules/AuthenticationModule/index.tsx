@@ -182,6 +182,9 @@ export function AuthPageModule() {
               disabled={loading}
               onClick={async () => {
                 await login()
+                setTimeout(() => {
+                  setLoading(false)
+                }, 200)
               }}
               size={'lg'}
               className="w-full"
