@@ -1,10 +1,10 @@
 'use client'
-import Image from 'next/image'
-import { Element } from 'react-scroll'
-import { motion, useInView } from 'framer-motion'
-import { childVariants, containerVariants } from './components/stagger'
 import { AnimatedTitle } from '@/components/ui/animated-title'
+import { motion, useInView } from 'framer-motion'
+import Image from 'next/image'
 import { useRef } from 'react'
+import { Element } from 'react-scroll'
+import { containerVariants } from './components/stagger'
 
 /* eslint-disable react/react-in-jsx-scope */
 export const TataCaraModule = () => {
@@ -21,7 +21,7 @@ export const TataCaraModule = () => {
           Gimana Tuh <br /> Tata Cara
           <b className="text-purple-primary"> Pemilihannya?</b>
         </AnimatedTitle>
-        <motion.div className='flex justify-center'>
+        <motion.div className="flex justify-center">
           <motion.div
             ref={ref}
             variants={containerVariants}
@@ -61,8 +61,8 @@ export const TataCaraModule = () => {
                     </h3>
                   </div>
                 </motion.div>
-            )
-          })}
+              )
+            })}
           </motion.div>
         </motion.div>
       </main>
