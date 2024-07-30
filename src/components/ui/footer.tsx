@@ -58,7 +58,7 @@ export const BottomBar = () => {
         </div>
         <div className="text-center">
           <h4 className="text-sm lg:text-base">
-            &copy; 2024 OSIS REVION, All right reserved.
+            &copy; 2024 SMANIKA COMPUTER CLUB, All right reserved.
           </h4>
         </div>
       </main>
