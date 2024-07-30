@@ -63,40 +63,24 @@ export function AuthPageModule() {
         }),
       })
 
-      if (fetchData.message === 'Incorrect password') {
+      console.log(fetchData)
+
+      if (fetchData.message) {
         toast({
-          title: 'Login',
-          description: 'Password salah!',
+          title: 'Login Gagal',
+          description: fetchData.message,
           variant: 'destructive',
         })
         setLoading(false)
         return
       }
 
-      if (fetchData.message === 'User not found') {
-        toast({
-          title: 'Login',
-          description: 'User tidak ditemukan!',
-          variant: 'destructive',
-        })
-        setLoading(false)
-        return
-      }
-
-      if (fetchData.message === 'User already logged in another device') {
-        toast({
-          title: 'User sudah login di perangkat lain!',
-          description: 'Silahkan hubungi admin untuk mengatasi masalah ini',
-          variant: 'destructive',
-        })
-        setLoading(false)
-        return
-      }
+      console.log(fetchData)
 
       if (fetchData.error) {
         toast({
           title: 'Login',
-          description: 'Login Gagal',
+          description: fetchData.message,
           variant: 'destructive',
         })
         setLoading(false)
@@ -123,7 +107,7 @@ export function AuthPageModule() {
     } catch (error) {
       toast({
         title: 'Login',
-        description: 'Login Gagal',
+        description: error as string,
         variant: 'destructive',
       })
       push('')

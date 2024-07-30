@@ -8,6 +8,7 @@ interface fetchResultInterface<T> {
   result?: T
   error?: string
   message?: string
+  releaseTime?: string
 }
 
 export const fetchWithToken = async <T>(
