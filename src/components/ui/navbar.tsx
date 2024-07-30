@@ -57,10 +57,12 @@ export const Navbar = () => {
   const { push } = useRouter()
   const { token, decoded } = useToken()
   const pathname = usePathname()
-
   const [open, setOpen] = useState(false)
 
+  const [loading, setLoading] = useState(false)
+
   async function logout() {
+    setLoading(true)
     toast({
       title: 'Logout',
       description: 'Sedang logout ...',
@@ -69,7 +71,12 @@ export const Navbar = () => {
 
     const response = await fetchWithToken(`/auth/logout/${decoded.id}`, token, {
       method: 'POST',
+      headers: {
+        API_KEY: process.env.NEXT_PUBLIC_API_KEY || '',
+      },
     })
+
+    console.log(response)
 
     if (response.result) {
       localStorage.removeItem('token')
@@ -78,6 +85,8 @@ export const Navbar = () => {
         description: 'Berhasil logout',
         variant: 'default',
       })
+
+      setLoading(false)
 
       setTimeout(() => {
         push('/login')
@@ -89,6 +98,9 @@ export const Navbar = () => {
         variant: 'destructive',
       })
       localStorage.removeItem('token')
+
+      setLoading(false)
+
       setTimeout(() => {
         push('/login')
       })
@@ -185,7 +197,11 @@ export const Navbar = () => {
               <div className="text-[#FF0000] flex-col cursor-pointer">
                 <Separator />
                 <div
-                  onClick={logout}
+                  {...(loading
+                    ? {
+                        style: { color: loading ? '#ccc' : '#FF0000' },
+                      }
+                    : { onClick: logout })}
                   className="flex gap-2 hover:scale-105 duration-200"
                 >
                   <DoorClosed className="w-4 " />
@@ -332,7 +348,11 @@ export const Navbar = () => {
               </PopoverTrigger>
               <PopoverContent className="w-[200px] font-manrope font-semibold text-[#FF0000]">
                 <div
-                  onClick={logout}
+                  {...(loading
+                    ? {
+                        style: { color: loading ? '#ccc' : '#FF0000' },
+                      }
+                    : { onClick: logout })}
                   className="flex gap-2 hover:scale-105 duration-200 justify-center cursor-pointer"
                 >
                   <DoorClosed className="w-4 " />
@@ -439,7 +459,11 @@ export const Navbar = () => {
                   <div className="text-[#FF0000] flex-col cursor-pointer">
                     <Separator />
                     <div
-                      onClick={logout}
+                      {...(loading
+                        ? {
+                            style: { color: loading ? '#ccc' : '#FF0000' },
+                          }
+                        : { onClick: logout })}
                       className="flex gap-2 hover:scale-105 duration-200"
                     >
                       <DoorClosed className="w-4 " />

@@ -16,6 +16,7 @@ import { Background } from '../../components/ui/background'
 export function AuthPageModule() {
   const [nisn, setNisn] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const { token } = useToken()
   const { push } = useRouter()
@@ -27,6 +28,7 @@ export function AuthPageModule() {
   }
 
   async function login() {
+    setLoading(true)
     if (!nisn || !password) {
       toast({
         title: 'Login',
@@ -48,6 +50,7 @@ export function AuthPageModule() {
         description: 'Kamu sudah Login!',
         variant: 'destructive',
       })
+      setLoading(false)
       return
     }
 
@@ -66,6 +69,7 @@ export function AuthPageModule() {
           description: 'Password salah!',
           variant: 'destructive',
         })
+        setLoading(false)
         return
       }
 
@@ -75,6 +79,7 @@ export function AuthPageModule() {
           description: 'User tidak ditemukan!',
           variant: 'destructive',
         })
+        setLoading(false)
         return
       }
 
@@ -84,6 +89,17 @@ export function AuthPageModule() {
           description: 'Silahkan hubungi admin untuk mengatasi masalah ini',
           variant: 'destructive',
         })
+        setLoading(false)
+        return
+      }
+
+      if (fetchData.error) {
+        toast({
+          title: 'Login',
+          description: 'Login Gagal',
+          variant: 'destructive',
+        })
+        setLoading(false)
         return
       }
 
@@ -97,6 +113,8 @@ export function AuthPageModule() {
         description: `Login sukses, Halo! ${fetchData.result?.name}`,
         variant: 'default',
       })
+
+      setLoading(false)
 
       const url = window.location.href.replace(pathname, '')
       setTimeout(() => {
@@ -161,6 +179,7 @@ export function AuthPageModule() {
               }}
             />
             <Button
+              disabled={loading}
               onClick={async () => {
                 await login()
               }}
