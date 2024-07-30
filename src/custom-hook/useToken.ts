@@ -59,7 +59,7 @@ const useToken = () => {
             }
           )
 
-          if (response.ok) {
+          if (!response.error) {
             localStorage.removeItem('token')
             refresh()
           }
