@@ -3,13 +3,19 @@
 'use client'
 import { Navbar } from '@/components/ui/navbar'
 import { toast } from '@/components/ui/use-toast'
-import { checkExpired, fetchWithToken } from '@/custom-hook/custom-fetch'
+import {
+  checkExpired,
+  fetchWithoutToken,
+  fetchWithToken,
+} from '@/custom-hook/custom-fetch'
 import useToken from '@/custom-hook/useToken'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { VoteConfirmationDialog } from './components/vote-confirmation'
 import { motion } from 'framer-motion'
+import { voteResultInterface } from '../LandingPageModule/vote-result'
+import { AnimatedSection } from '@/components/ui/animated-section'
 
 export default function VotePageModule() {
   const { token, decoded, expirationDate } = useToken()
@@ -36,6 +42,7 @@ export default function VotePageModule() {
   const [openDialog, setOpenDialog] = useState(false)
 
   async function voteCalon(calonId: number) {
+    setAlreadyVoted(true)
     const tokenExpired = checkExpired(expirationDate)
 
     toast({
@@ -85,26 +92,17 @@ export default function VotePageModule() {
         }
       )
 
-      if (response.message === 'User already voted') {
+      if (response.error) {
         toast({
           title: 'Vote',
-          description: 'Anda sudah melakukan voting!',
+          description: response.message,
           variant: 'destructive',
         })
-        localStorage.setItem('alreadyVoted', 'true')
-      } else if (response.message === 'Calon not found') {
-        toast({
-          title: 'Vote',
-          description: 'Calon tidak ditemukan!',
-          variant: 'destructive',
-        })
-      } else if (response.message === 'User not found') {
-        toast({
-          title: 'Vote',
-          description: 'User tidak ditemukan!',
-          variant: 'destructive',
-        })
-      } else if (response.result) {
+        setAlreadyVoted(false)
+        return
+      }
+
+      if (response.result) {
         toast({
           title: 'Vote',
           description: 'Berhasil vote!',
@@ -116,6 +114,7 @@ export default function VotePageModule() {
           description: 'Gagal vote!',
           variant: 'destructive',
         })
+        setAlreadyVoted(false)
       }
 
       const newToken = (response.result as { token: string }).token
@@ -125,6 +124,21 @@ export default function VotePageModule() {
     setAlreadyVoted(true)
     setOpenDialog(false)
   }
+
+  const [fetchData, setFetchData] = useState<voteResultInterface[]>()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchWithoutToken<voteResultInterface[]>(
+        '/vote/count/all',
+        {}
+      )
+
+      setFetchData(data?.result)
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <section
@@ -161,19 +175,18 @@ export default function VotePageModule() {
             : 'Klik kandidat yang ingin dipilih'}
         </motion.h3>
         <div className="flex flex-col items-center lg:flex-row gap-10 lg:gap-5 justify-between w-full font-manrope">
-          {
-            // token &&
-            [1, 2, 3].map((item) => {
+          {fetchData ? (
+            fetchData.map((item) => {
               return (
                 <VoteConfirmationDialog
-                  key={item}
+                  key={item.calonId}
                   openDialog={openDialog}
                   setOpenDialog={setOpenDialog}
                   {...(decoded.hasVoted || alreadyVoted
                     ? { disable: true }
                     : {})}
                   onSubmit={async () => {
-                    await voteCalon(item)
+                    await voteCalon(item.calonId)
                   }}
                 >
                   <motion.div
@@ -194,7 +207,7 @@ export default function VotePageModule() {
                           },
                         }
                       : {})}
-                    key={item}
+                    key={item.calonId}
                     className="overflow-hidden relative bg-white w-full rounded-xl shadow-lg p-10 lg:p-12 flex flex-col gap-4 border-2 hover:scale-[1.02] md:hover:-translate-y-5 duration-300 cursor-pointer"
                   >
                     {(decoded.hasVoted || alreadyVoted) && (
@@ -215,20 +228,25 @@ export default function VotePageModule() {
                         className="object-none"
                       />
                       <div className="absolute w-14 h-14 rounded-full bg-purple-primary text-white font-bold flex items-center justify-center text-2xl left-2 top-2">
-                        {item}
+                        {item.calonId}
                       </div>
                     </div>
                     <h1 className="text-3xl font-bold text-center text-black-primary">
                       Andrew & Aryo
                     </h1>
                     <p className="text-md text-center text-black-secondary font-medium">
-                      Calon Ketua dan Wakil Ketua OSIS SMANIKA Nomor Urut {item}
+                      Calon Ketua dan Wakil Ketua OSIS SMANIKA Nomor Urut{' '}
+                      {item.calonId}
                     </p>
                   </motion.div>
                 </VoteConfirmationDialog>
               )
             })
-          }
+          ) : (
+            <AnimatedSection className="animate-pulse font-manrope font-bold w-full flex justify-center">
+              Loading Data...
+            </AnimatedSection>
+          )}
         </div>
       </div>
     </section>

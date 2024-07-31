@@ -12,6 +12,9 @@ export function ExpirationLogout(logOutToo?: boolean) {
     const response = async () => {
       await fetchWithToken(`/auth/logout/${decoded.id}`, token, {
         method: 'POST',
+        headers: {
+          API_KEY: process.env.NEXT_PUBLIC_API_KEY || '',
+        },
       })
 
       localStorage.removeItem('token')

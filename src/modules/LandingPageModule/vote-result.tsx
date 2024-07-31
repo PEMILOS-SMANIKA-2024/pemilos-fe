@@ -30,7 +30,7 @@ export const voteItem: VoteItemProps[] = [
   },
 ]
 
-interface voteResultInterface {
+export interface voteResultInterface {
   paslonName: string
   calonId: number
   votes: number

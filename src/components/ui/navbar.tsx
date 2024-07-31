@@ -76,8 +76,6 @@ export const Navbar = () => {
       },
     })
 
-    console.log(response)
-
     if (response.result) {
       localStorage.removeItem('token')
       toast({

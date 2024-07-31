@@ -15,16 +15,19 @@ interface FAQProps {
 
 const FAQItems: FAQProps[] = [
   {
-    question: 'Is it accessible?',
+    question:
+      'Data apa saja yang dibutuhkan saat mengisi suara pada PEMILOS SMANIKA tahun ini?',
     answer: 'Yes. It adheres to the WAI-ARIA design pattern.',
   },
   {
-    question: 'Is it styled?',
+    question:
+      'Bagaimana jika terjadi kendala atapun kesalahan saat mengisi data untuk website PEMILOS SMANIKA 2024?',
     answer:
       'Yes. It comes with default styles that matches the other components aesthetic.',
   },
   {
-    question: 'Is it animated?',
+    question:
+      'Apa yang harus dilakukan jika saya tidak bisa menghadiri sesi pemilihan secara langsung?',
     answer:
       "Yes. It's animated by default, but you can disable it if you prefer.",
   },
