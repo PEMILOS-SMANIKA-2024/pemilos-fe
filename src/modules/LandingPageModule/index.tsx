@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/react-in-jsx-scope */
 import { Button } from '@/components/ui/button'

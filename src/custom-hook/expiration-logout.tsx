@@ -1,7 +1,9 @@
+'use client'
 import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 import { checkExpired, fetchWithToken } from './custom-fetch'
 import useToken from './useToken'
+import { removeAuthCookie } from './cookie'
 
 export function ExpirationLogout(logOutToo?: boolean) {
   const { token, decoded, expirationDate } = useToken()
@@ -14,6 +16,7 @@ export function ExpirationLogout(logOutToo?: boolean) {
       })
 
       localStorage.removeItem('token')
+      removeAuthCookie()
 
       if (logOutToo) {
         toast({

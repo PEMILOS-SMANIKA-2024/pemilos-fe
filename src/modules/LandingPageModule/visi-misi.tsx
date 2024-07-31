@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types */

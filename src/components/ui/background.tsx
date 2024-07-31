@@ -1,7 +1,10 @@
+'use client'
+import { ExpirationLogout } from '@/custom-hook/expiration-logout'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 /* eslint-disable react/react-in-jsx-scope */
 export const Background = () => {
+  ExpirationLogout()
   return (
     <div className="w-full h-screen absolute z-0 max-w-[1920px]">
       <motion.div

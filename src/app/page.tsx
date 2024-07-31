@@ -1,18 +1,15 @@
+'use server'
 /* eslint-disable react/react-in-jsx-scope */
-'use client'
 import { Background } from '@/components/ui/background'
 import { Navbar } from '@/components/ui/navbar'
-import { ExpirationLogout } from '@/custom-hook/expiration-logout'
 import LandingPageModule from '@/modules/LandingPageModule'
 import { FAQSection } from '@/modules/LandingPageModule/faq'
 import { TataCaraModule } from '@/modules/LandingPageModule/tata-cara'
 import { VisiMisiModule } from '@/modules/LandingPageModule/visi-misi'
 import { VoteResultModule } from '@/modules/LandingPageModule/vote-result'
 
-export default function Home() {
-  ExpirationLogout()
-
-  const showResult = false
+export default async function Home() {
+  const showResult = true
 
   return (
     <div className="max-w-[1920px]">

@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable react/prop-types */
 /* eslint-disable react/react-in-jsx-scope */
 import { motion, useInView } from 'framer-motion'
