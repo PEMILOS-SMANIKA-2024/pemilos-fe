@@ -17,19 +17,19 @@ const FAQItems: FAQProps[] = [
   {
     question:
       'Data apa saja yang dibutuhkan saat mengisi suara pada PEMILOS SMANIKA tahun ini?',
-    answer: 'Yes. It adheres to the WAI-ARIA design pattern.',
+    answer: 'Data yang perlu di isi untuk login PEMILOS SMANIKA tahun ini adalah username menggunakan NISN dan Password menggunakan NIS.',
   },
   {
     question:
       'Bagaimana jika terjadi kendala atapun kesalahan saat mengisi data untuk website PEMILOS SMANIKA 2024?',
     answer:
-      'Yes. It comes with default styles that matches the other components aesthetic.',
+      'Jika terjadi kendala atau kesalahan pada sistem pada saat pelaksanaan pemilos dimulai, anda dimohon untuk menghubungi admin untuk informasi lebih lanjut.',
   },
   {
     question:
       'Apa yang harus dilakukan jika saya tidak bisa menghadiri sesi pemilihan secara langsung?',
     answer:
-      "Yes. It's animated by default, but you can disable it if you prefer.",
+      'Jika anda tidak dapat menghadiri sesi pemilihan secara langsung, maka anda akan dianggap golput atau tidak memilih.',
   },
 ]
 
