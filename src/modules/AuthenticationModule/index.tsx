@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
-import { fetchWithToken } from '@/custom-hook/custom-fetch'
+import { checkExpired, fetchWithToken } from '@/custom-hook/custom-fetch'
 import useToken from '@/custom-hook/useToken'
 import { motion } from 'framer-motion'
 import { DoorOpen } from 'lucide-react'
@@ -18,7 +18,7 @@ export function AuthPageModule() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const { token } = useToken()
+  const { token, expirationDate } = useToken()
   const { push } = useRouter()
   const pathname = usePathname()
 
@@ -44,7 +44,10 @@ export function AuthPageModule() {
       variant: 'default',
     })
 
-    if (token) {
+    // Check Expiration
+    const isTokenExpired = checkExpired(expirationDate)
+
+    if (token && !isTokenExpired) {
       toast({
         title: 'Login',
         description: 'Kamu sudah Login!',
@@ -63,8 +66,6 @@ export function AuthPageModule() {
         }),
       })
 
-      console.log(fetchData)
-
       if (fetchData.message) {
         toast({
           title: 'Login Gagal',
@@ -74,8 +75,6 @@ export function AuthPageModule() {
         setLoading(false)
         return
       }
-
-      console.log(fetchData)
 
       if (fetchData.error) {
         toast({

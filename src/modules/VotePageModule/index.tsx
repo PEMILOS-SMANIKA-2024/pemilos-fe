@@ -15,7 +15,6 @@ import { VoteConfirmationDialog } from './components/vote-confirmation'
 
 export default function VotePageModule() {
   const { token, decoded } = useToken()
-
   const { replace } = useRouter()
 
   useEffect(() => {
@@ -32,8 +31,6 @@ export default function VotePageModule() {
 
     return () => clearTimeout(timer)
   }, [token, replace])
-
-  const [alreadyVoted, setAlreadyVoted] = useState(false)
 
   const [openDialog, setOpenDialog] = useState(false)
 
@@ -82,7 +79,7 @@ export default function VotePageModule() {
           }}
           className="text-black-secondary text-xl md:text-2xl font-bold text-center my-10"
         >
-          {decoded.hasVoted || alreadyVoted
+          {decoded.hasVoted
             ? 'Terimakasih telah melakukan voting!'
             : 'Klik kandidat yang ingin dipilih'}
         </motion.h3>
@@ -95,9 +92,7 @@ export default function VotePageModule() {
                   openDialog={openDialog}
                   setOpenDialog={setOpenDialog}
                   calonId={item.calonId}
-                  {...(decoded.hasVoted || alreadyVoted
-                    ? { disable: true }
-                    : {})}
+                  {...(decoded.hasVoted ? { disable: true } : {})}
                 >
                   <motion.div
                     initial={{ y: 100, opacity: 0 }}
@@ -106,7 +101,7 @@ export default function VotePageModule() {
                     transition={{ duration: 0.5 }}
                     whileTap={{ scale: 0.9, transition: { duration: 0.1 } }}
                     whileHover={{ y: -50, transition: { duration: 0.1 } }}
-                    {...(decoded.hasVoted || alreadyVoted
+                    {...(decoded.hasVoted
                       ? {
                           onClick: () => {
                             toast({
@@ -120,7 +115,7 @@ export default function VotePageModule() {
                     key={item.calonId}
                     className="overflow-hidden relative bg-white w-full rounded-xl shadow-lg p-10 lg:p-12 flex flex-col gap-4 border-2 hover:scale-[1.02] md:hover:-translate-y-5 duration-300 cursor-pointer"
                   >
-                    {(decoded.hasVoted || alreadyVoted) && (
+                    {decoded.hasVoted && (
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
