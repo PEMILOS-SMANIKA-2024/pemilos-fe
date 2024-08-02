@@ -1,24 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/react-in-jsx-scope */
 'use client'
+import { AnimatedSection } from '@/components/ui/animated-section'
 import { Navbar } from '@/components/ui/navbar'
 import { toast } from '@/components/ui/use-toast'
-import {
-  checkExpired,
-  fetchWithoutToken,
-  fetchWithToken,
-} from '@/custom-hook/custom-fetch'
+import { fetchWithoutToken } from '@/custom-hook/custom-fetch'
 import useToken from '@/custom-hook/useToken'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { VoteConfirmationDialog } from './components/vote-confirmation'
-import { motion } from 'framer-motion'
 import { voteResultInterface } from '../LandingPageModule/vote-result'
-import { AnimatedSection } from '@/components/ui/animated-section'
+import { VoteConfirmationDialog } from './components/vote-confirmation'
 
 export default function VotePageModule() {
-  const { token, decoded, expirationDate } = useToken()
+  const { token, decoded } = useToken()
 
   const { replace } = useRouter()
 
@@ -41,91 +37,7 @@ export default function VotePageModule() {
 
   const [openDialog, setOpenDialog] = useState(false)
 
-  async function voteCalon(calonId: number) {
-    setAlreadyVoted(true)
-    const tokenExpired = checkExpired(expirationDate)
-
-    toast({
-      title: 'Vote',
-      description: 'Sedang memproses vote ...',
-      variant: 'default',
-    })
-
-    if (tokenExpired) {
-      toast({
-        title: 'Sesi anda sudah expired!',
-        description: 'Mengarahkan ke halaman login ...',
-        variant: 'destructive',
-      })
-
-      const response = async () => {
-        await fetchWithToken(`/auth/logout/${decoded.id}`, token, {
-          method: 'POST',
-        })
-
-        localStorage.removeItem('token')
-      }
-      response()
-
-      setTimeout(() => {
-        replace('/login')
-      }, 500)
-
-      return
-    }
-
-    if (alreadyVoted) {
-      toast({
-        title: 'Vote Gagal',
-        description: 'Anda sudah melakukan voting!',
-        variant: 'destructive',
-      })
-    } else {
-      const response = await fetchWithToken(
-        `/vote/${calonId}/${decoded.id}`,
-        token,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            sessionToken: token,
-          }),
-        }
-      )
-
-      if (response.error) {
-        toast({
-          title: 'Vote',
-          description: response.message,
-          variant: 'destructive',
-        })
-        setAlreadyVoted(false)
-        return
-      }
-
-      if (response.result) {
-        toast({
-          title: 'Vote',
-          description: 'Berhasil vote!',
-          variant: 'default',
-        })
-      } else {
-        toast({
-          title: 'Vote',
-          description: 'Gagal vote!',
-          variant: 'destructive',
-        })
-        setAlreadyVoted(false)
-      }
-
-      const newToken = (response.result as { token: string }).token
-      localStorage.setItem('token', newToken)
-    }
-
-    setAlreadyVoted(true)
-    setOpenDialog(false)
-  }
-
-  const [fetchData, setFetchData] = useState<voteResultInterface[]>()
+  const [fetchDataCalon, setFetchDataCalon] = useState<voteResultInterface[]>()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -134,7 +46,7 @@ export default function VotePageModule() {
         {}
       )
 
-      setFetchData(data?.result)
+      setFetchDataCalon(data?.result)
     }
 
     fetchData()
@@ -175,19 +87,17 @@ export default function VotePageModule() {
             : 'Klik kandidat yang ingin dipilih'}
         </motion.h3>
         <div className="flex flex-col items-center lg:flex-row gap-10 lg:gap-5 justify-between w-full font-manrope">
-          {fetchData ? (
-            fetchData.map((item) => {
+          {fetchDataCalon ? (
+            fetchDataCalon.map((item) => {
               return (
                 <VoteConfirmationDialog
                   key={item.calonId}
                   openDialog={openDialog}
                   setOpenDialog={setOpenDialog}
+                  calonId={item.calonId}
                   {...(decoded.hasVoted || alreadyVoted
                     ? { disable: true }
                     : {})}
-                  onSubmit={async () => {
-                    await voteCalon(item.calonId)
-                  }}
                 >
                   <motion.div
                     initial={{ y: 100, opacity: 0 }}
