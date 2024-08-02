@@ -34,6 +34,7 @@ export const VoteConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
   disable = false,
 }) => {
   const [open, setOpen] = useState(false)
+
   return (
     <>
       <Dialog
@@ -45,7 +46,9 @@ export const VoteConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
         {children && <DialogTrigger asChild>{children}</DialogTrigger>}
         <DialogContent className="min-w-[300px] p-10">
           <DialogHeader>
-            <DialogTitle>Yakin untuk memilih paslon ini?</DialogTitle>
+            <DialogTitle>
+              Yakin Untuk Memilih Kandidat Nomor {calonId}?
+            </DialogTitle>
             <DialogDescription>
               Pilihan anda tidak bisa diubah!
             </DialogDescription>
@@ -60,6 +63,7 @@ export const VoteConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
               <Button
                 onClick={() => {
                   setOpen(true)
+                  console.log(calonId)
                 }}
                 isAnimated
                 variant={'default'}
@@ -90,7 +94,7 @@ export const TokenConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
   const { replace } = useRouter()
   const { token, decoded, expirationDate } = useToken()
 
-  async function voteCalon(calonId: number) {
+  async function voteCalon() {
     const tokenExpired = checkExpired(expirationDate)
 
     toast({
@@ -159,12 +163,12 @@ export const TokenConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
     localStorage.setItem('token', newToken)
 
     setTimeout(() => {
-      replace('/login')
+      const url = window.location.href.replace(window.location.pathname, '')
+      replace(url)
     }, 200)
   }
 
   const [tokenInput, setTokenInput] = useState('')
-
   return (
     <Dialog
       open={openDialog && !disable}
@@ -175,9 +179,9 @@ export const TokenConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="min-w-[300px] p-10">
         <DialogHeader>
-          <DialogTitle>Masukkan token voting</DialogTitle>
+          <DialogTitle>Masukkan Vote Token</DialogTitle>
           <DialogDescription>
-            Jika token tidak dapat dimasukkan, harap menghubungi admin
+            Jika token salah, harap menghubungi admin untuk meminta token baru
           </DialogDescription>
         </DialogHeader>
         <div className="w-full">
@@ -199,7 +203,7 @@ export const TokenConfirmationDialog: React.FC<VoteConfirmationDialogProps> = ({
             <Button
               isAnimated
               onClick={async () => {
-                await voteCalon(calonId)
+                await voteCalon()
               }}
               variant={'default'}
               className="w-full"

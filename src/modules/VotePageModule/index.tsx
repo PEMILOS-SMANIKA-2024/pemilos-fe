@@ -33,6 +33,7 @@ export default function VotePageModule() {
   }, [token, replace])
 
   const [openDialog, setOpenDialog] = useState(false)
+  const [currentCalonId, setCurrentCalonId] = useState<number>(0)
 
   const [fetchDataCalon, setFetchDataCalon] = useState<voteResultInterface[]>()
 
@@ -91,7 +92,7 @@ export default function VotePageModule() {
                   key={item.calonId}
                   openDialog={openDialog}
                   setOpenDialog={setOpenDialog}
-                  calonId={item.calonId}
+                  calonId={currentCalonId}
                   {...(decoded.hasVoted ? { disable: true } : {})}
                 >
                   <motion.div
@@ -111,8 +112,11 @@ export default function VotePageModule() {
                             })
                           },
                         }
-                      : {})}
-                    key={item.calonId}
+                      : {
+                          onClick: () => {
+                            setCurrentCalonId(item.calonId)
+                          },
+                        })}
                     className="overflow-hidden relative bg-white w-full rounded-xl shadow-lg p-10 lg:p-12 flex flex-col gap-4 border-2 hover:scale-[1.02] md:hover:-translate-y-5 duration-300 cursor-pointer"
                   >
                     {decoded.hasVoted && (
@@ -137,7 +141,7 @@ export default function VotePageModule() {
                       </div>
                     </div>
                     <h1 className="text-3xl font-bold text-center text-black-primary">
-                      Andrew & Aryo
+                      {item.paslonName}
                     </h1>
                     <p className="text-md text-center text-black-secondary font-medium">
                       Calon Ketua dan Wakil Ketua OSIS SMANIKA Nomor Urut{' '}
