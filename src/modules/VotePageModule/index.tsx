@@ -136,7 +136,7 @@ export default function VotePageModule() {
                         height={525}
                         className="object-none"
                       />
-                      <div className="absolute w-14 h-14 rounded-full bg-purple-primary text-white font-bold flex items-center justify-center text-2xl left-2 top-2">
+                      <div className="absolute -left-3 -top-3 w-14 h-14 rounded-full bg-purple-primary text-white font-bold flex items-center justify-center text-2xl md:left-2 md:top-2">
                         {item.calonId}
                       </div>
                     </div>

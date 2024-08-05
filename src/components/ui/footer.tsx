@@ -127,7 +127,7 @@ export const BottomBar = () => {
           />
         </div>
         <div className="text-center">
-          <h4 className="text-sm lg:text-base">
+          <h4 className="text-sm mt-2 md:mt-0 md:text-base">
             &copy; 2024 SMANIKA COMPUTER CLUB, All right reserved.
           </h4>
         </div>
