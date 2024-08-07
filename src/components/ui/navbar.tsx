@@ -106,7 +106,7 @@ export const Navbar = () => {
   }
 
   return (
-    <div className="absolute w-full max-w-[1920px] px-10 md:px-20 top-10 z-30">
+    <div className="w-full max-w-[1920px] px-10 md:px-20 top-10 z-30 sticky">
       <AnimatePresence>
         <div
           className={`absolute p-10 w-fit lg:hidden bg-white right-10 md:right-20 top-24 shadow-md rounded-md flex flex-col font-manrope ${open ? 'flex' : 'hidden'}`}
