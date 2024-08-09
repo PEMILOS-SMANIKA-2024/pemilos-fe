@@ -55,48 +55,54 @@ interface paslonProps {
   image: string
   visi: string
   misi: string[]
-  videoLink?: string
+  proker: string[]
 }
 
 const paslonData: paslonProps[] = [
   {
     nomorUrut: 1,
-    nama: 'Andrew & Aryo',
+    nama: 'Zulfikar & Embun',
     image: 'osis-1.png',
-    visi: 'Menjadikan OSIS sebagai organisasi yang inspiratif, kreatif, dan inovatif, guna menciptakan lingkungan sekolah yang harmonis, berprestasi, dan berbudaya.',
+    visi: 'Mewujudkan siswa-siswi SMAN 1 Sumbawa Besar yang berkarakter ( 3K + 3R ) Kreatif dalam pemunculan gagasan, Kolaboratif dengan tindakan, Komunikatif melalui penyampaian pesan, Religius pada kenyakinan, Relevan melalui bantuan, dan Revolusioner dalam menciptakan perubahan.',
     misi: [
-      'Misi dari Andrew & Aryo adalah memperjuangkan hak-hak siswa dan siswi SMANIKA',
-      'Misi kedua dari Andrew & Aryo adalah memperjuangkan hak-hak siswa dan siswi SMANIKA',
-      'Misi ketiga dari Andrew & Aryo adalah memperjuangkan hak-hak siswa dan siswi SMANIKA',
+      '1. Menciptakan toleransi antar umat beragama dalam menciptakan ketenangan dan perdamaian antar siswa-siswi SMAN 1 Sumbawa Besar.',
+      '2. Memfasilitasi, mengembangkan, dan mengapresiasi minat dan bakat siswa/i SMAN 1 Sumbawa Besar dalam bidang olahraga, seni/budaya, keilmuan, keagamaan, dan peminatan bakat lainnya.',
+      '3. Melibatkan seluruh anggota organisasi dan seluruh warga sekolah untuk menerapkan budaya kolaboratif dalam mencapai tujuan yang positif.',
+      '4. Meningkatkan kinerja OSIS SMAN 1 Sumbawa Besar dengan pemanfaatan sistem teknologi komunikasi dan informasi dalam tujuan kemajuan sekolah.',
+      '5. Memperkuat kehormanisan antar pengurus dan seluruh siswa-siswi sekolah untuk mewujudkan karakter produktif dalam berorganisasi.',
+      '6. Menjadikan program kerja OSIS SMAN 1 Sumbawa Besar yang bermanfaat bagi sekolah dan masyarakat.',
     ],
-    videoLink:
-      'https://www.youtube.com/embed/dQw4w9WgXcQ?si=B8OGkM156KWZ01wQ?autoplay=1',
+    proker: [
+      '1. SMANIKA DUTION - Duty Inspiration : Kompetisi Duta antar kelas X.XI.XII melalui perwakilan satu siswa yang menjadi role model dalam SMAN 1 SUMBAWA BESAR melalui bakat dan keahlian yang dimiliki oleh masing masing siswa-siswi.',
+      '2. SMANIKA ENPRETION - Entreprise Competition : Kompetisi Memasak antar kelas X.XI.XII dalam membentuk jiwa kewirausahaan dan Kompetisi Berjualan dari hasil karya memasak peserta dalam menciptakan jiwa bisnis di lingkungan sekolah.',
+      '3. SMANIKA ESCORATION - Extra School Collaboration : Lomba Antar Sekolah Menengah Atas dalam bidang komunikasi, kreativitas, keahlian akademik maupun non-akademik.',
+      '4. SMANIKA FESDATION - Festival Ramadhan and Action : Kompetisi Bisnis Ramadhan dalam mengembangkan jiwa wirausaha pada saat bulan suci Ramadhan. Berbagi Takjil Bareng kelas X,XI dalam meraih keberkahan bulan suci Ramadhan dengan Bersedekah antar sesama. Buka Bersama Bareng kepengurusan OSIS-MPK REVION SMANIKA dalam menunjukkan kebersamaan dan kekompakan organisasi. Lomba Ramadhan Bareng seluruh siswa-siswi melalui lomba Kisah 25 Nabi, dan Ceramah Keagamaan.',
+      '5. SMANIKA DAICLATION - Daily Class Selection : Seleksi Antar Kelas dalam membentuk kelas yang memiliki standar kebersihan dan ketertiban melalui seleksi serempak dengan penilaian yang berisikan poin poin dengan hitungan yang berstandar tinggi.',
+      '6. SMANIKA FONPRETION - Food Enterpeneur and Action Bisnis : Organisasi dalam mengupayakan kedekatan akan masyarakat di luar lingkungan sekolah melalui bisnis berdagang dan lain-lain.',
+      '7. SMANIKA INVETION - Integrity Value Innovation : \n Kegiatan rutin sekolah akhir semester melalui permainan dan lomba-lomba seperti Futsal, E-Sport, Kreasi budaya sumbawa, kreasi Olahraga, bidang komunikasi, dan lomba antar bapak/ibu guru SMAN 1 Sumbawa Besar',
+    ],
   },
   {
     nomorUrut: 2,
-    nama: 'Dode & Reksa',
+    nama: 'Arvel & Icha',
     image: 'osis-2.png',
-    visi: 'Menjadikan OSIS sebagai organisasi yang inspiratif, kreatif, dan inovatif, guna menciptakan lingkungan sekolah yang harmonis, berprestasi, dan berbudaya.',
+    visi: 'menjadikan OSIS sebagai wadah aspirasi dan garda terdepan dalam mewujudkan generasi emas yang unggul, berdaya saing tinggi, baik dalam segi akademik maupun non akademik dengan pemerbdayaan sumber daya pelajar yang berkompetensi global menuju transformasi pendidikan dan selaras untuk mewujudkan smanika yang berprestasi, partisipasi, kreasi inovasi, serta untuk mencapai generasi emas 2045.',
     misi: [
-      'Misi dari Dode & Reksa adalah memperjuangkan hak-hak siswa dan siswi SMANIKA',
-      'Misi kedua dari Dode & Reksa adalah memperjuangkan hak-hak siswa dan siswi SMANIKA',
-      'Misi ketiga dari Dode & Reksa adalah memperjuangkan hak-hak siswa dan siswi SMANIKA',
+      '1. Menciptakan lingkungan SMANIKA menjadi lingkungan yang bersih, aman dan sehat, untuk membantu sekolah mewujudkan sekolah adiwiyata.',
+      '2. Mengadakan kegiatan yang membangun karakter siswa melalui program volunteerisme, kegiatan sosial, dan budaya.',
+      '3. Mengembangkan program yang mengintegrasikan ilmu pengetahuan, teknologi, dan seni untuk mengasah kreativitas siswa.',
+      '4. menciptakan kolaborasi ekstrakurikuler dalam pelaksanaan kegiatan sekolah.',
+      '5. Mengoptimalkan dan mengembangkan program kerja osis  sudah terlaksana atau belum terlaksana di kepungurusan osis sebelumnya.',
+      '6. Memberikan kebebasan berekspresi, berpendapat dan berkreasi yang bertanggung jawab terhadapa siswa siswi sma negeri 1 sumbawa besar.',
     ],
-    videoLink:
-      'https://www.youtube.com/embed/dQw4w9WgXcQ?si=B8OGkM156KWZ01wQ?autoplay=1',
-  },
-  {
-    nomorUrut: 3,
-    nama: 'Ganjar & Mahfud',
-    image: 'osis-3.png',
-    visi: 'Menjadikan OSIS sebagai organisasi yang inspiratif, kreatif, dan inovatif, guna menciptakan lingkungan sekolah yang harmonis, berprestasi, dan berbudaya.',
-    misi: [
-      'Misi dari Ganjar & Mahfud',
-      'Misi kedua dari Ganjar & Mahfud',
-      'Misi ketiga dari Ganjar & Mahfud',
+    proker: [
+      '1. SmanikaEntrepreneurship : Pameran kewirausahaan yang memamerkan produk dalam rangka menyukseskan pertumbuhan sektor ekonomi kreatif di mana tiap kelas akan menampilkan pertunjukan dan membuka stand sesuai dengan sektor-sektor ekonomi kreatif yang dipilih.',
+      '2. SmanikaTalentShow: Pertunjukan bakat yang memberikan platform bagi siswa untuk menunjukkan keahlian mereka seperti Tari, Vocal, Catwalk, Monolog, Puisi.',
+      '3. SmanikaChampionship: kompetisi antar sekolah menengah atas yang diwakili oleh tim terbaik pada sekolah berdasarkan hasil seleksi internal sekolah yang diadakan terlebih dahulu dengan tujuan meningkatkan solidaritas dan sportivitas antar sekolah seperti turnamen mobile legends, free fire, pubg dan kompetisi olahraga seperti futsal, volly, basket, badminton.',
+      '4. SmanikaLangFest: Mengadakan lomba-lomba yang berkaitan dengan bahasa, seperti lomba pidato dalam berbagai bahasa, lomba spelling bee, dan lomba debat bilingual.',
+      '5. SmanikaSSC: (Super Smart Competition) Mengasah keterampilan akademik, logika, dan kreativitas siswa melalui kompetisi yang menantang.',
+
     ],
-    videoLink:
-      'https://www.youtube.com/embed/dQw4w9WgXcQ?si=B8OGkM156KWZ01wQ?autoplay=1',
   },
 ]
 
@@ -258,14 +264,19 @@ export const VisiMisiModule = () => {
                     </div>
                   )
                 })}
-                <iframe
-                  className="w-full aspect-video self-stretch md:min-h-96 rounded-md"
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=B8OGkM156KWZ01wQ?autoplay=1"
-                  allowFullScreen
-                  allow="autoplay; encrypted-media"
-                  title="Product Overview Video"
-                  aria-hidden="true"
-                />
+                <h1 className="font-extrabold text-2xl text-black-primary">
+                  PROGRAM KERJA
+                </h1>
+                {paslonData[current].proker.map((item, index) => {
+                  return (
+                    <div
+                      className='w-full px-5 md:px-10 py-5 text-white bg-purple-primary rounded-md cursor-pointer hover:scale-[101%] duration-150 transition-all'
+                      key={index}
+                    >
+                      <p className='font-medium text-sm'>{item}</p>
+                    </div>
+                  )
+                })}
               </motion.div>
             )}
           </AnimatePresence>

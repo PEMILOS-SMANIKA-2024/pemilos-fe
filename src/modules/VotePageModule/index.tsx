@@ -84,7 +84,7 @@ export default function VotePageModule() {
             ? 'Terimakasih telah melakukan voting!'
             : 'Klik kandidat yang ingin dipilih'}
         </motion.h3>
-        <div className="flex flex-col items-center lg:flex-row gap-10 lg:gap-5 justify-between w-full font-manrope">
+        <div className="flex flex-col-reverse items-center lg:flex-row-reverse gap-10 lg:gap-5 justify-between w-full font-manrope">
           {fetchDataCalon ? (
             fetchDataCalon.map((item) => {
               return (

@@ -14,19 +14,14 @@ interface VoteItemProps {
 
 export const voteItem: VoteItemProps[] = [
   {
-    paslonName: 'Andrew & Aryo',
+    paslonName: 'Zulfikar & Embun',
     paslonImage: '404-1.png',
     voteCount: 222,
   },
   {
-    paslonName: 'Dode & Reksa',
+    paslonName: 'Arvel & Icha',
     paslonImage: '404-1.png',
     voteCount: 321,
-  },
-  {
-    paslonName: 'Ganjar & Mahfud',
-    paslonImage: '404-1.png',
-    voteCount: 60,
   },
 ]
 
