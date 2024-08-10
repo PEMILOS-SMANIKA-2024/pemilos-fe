@@ -152,7 +152,7 @@ const paslonData: paslonProps[] = [
       {
         title: 'SmanikaSSC',
         content:
-          'Super Smart Competition) Mengasah keterampilan akademik, logika, dan kreativitas siswa melalui kompetisi yang menantang.',
+          'Super Smart Competition Mengasah keterampilan akademik, logika, dan kreativitas siswa melalui kompetisi yang menantang.',
       },
     ],
   },
