@@ -9,7 +9,7 @@ import { VisiMisiModule } from '@/modules/LandingPageModule/visi-misi'
 import { VoteResultModule } from '@/modules/LandingPageModule/vote-result'
 
 export default async function Home() {
-  const showResult = true
+  const showResult = false
 
   return (
     <div className="max-w-[1920px]">

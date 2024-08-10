@@ -17,6 +17,8 @@ import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Element } from 'react-scroll'
+import { voteResultInterface } from './vote-result'
+import { fetchWithoutToken } from '@/custom-hook/custom-fetch'
 
 interface PaslonCardProps {
   item: paslonProps
@@ -55,7 +57,10 @@ interface paslonProps {
   image: string
   visi: string
   misi: string[]
-  proker: string[]
+  proker: {
+    title: string
+    content: string
+  }[]
 }
 
 const paslonData: paslonProps[] = [
@@ -65,21 +70,49 @@ const paslonData: paslonProps[] = [
     image: 'osis-1.png',
     visi: 'Mewujudkan siswa-siswi SMAN 1 Sumbawa Besar yang berkarakter ( 3K + 3R ) Kreatif dalam pemunculan gagasan, Kolaboratif dengan tindakan, Komunikatif melalui penyampaian pesan, Religius pada kenyakinan, Relevan melalui bantuan, dan Revolusioner dalam menciptakan perubahan.',
     misi: [
-      '1. Menciptakan toleransi antar umat beragama dalam menciptakan ketenangan dan perdamaian antar siswa-siswi SMAN 1 Sumbawa Besar.',
-      '2. Memfasilitasi, mengembangkan, dan mengapresiasi minat dan bakat siswa/i SMAN 1 Sumbawa Besar dalam bidang olahraga, seni/budaya, keilmuan, keagamaan, dan peminatan bakat lainnya.',
-      '3. Melibatkan seluruh anggota organisasi dan seluruh warga sekolah untuk menerapkan budaya kolaboratif dalam mencapai tujuan yang positif.',
-      '4. Meningkatkan kinerja OSIS SMAN 1 Sumbawa Besar dengan pemanfaatan sistem teknologi komunikasi dan informasi dalam tujuan kemajuan sekolah.',
-      '5. Memperkuat kehormanisan antar pengurus dan seluruh siswa-siswi sekolah untuk mewujudkan karakter produktif dalam berorganisasi.',
-      '6. Menjadikan program kerja OSIS SMAN 1 Sumbawa Besar yang bermanfaat bagi sekolah dan masyarakat.',
+      'Menciptakan toleransi antar umat beragama dalam menciptakan ketenangan dan perdamaian antar siswa-siswi SMAN 1 Sumbawa Besar.',
+      'Memfasilitasi, mengembangkan, dan mengapresiasi minat dan bakat siswa/i SMAN 1 Sumbawa Besar dalam bidang olahraga, seni/budaya, keilmuan, keagamaan, dan peminatan bakat lainnya.',
+      'Melibatkan seluruh anggota organisasi dan seluruh warga sekolah untuk menerapkan budaya kolaboratif dalam mencapai tujuan yang positif.',
+      'Meningkatkan kinerja OSIS SMAN 1 Sumbawa Besar dengan pemanfaatan sistem teknologi komunikasi dan informasi dalam tujuan kemajuan sekolah.',
+      'Memperkuat kehormanisan antar pengurus dan seluruh siswa-siswi sekolah untuk mewujudkan karakter produktif dalam berorganisasi.',
+      'Menjadikan program kerja OSIS SMAN 1 Sumbawa Besar yang bermanfaat bagi sekolah dan masyarakat.',
     ],
     proker: [
-      '1. SMANIKA DUTION - Duty Inspiration : Kompetisi Duta antar kelas X.XI.XII melalui perwakilan satu siswa yang menjadi role model dalam SMAN 1 SUMBAWA BESAR melalui bakat dan keahlian yang dimiliki oleh masing masing siswa-siswi.',
-      '2. SMANIKA ENPRETION - Entreprise Competition : Kompetisi Memasak antar kelas X.XI.XII dalam membentuk jiwa kewirausahaan dan Kompetisi Berjualan dari hasil karya memasak peserta dalam menciptakan jiwa bisnis di lingkungan sekolah.',
-      '3. SMANIKA ESCORATION - Extra School Collaboration : Lomba Antar Sekolah Menengah Atas dalam bidang komunikasi, kreativitas, keahlian akademik maupun non-akademik.',
-      '4. SMANIKA FESDATION - Festival Ramadhan and Action : Kompetisi Bisnis Ramadhan dalam mengembangkan jiwa wirausaha pada saat bulan suci Ramadhan. Berbagi Takjil Bareng kelas X,XI dalam meraih keberkahan bulan suci Ramadhan dengan Bersedekah antar sesama. Buka Bersama Bareng kepengurusan OSIS-MPK REVION SMANIKA dalam menunjukkan kebersamaan dan kekompakan organisasi. Lomba Ramadhan Bareng seluruh siswa-siswi melalui lomba Kisah 25 Nabi, dan Ceramah Keagamaan.',
-      '5. SMANIKA DAICLATION - Daily Class Selection : Seleksi Antar Kelas dalam membentuk kelas yang memiliki standar kebersihan dan ketertiban melalui seleksi serempak dengan penilaian yang berisikan poin poin dengan hitungan yang berstandar tinggi.',
-      '6. SMANIKA FONPRETION - Food Enterpeneur and Action Bisnis : Organisasi dalam mengupayakan kedekatan akan masyarakat di luar lingkungan sekolah melalui bisnis berdagang dan lain-lain.',
-      '7. SMANIKA INVETION - Integrity Value Innovation : \n Kegiatan rutin sekolah akhir semester melalui permainan dan lomba-lomba seperti Futsal, E-Sport, Kreasi budaya sumbawa, kreasi Olahraga, bidang komunikasi, dan lomba antar bapak/ibu guru SMAN 1 Sumbawa Besar',
+      {
+        title: 'SMANIKA DUTION',
+        content:
+          'Duty Inspiration : Kompetisi Duta antar kelas X.XI.XII melalui perwakilan satu siswa yang menjadi role model dalam SMAN 1 SUMBAWA BESAR melalui bakat dan keahlian yang dimiliki oleh masing masing siswa-siswi.',
+      },
+      {
+        title: 'SMANIKA ENPRETION',
+        content:
+          'Entreprise Competition : Kompetisi Memasak antar kelas X.XI.XII dalam membentuk jiwa kewirausahaan dan Kompetisi Berjualan dari hasil karya memasak peserta dalam menciptakan jiwa bisnis di lingkungan sekolah.',
+      },
+      {
+        title: 'SMANIKA ESCORATION',
+        content:
+          'Extra School Collaboration : Lomba Antar Sekolah Menengah Atas dalam bidang komunikasi, kreativitas, keahlian akademik maupun non-akademik.',
+      },
+      {
+        title: 'SMANIKA FESDATION',
+        content:
+          'Festival Ramadhan and Action : Kompetisi Bisnis Ramadhan dalam mengembangkan jiwa wirausaha pada saat bulan suci Ramadhan. Berbagi Takjil Bareng kelas X,XI dalam meraih keberkahan bulan suci Ramadhan dengan Bersedekah antar sesama. Buka Bersama Bareng kepengurusan OSIS-MPK REVION SMANIKA dalam menunjukkan kebersamaan dan kekompakan organisasi. Lomba Ramadhan Bareng seluruh siswa-siswi melalui lomba Kisah 25 Nabi, dan Ceramah Keagamaan.',
+      },
+      {
+        title: 'SMANIKA DAICLATION',
+        content:
+          'Daily Class Selection : Seleksi Antar Kelas dalam membentuk kelas yang memiliki standar kebersihan dan ketertiban melalui seleksi serempak dengan penilaian yang berisikan poin poin dengan hitungan yang berstandar tinggi.',
+      },
+      {
+        title: 'SMANIKA FONPRETION',
+        content:
+          'Food Enterpeneur and Action Bisnis : Organisasi dalam mengupayakan kedekatan antar pengurus dan seluruh siswa-siswi SMAN 1 Sumbawa Besar melalui kegiatan yang bersifat kekeluargaan dan kebersamaan dalam bentuk kegiatan santai dan kebersamaan antar pengurus dan seluruh siswa-siswi SMAN 1 Sumbawa Besar.',
+      },
+      {
+        title: 'SMANIKA INVETION',
+        content:
+          'Integrity Value Innovation : Kegiatan rutin sekolah akhir semester melalui permainan dan lomba-lomba seperti Futsal, E-Sport, Kreasi budaya sumbawa, kreasi Olahraga, bidang komunikasi, dan lomba antar bapak/ibu guru SMAN 1 Sumbawa Besar',
+      },
     ],
   },
   {
@@ -88,26 +121,62 @@ const paslonData: paslonProps[] = [
     image: 'osis-2.png',
     visi: 'menjadikan OSIS sebagai wadah aspirasi dan garda terdepan dalam mewujudkan generasi emas yang unggul, berdaya saing tinggi, baik dalam segi akademik maupun non akademik dengan pemerbdayaan sumber daya pelajar yang berkompetensi global menuju transformasi pendidikan dan selaras untuk mewujudkan smanika yang berprestasi, partisipasi, kreasi inovasi, serta untuk mencapai generasi emas 2045.',
     misi: [
-      '1. Menciptakan lingkungan SMANIKA menjadi lingkungan yang bersih, aman dan sehat, untuk membantu sekolah mewujudkan sekolah adiwiyata.',
-      '2. Mengadakan kegiatan yang membangun karakter siswa melalui program volunteerisme, kegiatan sosial, dan budaya.',
-      '3. Mengembangkan program yang mengintegrasikan ilmu pengetahuan, teknologi, dan seni untuk mengasah kreativitas siswa.',
-      '4. menciptakan kolaborasi ekstrakurikuler dalam pelaksanaan kegiatan sekolah.',
-      '5. Mengoptimalkan dan mengembangkan program kerja osis  sudah terlaksana atau belum terlaksana di kepungurusan osis sebelumnya.',
-      '6. Memberikan kebebasan berekspresi, berpendapat dan berkreasi yang bertanggung jawab terhadapa siswa siswi sma negeri 1 sumbawa besar.',
+      'Menciptakan lingkungan SMANIKA menjadi lingkungan yang bersih, aman dan sehat, untuk membantu sekolah mewujudkan sekolah adiwiyata.',
+      'Mengadakan kegiatan yang membangun karakter siswa melalui program volunteerisme, kegiatan sosial, dan budaya.',
+      'Mengembangkan program yang mengintegrasikan ilmu pengetahuan, teknologi, dan seni untuk mengasah kreativitas siswa.',
+      'menciptakan kolaborasi ekstrakurikuler dalam pelaksanaan kegiatan sekolah.',
+      'Mengoptimalkan dan mengembangkan program kerja osis  sudah terlaksana atau belum terlaksana di kepungurusan osis sebelumnya.',
+      'Memberikan kebebasan berekspresi, berpendapat dan berkreasi yang bertanggung jawab terhadapa siswa siswi sma negeri 1 sumbawa besar.',
     ],
     proker: [
-      '1. SmanikaEntrepreneurship : Pameran kewirausahaan yang memamerkan produk dalam rangka menyukseskan pertumbuhan sektor ekonomi kreatif di mana tiap kelas akan menampilkan pertunjukan dan membuka stand sesuai dengan sektor-sektor ekonomi kreatif yang dipilih.',
-      '2. SmanikaTalentShow: Pertunjukan bakat yang memberikan platform bagi siswa untuk menunjukkan keahlian mereka seperti Tari, Vocal, Catwalk, Monolog, Puisi.',
-      '3. SmanikaChampionship: kompetisi antar sekolah menengah atas yang diwakili oleh tim terbaik pada sekolah berdasarkan hasil seleksi internal sekolah yang diadakan terlebih dahulu dengan tujuan meningkatkan solidaritas dan sportivitas antar sekolah seperti turnamen mobile legends, free fire, pubg dan kompetisi olahraga seperti futsal, volly, basket, badminton.',
-      '4. SmanikaLangFest: Mengadakan lomba-lomba yang berkaitan dengan bahasa, seperti lomba pidato dalam berbagai bahasa, lomba spelling bee, dan lomba debat bilingual.',
-      '5. SmanikaSSC: (Super Smart Competition) Mengasah keterampilan akademik, logika, dan kreativitas siswa melalui kompetisi yang menantang.',
-
+      {
+        title: 'SmanikaEntrepreneurship',
+        content:
+          'Pameran kewirausahaan yang memamerkan produk dalam rangka menyukseskan pertumbuhan sektor ekonomi kreatif di mana tiap kelas akan menampilkan pertunjukan dan membuka stand sesuai dengan sektor-sektor ekonomi kreatif yang dipilih.',
+      },
+      {
+        title: 'SmanikaTalentShow',
+        content:
+          'Pertunjukan bakat yang memberikan platform bagi siswa untuk menunjukkan keahlian mereka seperti Tari, Vocal, Catwalk, Monolog, Puisi.',
+      },
+      {
+        title: 'SmanikaChampionship',
+        content:
+          'kompetisi antar sekolah menengah atas yang diwakili oleh tim terbaik pada sekolah berdasarkan hasil seleksi internal sekolah yang diadakan terlebih dahulu dengan tujuan meningkatkan solidaritas dan sportivitas antar sekolah seperti turnamen mobile legends, free fire, pubg dan kompetisi olahraga seperti futsal, volly, basket, badminton.',
+      },
+      {
+        title: 'SmanikaLangFest',
+        content:
+          'Mengadakan lomba-lomba yang berkaitan dengan bahasa, seperti lomba pidato dalam berbagai bahasa, lomba spelling bee, dan lomba debat bilingual.',
+      },
+      {
+        title: 'SmanikaSSC',
+        content:
+          'Super Smart Competition) Mengasah keterampilan akademik, logika, dan kreativitas siswa melalui kompetisi yang menantang.',
+      },
     ],
   },
 ]
 
 export const VisiMisiModule = () => {
   const [openVisiMisi, setOpenVisiMisi] = useState<number | null>(null)
+
+  const [fetchDataCalon, setFetchDataCalon] = useState<voteResultInterface[]>()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchWithoutToken<voteResultInterface[]>(
+        '/vote/count/all',
+        {}
+      )
+
+      setFetchDataCalon(data?.result)
+    }
+
+    fetchData()
+  }, [])
+
+  console.log(fetchDataCalon)
 
   const PaslonCard: React.FC<PaslonCardProps> = ({
     item,
@@ -136,18 +205,11 @@ export const VisiMisiModule = () => {
           variants={imageVariants}
         >
           <Image
-            src={'/osis-2.png'}
+            src={`/paslon${item.nomorUrut}.jpg`}
             alt="OSIS Logo"
             width={300}
             height={300}
-            className="w-40 absolute bottom-0 right-0 z-20"
-          />
-          <Image
-            src={'/osis-1.png'}
-            alt="OSIS Logo"
-            width={300}
-            height={300}
-            className="w-40 absolute bottom-0"
+            className="w-full object-cover"
           />
         </motion.div>
         <div className="flex flex-col gap-2">
@@ -256,11 +318,16 @@ export const VisiMisiModule = () => {
                 </h1>
                 {paslonData[current].misi.map((item, index) => {
                   return (
-                    <div
-                      className="w-full px-5 md:px-10 py-5 text-white bg-purple-primary rounded-md cursor-pointer hover:scale-[101%] duration-150 transition-all"
-                      key={index}
-                    >
-                      <p className="font-medium text-sm">{item}</p>
+                    <div key={index} className="flex items-center gap-4">
+                      <div className="hidden md:flex w-10 aspect-square bg-purple-primary rounded-full items-center justify-center text-white">
+                        <span className="font-bold">{index + 1}</span>
+                      </div>
+                      <div
+                        className="w-full px-5 md:px-10 py-5 text-white bg-purple-primary rounded-md cursor-pointer hover:scale-[101%] duration-150 transition-all"
+                        key={index}
+                      >
+                        <p className="font-medium text-sm">{item}</p>
+                      </div>
                     </div>
                   )
                 })}
@@ -269,11 +336,17 @@ export const VisiMisiModule = () => {
                 </h1>
                 {paslonData[current].proker.map((item, index) => {
                   return (
-                    <div
-                      className='w-full px-5 md:px-10 py-5 text-white bg-purple-primary rounded-md cursor-pointer hover:scale-[101%] duration-150 transition-all'
-                      key={index}
-                    >
-                      <p className='font-medium text-sm'>{item}</p>
+                    <div key={index} className="flex items-center gap-4">
+                      <div className="hidden md:flex w-10 aspect-square bg-purple-primary rounded-full items-center justify-center text-white">
+                        <span className="font-bold">{index + 1}</span>
+                      </div>
+                      <div
+                        className="w-full px-5 md:px-10 py-5 text-white bg-purple-primary rounded-md cursor-pointer hover:scale-[101%] duration-150 transition-all"
+                        key={index}
+                      >
+                        <h3 className="font-extrabold">{item.title}</h3>
+                        <p className="font-medium text-sm">{item.content}</p>
+                      </div>
                     </div>
                   )
                 })}
