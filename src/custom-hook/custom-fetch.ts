@@ -48,8 +48,6 @@ export const fetchWithoutToken = async <T>(
       },
     })
 
-    console.log(response)
-
     return response.json()
   } catch (error) {
     return {

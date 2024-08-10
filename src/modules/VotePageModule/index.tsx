@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { voteResultInterface } from '../LandingPageModule/vote-result'
 import { VoteConfirmationDialog } from './components/vote-confirmation'
-import Countdown from '@/components/ui/Countdown'
+import Countdown from '@/components/ui/countdown'
 
 export default function VotePageModule() {
   const { token, decoded } = useToken()
