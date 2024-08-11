@@ -55,7 +55,7 @@ export default function VotePageModule() {
   const voteDate = new Date('2024-08-12T00:00:00.000Z')
   const isVoteDate = new Date() >= voteDate
 
-  const isUseVoteTime = false
+  const isUseVoteTime = true
 
   return (
     <section
