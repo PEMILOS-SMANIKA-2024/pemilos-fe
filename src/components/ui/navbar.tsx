@@ -3,7 +3,7 @@
 import { fetchWithToken } from '@/custom-hook/custom-fetch'
 import useToken from '@/custom-hook/useToken'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown, DoorClosed, Menu } from 'lucide-react'
+import { ChevronDown, DoorClosed, LogIn, Menu } from 'lucide-react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -216,7 +216,8 @@ export const Navbar = () => {
                 variant={'default'}
                 className="hover:scale-[1.05] transition duration-200 ease-in-out hidden lg:flex"
               >
-                Login
+                <LogIn className="w-4" />
+                <span>Login</span>
               </Button>
             )}
           </div>
@@ -324,7 +325,8 @@ export const Navbar = () => {
               variant={'default'}
               className="hover:scale-[1.05] transition duration-200 ease-in-out hidden lg:flex"
             >
-              Login
+              <LogIn className="w-4" />
+              <span>Login</span>
             </Button>
           ) : (
             <Popover open={open} onOpenChange={setOpen}>

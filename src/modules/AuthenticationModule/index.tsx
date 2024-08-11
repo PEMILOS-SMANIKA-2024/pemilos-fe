@@ -7,7 +7,7 @@ import { toast } from '@/components/ui/use-toast'
 import { checkExpired, fetchWithToken } from '@/custom-hook/custom-fetch'
 import useToken from '@/custom-hook/useToken'
 import { motion } from 'framer-motion'
-import { DoorOpen } from 'lucide-react'
+import { LogIn } from 'lucide-react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -173,7 +173,7 @@ export function AuthPageModule() {
               className="w-full"
               isAnimated
             >
-              <DoorOpen className="w-4" />
+              <LogIn className="w-4" />
               <span>Login</span>
             </Button>
           </div>

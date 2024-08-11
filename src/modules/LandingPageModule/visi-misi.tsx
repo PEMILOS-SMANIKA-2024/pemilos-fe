@@ -16,9 +16,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { Element } from 'react-scroll'
-import { voteResultInterface } from './vote-result'
-import { fetchWithoutToken } from '@/custom-hook/custom-fetch'
+import { Element, scroller } from 'react-scroll'
 
 interface PaslonCardProps {
   item: paslonProps
@@ -161,23 +159,6 @@ const paslonData: paslonProps[] = [
 export const VisiMisiModule = () => {
   const [openVisiMisi, setOpenVisiMisi] = useState<number | null>(null)
 
-  const [fetchDataCalon, setFetchDataCalon] = useState<voteResultInterface[]>()
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchWithoutToken<voteResultInterface[]>(
-        '/vote/count/all',
-        {}
-      )
-
-      setFetchDataCalon(data?.result)
-    }
-
-    fetchData()
-  }, [])
-
-  console.log(fetchDataCalon)
-
   const PaslonCard: React.FC<PaslonCardProps> = ({
     item,
     openVisiMisi,
@@ -189,6 +170,13 @@ export const VisiMisiModule = () => {
       } else {
         setCurrent(item.nomorUrut - 1)
         setOpenVisiMisi(item.nomorUrut)
+        setTimeout(() => {
+          scroller.scrollTo('visi-misi-card', {
+            smooth: true,
+            offset: -150,
+            duration: 500,
+          })
+        }, 400)
       }
     }
 
@@ -302,6 +290,7 @@ export const VisiMisiModule = () => {
           <AnimatePresence>
             {openVisiMisi != null && (
               <motion.div
+                id="visi-misi-card"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
