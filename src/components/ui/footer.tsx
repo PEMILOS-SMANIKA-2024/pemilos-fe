@@ -1,13 +1,13 @@
 /* eslint-disable react/react-in-jsx-scope */
 'use client'
-import { motion, useInView } from 'framer-motion'
-import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react'
-import Image from 'next/image'
-import { useRef } from 'react'
-import { NavbarItem } from './navbar'
-import { usePathname, useRouter } from 'next/navigation'
-import { scroller } from 'react-scroll'
 import useToken from '@/custom-hook/useToken'
+import { motion, useInView } from 'framer-motion'
+import { Instagram, Youtube } from 'lucide-react'
+import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation'
+import { useRef } from 'react'
+import { scroller } from 'react-scroll'
+import { NavbarItem } from './navbar'
 
 export const BottomBar = () => {
   const pathname = usePathname()
@@ -47,9 +47,13 @@ export const BottomBar = () => {
             >
               <Instagram />
             </a>
-            <Twitter />
-            <Youtube />
-            <Facebook />
+            <a
+              href="https://www.youtube.com/@sman1sumbawabesar"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Youtube />
+            </a>
           </div>
         </div>
         <div className="flex flex-col gap-4 text-sm w-fit">
