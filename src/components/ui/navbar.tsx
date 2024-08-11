@@ -3,15 +3,15 @@
 import { fetchWithToken } from '@/custom-hook/custom-fetch'
 import useToken from '@/custom-hook/useToken'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown, DoorClosed, LogIn, Menu } from 'lucide-react'
+import { ChevronDown, LogIn, LogOut, Menu } from 'lucide-react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { scroller } from 'react-scroll'
 import { Button } from './button'
+import { Popover, PopoverContent, PopoverTrigger } from './popover'
 import { Separator } from './separator'
 import { toast } from './use-toast'
-import { Popover, PopoverContent, PopoverTrigger } from './popover'
 
 export const NavbarItem = ({
   name,
@@ -202,7 +202,7 @@ export const Navbar = () => {
                     : { onClick: logout })}
                   className="flex gap-2 hover:scale-105 duration-200"
                 >
-                  <DoorClosed className="w-4 " />
+                  <LogOut className="w-4" />
                   <span>Logout</span>
                 </div>
               </div>
@@ -355,7 +355,7 @@ export const Navbar = () => {
                     : { onClick: logout })}
                   className="flex gap-2 hover:scale-105 duration-200 justify-center cursor-pointer"
                 >
-                  <DoorClosed className="w-4 " />
+                  <LogOut className="w-4" />
                   <span>Logout</span>
                 </div>
               </PopoverContent>
@@ -466,7 +466,7 @@ export const Navbar = () => {
                         : { onClick: logout })}
                       className="flex gap-2 hover:scale-105 duration-200"
                     >
-                      <DoorClosed className="w-4 " />
+                      <LogOut className="w-4" />
                       <span>Logout</span>
                     </div>
                   </div>
