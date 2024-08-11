@@ -55,6 +55,8 @@ export default function VotePageModule() {
   const voteDate = new Date('2024-08-12T00:00:00.000Z')
   const isVoteDate = new Date() >= voteDate
 
+  const isUseVoteTime = false
+
   return (
     <section
       id="vote"
@@ -85,15 +87,15 @@ export default function VotePageModule() {
           }}
           className="text-black-secondary text-xl md:text-2xl font-bold text-center my-10"
         >
-          {isVoteDate
+          {isVoteDate || !isUseVoteTime
             ? decoded.hasVoted
               ? 'Terimakasih telah melakukan voting!'
               : 'Klik kandidat yang ingin dipilih'
             : 'Tunggu waktu voting yak!'}
         </motion.h3>
-        <Countdown targetDate={voteDate} />
-        {isVoteDate && (
-          <div className="flex flex-col-reverse items-center lg:flex-row-reverse gap-10 lg:gap-5 justify-between w-full font-manrope">
+
+        {isVoteDate || !isUseVoteTime ? (
+          <div className="flex flex-col items-center lg:flex-row gap-10 lg:gap-5 justify-between w-full font-manrope">
             {fetchDataCalon ? (
               fetchDataCalon.map((item) => {
                 return (
@@ -143,7 +145,7 @@ export default function VotePageModule() {
                           alt="SMANIKA OSIS Logo"
                           width={250}
                           height={525}
-                          className="object-none aspect-square"
+                          className="object-contain"
                         />
                         <div className="absolute -left-3 -top-3 w-14 h-14 rounded-full bg-purple-primary text-white font-bold flex items-center justify-center text-2xl md:left-2 md:top-2">
                           {item.calonId}
@@ -166,6 +168,8 @@ export default function VotePageModule() {
               </AnimatedSection>
             )}
           </div>
+        ) : (
+          <Countdown targetDate={voteDate} />
         )}
       </div>
     </section>
