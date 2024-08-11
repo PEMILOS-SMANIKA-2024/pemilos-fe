@@ -209,7 +209,7 @@ export const VisiMisiModule = () => {
             alt="OSIS Logo"
             width={300}
             height={300}
-            className="w-full object-cover"
+            className="w-full object-top object-cover"
           />
         </motion.div>
         <div className="flex flex-col gap-2">
