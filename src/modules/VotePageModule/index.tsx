@@ -52,7 +52,7 @@ export default function VotePageModule() {
   }, [])
 
   // voteDate = 14 Agustus 2024
-  const voteDate = new Date('2024-08-14T00:00:00')
+  const voteDate = new Date('2024-08-12T09:00:00')
   const isVoteDate = new Date() >= voteDate
 
   return (

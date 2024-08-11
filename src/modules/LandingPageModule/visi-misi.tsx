@@ -150,9 +150,9 @@ const paslonData: paslonProps[] = [
           'Mengadakan lomba-lomba yang berkaitan dengan bahasa, seperti lomba pidato dalam berbagai bahasa, lomba spelling bee, dan lomba debat bilingual.',
       },
       {
-        title: 'SmanikaSSC',
+        title: 'SmanikaSSC (Super Smart Competition)',
         content:
-          'Super Smart Competition Mengasah keterampilan akademik, logika, dan kreativitas siswa melalui kompetisi yang menantang.',
+          'Mengasah keterampilan akademik, logika, dan kreativitas siswa melalui kompetisi yang menantang.',
       },
     ],
   },
@@ -209,7 +209,7 @@ export const VisiMisiModule = () => {
             alt="OSIS Logo"
             width={300}
             height={300}
-            className="w-full object-cover"
+            className="w-full object-top object-cover"
           />
         </motion.div>
         <div className="flex flex-col gap-2">
