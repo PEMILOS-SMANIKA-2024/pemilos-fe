@@ -51,8 +51,8 @@ export default function VotePageModule() {
     fetchData()
   }, [])
 
-  // voteDate = 14 Agustus 2024
-  const voteDate = new Date('2024-08-12T09:00:00')
+  // voteDate = 14 Agustus 2024 Jam 8 Pagi
+  const voteDate = new Date('2024-08-14T01:00:00.000Z')
   const isVoteDate = new Date() >= voteDate
 
   return (
