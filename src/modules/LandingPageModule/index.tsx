@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui/button'
 import useToken from '@/custom-hook/useToken'
 import { motion } from 'framer-motion'
-import { ArrowDown, Vote } from 'lucide-react'
+import { ArrowDown, Vote, LogIn } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Link } from 'react-scroll'
@@ -122,7 +122,7 @@ export default function LandingPageModule() {
                   push('/login')
                 }}
               >
-                <Vote className="w-5" />
+                {token ? <Vote className="w-4" /> : <LogIn className="w-4" />}
                 <span>{token ? 'Vote' : 'Login'}</span>
               </Button>
             </motion.div>
