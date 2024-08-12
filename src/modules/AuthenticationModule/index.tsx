@@ -61,8 +61,8 @@ export function AuthPageModule() {
       const fetchData = await fetchWithToken<result>('/auth/login', token, {
         method: 'POST',
         body: JSON.stringify({
-          username: nisn,
-          password: password,
+          username: nisn.trim(),
+          password: password.trim(),
         }),
       })
 
