@@ -10,7 +10,7 @@ import { motion } from 'framer-motion'
 import { LogIn } from 'lucide-react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Background } from '../../components/ui/background'
 
 export function AuthPageModule() {
@@ -19,7 +19,7 @@ export function AuthPageModule() {
   const [loading, setLoading] = useState(false)
 
   const { token, expirationDate } = useToken()
-  const { push } = useRouter()
+  const { push, replace } = useRouter()
   const pathname = usePathname()
 
   interface result {
@@ -113,6 +113,21 @@ export function AuthPageModule() {
     }
   }
 
+  useEffect(() => {
+    const isExpired = checkExpired(expirationDate)
+
+    if (token && !isExpired) {
+      setTimeout(() => {
+        toast({
+          title: 'Login',
+          description: 'Kamu sudah Login!',
+          variant: 'destructive',
+        })
+        replace('/')
+      }, 200)
+    }
+  })
+
   return (
     <section className="font-manrope w-full h-screen relative overflow-hidden flex items-center justify-center">
       <Background />
@@ -160,6 +175,11 @@ export function AuthPageModule() {
               onChange={(e) => {
                 setPassword(e.target.value)
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  login()
+                }
+              }}
             />
             <Button
               disabled={loading}
@@ -168,6 +188,11 @@ export function AuthPageModule() {
                 setTimeout(() => {
                   setLoading(false)
                 }, 200)
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  login()
+                }
               }}
               size={'lg'}
               className="w-full"
