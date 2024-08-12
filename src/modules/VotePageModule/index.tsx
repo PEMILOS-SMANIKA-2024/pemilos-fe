@@ -45,6 +45,8 @@ export default function VotePageModule() {
         {}
       )
 
+      console.log(data)
+
       setFetchDataCalon(data?.result)
     }
 
@@ -55,7 +57,9 @@ export default function VotePageModule() {
   const voteDate = new Date('2024-08-12T00:00:00.000Z')
   const isVoteDate = new Date() >= voteDate
 
-  const isUseVoteTime = true
+  const isUseVoteTime = false
+
+  console.log(fetchDataCalon)
 
   return (
     <section
