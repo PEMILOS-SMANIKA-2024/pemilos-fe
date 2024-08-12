@@ -61,6 +61,11 @@ export default function VotePageModule() {
 
   console.log(fetchDataCalon)
 
+  const calonData = [
+    { calonId: 1, paslonName: 'Zulfikar & Embun', votes: 0 },
+    { calonId: 2, paslonName: 'Arvel & Icha', votes: 0 },
+  ]
+
   return (
     <section
       id="vote"
@@ -100,8 +105,8 @@ export default function VotePageModule() {
 
         {isVoteDate || !isUseVoteTime ? (
           <div className="flex flex-col items-center lg:flex-row gap-10 lg:gap-5 justify-between w-full font-manrope">
-            {fetchDataCalon ? (
-              fetchDataCalon.map((item) => {
+            {calonData ? (
+              calonData.map((item) => {
                 return (
                   <VoteConfirmationDialog
                     key={item.calonId}
